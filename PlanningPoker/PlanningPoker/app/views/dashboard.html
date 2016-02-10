@@ -1,0 +1,15 @@
+    <div class="container text-center">
+        <hr />
+        <h2>{{ message }}</h2>
+        <hr />
+        <a class="btn btn-warning" style="width: 200px;" ng-click="showRoom()">Create room</a>
+        <br/><br/>
+        <!--the form for creating the room-->
+        <form role="form" class="form-inline" ng-show="data.visible" action="#room">
+            <div class="form-group">
+                <label for="rName">Name</label>
+                <input type="text" class="form-control" id="rName" placeholder="Enter room name" required>
+            </div>
+            <button class="btn btn-success">Create</button>
+        </form>
+    </div>

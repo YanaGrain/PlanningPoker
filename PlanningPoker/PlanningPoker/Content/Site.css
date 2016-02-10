@@ -1,0 +1,101 @@
+﻿﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+.nav{
+    background-color: #ffffff;
+    padding-top: 25px;
+}
+.nav li {
+  position: relative;
+  color: #5a5a5a;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 10px 10px;
+  text-transform: uppercase;
+  display: inline;
+ }
+
+
+.nav a input {
+    margin-top: 50px;
+}
+
+.jumbotron {
+  background-image: url("../img/work1.jpg");
+  height: 500px;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.jumbotron .container {
+  position: relative;
+  top:100px;
+  left: 250px;
+}
+
+.jumbotron h1 {
+  color: #fff;
+  font-size: 48px;  
+  font-family: 'Shift', sans-serif;
+  font-weight: bold;
+}
+
+.jumbotron p {
+  font-size: 20px;
+  color: #fff;
+}
+
+.form-login {
+    max-width: 330px;
+    padding: 0px 15px 5px 15px;
+    margin: 0 auto;
+}
+
+    .form-login .form-login-heading {
+        margin-bottom: 10px;
+    }
+
+    .form-login .form-control {
+        position: relative;
+        height: auto;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        padding: 10px;
+        font-size: 16px;
+    }
+
+        .form-login .form-control:focus {
+            z-index: 2;
+        }
+
+    .form-login input[type="password"] {
+        margin-top:5px;
+        margin-bottom: 5px;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
+
+
