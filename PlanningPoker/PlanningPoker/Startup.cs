@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
+using Microsoft.Owin.Security.OAuth;
+using PlanningPoker.Providers;
 
 [assembly: OwinStartup(typeof(PlanningPoker.Startup))]
 
@@ -15,9 +17,27 @@ namespace PlanningPoker
         public void Configuration(IAppBuilder app)
         {
             // Дополнительные сведения о настройке приложения см. по адресу: http://go.microsoft.com/fwlink/?LinkID=316888
+            ConfigureOAuth(app);
             HttpConfiguration config = new HttpConfiguration();
             WebApiConfig.Register(config);
+            app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
             app.UseWebApi(config);
+        }
+
+        public void ConfigureOAuth(IAppBuilder app)
+        {
+            OAuthAuthorizationServerOptions OAuthServerOptions = new OAuthAuthorizationServerOptions()
+            {
+                AllowInsecureHttp = true,
+                TokenEndpointPath = new PathString("/token"),
+                AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
+                Provider = new SimpleAuthorizationServerProvider()
+            };
+
+            // Token Generation
+            app.UseOAuthAuthorizationServer(OAuthServerOptions);
+            app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
+
         }
     }
 }
