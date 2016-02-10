@@ -1,0 +1,30 @@
+﻿
+<div class="row">
+    <div class="col-md-2">
+        &nbsp;
+    </div>
+    <div class="col-md-8">
+        <table class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="card in cards">
+                    <td>
+                        {{ card.Id }}
+                    </td>
+                    <td>
+                        {{ card.Value }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-md-2">
+        &nbsp;
+    </div>
+</div>
