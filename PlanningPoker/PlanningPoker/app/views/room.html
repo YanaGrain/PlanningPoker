@@ -1,0 +1,25 @@
+<div class="container text-center" ng-controller="chatController">
+    <hr/>
+    <h2>Welcome to the {{roomName}} {{name}}</h2>
+    <hr />
+    <form role="form" class="form-inline">
+        <div class="form-group">
+            <input type="text" class="form-control" id="msg" placeholder="Type your message" ng-model="message">
+        </div>
+        <button class="btn btn-success" ng-click="newMessage()">Send</button>
+    </form>
+    <br/>
+    <p>Or choose a card</p>
+    <!--<span ng-repeat="slide in cards">
+        <img ng-src="{{slide.card}}" width="75" id="card" ng-click="cardMsg()"/>
+    </span>    -->
+
+    <hr /><br />
+    <div>
+        <ul>
+            <li ng-repeat="chat in messages track by $index" style="list-style-type: none;">
+                <span ng-bind="chat"></span>
+            </li>
+        </ul>
+    </div>    
+</div>
