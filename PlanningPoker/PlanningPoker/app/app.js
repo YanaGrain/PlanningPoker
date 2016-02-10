@@ -1,8 +1,7 @@
 ﻿var app = angular.module('PokerApp', ['ngRoute', 'LocalStorageModule', 'angular-loading-bar']);
 
 app.config(function ($routeProvider) {
-    $routeProvider
-
+$routeProvider
     .when("/home", {
         controller: "homeController",
         templateUrl: "/app/views/home.html"
@@ -12,16 +11,23 @@ app.config(function ($routeProvider) {
         controller: "loginController",
         templateUrl: "/app/views/login.html"
     })
+    .when("/about", {
+        controller: "aboutController",
+        templateUrl: "/app/views/about.html"
+    })
+    .when("/contact", {
+        controller: "contactController",
+        templateUrl: "/app/views/contact.html"
+    })
+    .when("/dashboard", {
+        controller: "dashboardController",
+        templateUrl: "/app/views/dashboard.html"
+    })
 
-    .when("/signup", {
+   .when("/signup", {
         controller: "signupController",
         templateUrl: "/app/views/signup.html"
-    })
-
-    .when("/cards", {
-        controller: "cardsController",
-        templateUrl: "/app/views/cards.html"
-    })
+   })
 
     .otherwise({ redirectTo: "/home" });
 });

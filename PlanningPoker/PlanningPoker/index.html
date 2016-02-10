@@ -1,11 +1,11 @@
 ﻿<!DOCTYPE html>
 <html data-ng-app="PokerApp">
 <head>
-    <meta content="IE=edge, chrome=1" http-equiv="X-UA-Compatible" />
-    <title>PokerPlanning</title>
+    <meta content="IE=edge, chrome=1" http-equiv="X-UA-Compatible"/>
+    <title>Poker Planning</title>
     <link rel="stylesheet" href="https://bootswatch.com/cosmo/bootstrap.min.css">
-    <link href="content/site.css" rel="stylesheet" />
-    <link href="content/loading-bar.css" rel="stylesheet" />
+    <link href="content/site.css" rel="stylesheet"/>
+    <link href="content/loading-bar.css" rel="stylesheet"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
     <!-- 3rd party libraries -->
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
@@ -17,16 +17,15 @@
     <!-- Load services -->
     <script src="app/services/authInterceptorService.js"></script>
     <script src="app/services/authService.js"></script>
-    <script src="app/services/cardsService.js"></script>
     <!-- Load controllers -->
     <script src="app/controllers/indexController.js"></script>
     <script src="app/controllers/homeController.js"></script>
     <script src="app/controllers/loginController.js"></script>
     <script src="app/controllers/signupController.js"></script>
-    <script src="app/controllers/cardsController.js"></script>
+    <script src="app/controllers/dashboardController.js"></script>
 </head>
-<body>
-    <div class="nav" role="navigation" data-ng-controller="indexController">
+<body >
+    <div class="nav" ng-controller="indexController">
         <div class="container">
             <ul class="pull-left">
                 <li><a href="#"><img id="logo" src="img/Logo.png" style="width: 200px;" /></a></li>
@@ -34,7 +33,6 @@
             <div class="nav">
                 <ul class="pull-right">
                     <li data-ng-hide="!authentication.isAuth"><a href="#">Welcome {{authentication.userName}}</a></li>
-                    <li data-ng-hide="!authentication.isAuth"><a href="#/cards">My Cards</a></li>
                     <li data-ng-hide="!authentication.isAuth"><a href="" data-ng-click="logOut()" class="btn btn-primary" style="width: 100px;">Logout</a></li>
                     <li data-ng-hide="authentication.isAuth"> <a href="#/login" class="btn btn-primary" style="width: 100px;">Login</a></li>
                     <li data-ng-hide="authentication.isAuth"> <a href="#/signup" class="btn btn-primary" style="width: 100px;">Sign Up</a></li>

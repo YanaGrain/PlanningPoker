@@ -138,23 +138,22 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\app.js" />
-    <Content Include="app\controllers\cardsController.js" />
+    <Content Include="app\controllers\dashboardController.js" />
     <Content Include="app\controllers\homeController.js" />
     <Content Include="app\controllers\indexController.js" />
     <Content Include="app\controllers\loginController.js" />
     <Content Include="app\controllers\signupController.js" />
     <Content Include="app\services\authInterceptorService.js" />
     <Content Include="app\services\authService.js" />
-    <Content Include="app\services\cardsService.js" />
-    <Content Include="app\views\cards.html" />
+    <Content Include="app\views\about.html" />
+    <Content Include="app\views\contact.html" />
+    <Content Include="app\views\dashboard.html" />
     <Content Include="app\views\home.html" />
     <Content Include="app\views\login.html" />
+    <Content Include="app\views\room.html" />
     <Content Include="app\views\signup.html" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <None Include="Scripts\jquery-2.0.0.intellisense.js" />
     <Content Include="Content\loading-bar.css" />
     <Content Include="Content\loading-bar.min.css" />
     <Content Include="Content\sandstone.css" />
@@ -176,6 +175,9 @@
     <Content Include="img\Logo.png" />
     <Content Include="img\work1.jpg" />
     <Content Include="index.html" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <None Include="Scripts\jquery-2.0.0.intellisense.js" />
     <Content Include="Scripts\angular-local-storage.js" />
     <Content Include="Scripts\angular-local-storage.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -190,6 +192,11 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CardsController.cs" />
+    <Compile Include="Migrations\201602101251205_first.cs" />
+    <Compile Include="Migrations\201602101251205_first.Designer.cs">
+      <DependentUpon>201602101251205_first.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CardsModel.cs" />
     <Compile Include="Models\PokerContext.cs" />
     <Compile Include="Models\PokerRepository.cs" />
@@ -210,6 +217,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201602101251205_first.resx">
+      <DependentUpon>201602101251205_first.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
