@@ -1,4 +1,4 @@
-﻿var app = angular.module('PokerApp', ['ngRoute', 'LocalStorageModule', 'angular-loading-bar']);
+﻿var app = angular.module('PokerApp', ['ngRoute', 'LocalStorageModule']);
 
 app.config(function ($routeProvider) {
 $routeProvider
