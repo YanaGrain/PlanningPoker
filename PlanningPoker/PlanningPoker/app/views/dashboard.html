@@ -2,20 +2,20 @@
         <hr />
         <h2 class="text-center">{{ message }}</h2>
         <hr />
-        <div class="text-center"><a class="btn btn-warning" style="width: 200px;" ng-click="showRoom()">Create room</a></div>
+        <div class="text-center"><a class="btn btn-warning" style="width: 200px;" ng-click="showRoomForm()">Create room</a></div>
         <br/><br/>
         <!--the form for creating the room-->
         
-            <form role="form" ng-show="data.visible" action="#room" class="form-horizontal text-center">
+            <form role="form" ng-show="data.visible" class="form-horizontal text-center">
                 <div class="form-group">
                     <label for="rName" class="control-label">Name</label>
-                    <div align="center"><input type="text" class="form-control" id="rName" placeholder="Enter room name" required /></div>
+                    <div align="center"><input type="text" class="form-control" id="rName" placeholder="Enter room name" data-ng-model="newroom.Name" required /></div>
                     </div>
                 <div class="form-group">
                     <label for="rDescription" class="control-label">Description</label>
-                    <div align="center"><textarea class="form-control" rows="3" id="rDescription"></textarea></div>
+                    <div align="center"><textarea class="form-control" rows="3" data-ng-model="newroom.Description" id="rDescription"></textarea></div>
                     </div>
-                <button class="btn btn-success">Create</button>
+                <button class="btn btn-success" ng-click="createRoom()">Create</button>
             </form>
         </div>
     </div>

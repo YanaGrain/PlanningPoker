@@ -16,13 +16,7 @@ namespace PlanningPoker.Controllers
     public class CardsController : ApiController
     {
         private PokerContext db = new PokerContext();
-
         // GET: api/Cards
-        //public IQueryable<Card> GetCards()
-        //{
-        //    return db.Cards;
-        //}
-
         public JsonResult<List<Card>> GetCards()
         {
             return Json(db.Cards.ToList());

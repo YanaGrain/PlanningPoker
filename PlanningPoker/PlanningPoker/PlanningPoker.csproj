@@ -147,6 +147,7 @@
     <Content Include="app\services\authInterceptorService.js" />
     <Content Include="app\services\authService.js" />
     <Content Include="app\services\cardsService.js" />
+    <Content Include="app\services\roomsService.js" />
     <Content Include="app\views\about.html" />
     <Content Include="app\views\cards.html" />
     <Content Include="app\views\contact.html" />
@@ -195,6 +196,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CardsController.cs" />
+    <Compile Include="Controllers\RoomsController.cs" />
     <Compile Include="Migrations\201602111016163_cards.cs" />
     <Compile Include="Migrations\201602111016163_cards.Designer.cs">
       <DependentUpon>201602111016163_cards.cs</DependentUpon>
@@ -203,10 +205,15 @@
     <Compile Include="Migrations\201602111038397_second.Designer.cs">
       <DependentUpon>201602111038397_second.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201602120800247_rooms.cs" />
+    <Compile Include="Migrations\201602120800247_rooms.Designer.cs">
+      <DependentUpon>201602120800247_rooms.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CardsModel.cs" />
     <Compile Include="Models\PokerContext.cs" />
     <Compile Include="Models\PokerRepository.cs" />
+    <Compile Include="Models\RoomsModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\SimpleAuthorizationServerProvider.cs" />
@@ -231,6 +238,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201602111038397_second.resx">
       <DependentUpon>201602111038397_second.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602120800247_rooms.resx">
+      <DependentUpon>201602120800247_rooms.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
