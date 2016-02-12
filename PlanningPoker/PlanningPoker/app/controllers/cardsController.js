@@ -1,14 +1,12 @@
 ﻿'use strict';
 app.controller('cardsController', ['$scope', 'cardsService', function ($scope, cardsService) {
-
+    $scope.message = 'All cards are here';
     $scope.cards = [];
 
-    cardsService.getOrders().then(function (results) {
-
+    cardsService.getCards().then(function (results) {
         $scope.cards = results.data;
-
     }, function (error) {
-        //alert(error.data.message);
+        alert(error.data.message);
     });
 
 }]);

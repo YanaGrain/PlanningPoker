@@ -1,18 +1,12 @@
 ﻿'use strict';
 app.factory('cardsService', ['$http', function ($http) {
-
-    var serviceBase = 'http://localhost:65020/';
-    var cardsServiceFactory = {};
-
+    var urlBase = 'http://localhost:65020/';
+    var cardsService = {};
     var _getCards = function () {
-
-        return $http.get(serviceBase + 'api/cards').then(function (results) {
+        return $http.get(urlBase + 'api/Cards').then(function (results) {
             return results;
         });
     };
-
-    cardsServiceFactory.getCards = _getCards;
-
-    return cardsServiceFactory;
-
+    cardsService.getCards = _getCards;
+    return cardsService;
 }]);

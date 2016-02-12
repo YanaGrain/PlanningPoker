@@ -19,6 +19,12 @@ $routeProvider
         controller: "contactController",
         templateUrl: "/app/views/contact.html"
     })
+
+    .when("/cards", {
+        controller: "cardsController",
+        templateUrl: "/app/views/cards.html"
+    })
+
     .when("/dashboard", {
         controller: "dashboardController",
         templateUrl: "/app/views/dashboard.html"
@@ -39,3 +45,4 @@ app.run(['authService', function (authService) {
 app.config(function ($httpProvider) {
     $httpProvider.interceptors.push('authInterceptorService');
 });
+

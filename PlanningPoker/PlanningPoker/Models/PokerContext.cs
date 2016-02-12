@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -11,8 +12,8 @@ namespace PlanningPoker.Models
         public PokerContext()
             : base("PokerContext")
         {
-
+            
         }
-
+        public DbSet<Card> Cards { get; set; }
     }
 }

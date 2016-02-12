@@ -17,14 +17,16 @@
     <!-- Load services -->
     <script src="app/services/authInterceptorService.js"></script>
     <script src="app/services/authService.js"></script>
+    <script src="app/services/cardsService.js"></script>
     <!-- Load controllers -->
     <script src="app/controllers/indexController.js"></script>
     <script src="app/controllers/homeController.js"></script>
     <script src="app/controllers/loginController.js"></script>
     <script src="app/controllers/signupController.js"></script>
     <script src="app/controllers/dashboardController.js"></script>
+    <script src="app/controllers/cardsController.js"></script>
 </head>
-<body >
+<body  >
     <div class="nav" ng-controller="indexController">
         <div class="container">
             <ul class="pull-left">
@@ -33,6 +35,7 @@
             <div class="nav">
                 <ul class="pull-right">
                     <li data-ng-hide="!authentication.isAuth"><a href="#">Welcome {{authentication.userName}}</a></li>
+                    <li data-ng-hide="!authentication.isAuth"><a href="#/cards">Cards</a></li>
                     <li data-ng-hide="!authentication.isAuth"><a href="" data-ng-click="logOut()" class="btn btn-primary" style="width: 100px;">Logout</a></li>
                     <li data-ng-hide="authentication.isAuth"> <a href="#/login" class="btn btn-primary" style="width: 100px;">Login</a></li>
                     <li data-ng-hide="authentication.isAuth"> <a href="#/signup" class="btn btn-primary" style="width: 100px;">Sign Up</a></li>
