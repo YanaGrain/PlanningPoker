@@ -16,5 +16,6 @@ namespace PlanningPoker.Models
         }
         public DbSet<Card> Cards { get; set; }
         public DbSet<Room> Rooms { get; set; }
+        public DbSet<Choice> Choices { get; set; }
     }
 }

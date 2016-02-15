@@ -1,6 +1,6 @@
-<div class="container text-center" ng-controller="chatController">
+<div class="container text-center" ng-controller="roomController">
     <hr/>
-    <h2>Welcome to the {{roomName}} {{name}}</h2>
+    <h2>Welcome to the room {{userName}}</h2>
     <hr />
     <form role="form" class="form-inline">
         <div class="form-group">
@@ -10,9 +10,14 @@
     </form>
     <br/>
     <p>Or choose a card</p>
-    <!--<span ng-repeat="slide in cards">
-        <img ng-src="{{slide.card}}" width="75" id="card" ng-click="cardMsg()"/>
-    </span>    -->
+    <span ng-repeat="(id, card) in cards">
+        <img src="{{card.Path}}" width="80" ng-click="cardChosen()"/>
+    </span>
+    
+    <hr /><br />
+    <div ng-show="data.visible">
+         chose a card
+    </div>
 
     <hr /><br />
     <div>

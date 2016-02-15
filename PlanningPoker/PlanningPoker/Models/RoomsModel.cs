@@ -12,6 +12,6 @@ namespace PlanningPoker.Models
         public string Description { get; set; }
         public bool IsClosed { get; set; }
 
-        //public virtual ICollection<PokerChoice> Choices { get; set; }
+        public virtual ICollection<Choice> Choices { get; set; }
     }
 }

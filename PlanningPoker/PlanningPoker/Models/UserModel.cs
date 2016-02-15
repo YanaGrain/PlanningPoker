@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace PlanningPoker.Models
 {
-    public class UserModel
+    public class UserModel:IdentityUser
     {
         [Required]
         [Display(Name = "User name")]
@@ -23,6 +24,6 @@ namespace PlanningPoker.Models
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
-        //public virtual ICollection<PokerChoice> Choices { get; set; }
+        public virtual ICollection<Choice> Choices { get; set; }
     }
 }

@@ -30,6 +30,11 @@ $routeProvider
         templateUrl: "/app/views/dashboard.html"
     })
 
+    .when("/room", {
+        controller: "roomController",
+        templateUrl: "/app/views/room.html"
+    })
+
    .when("/signup", {
         controller: "signupController",
         templateUrl: "/app/views/signup.html"

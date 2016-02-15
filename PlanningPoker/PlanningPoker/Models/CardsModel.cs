@@ -11,6 +11,6 @@ namespace PlanningPoker.Models
         public string Value { get; set; }
         public string Path { get; set; }
 
-        //public virtual ICollection<PokerChoice> Choices { get; set; }
+        public virtual ICollection<Choice> Choices { get; set; }
     }
 }
