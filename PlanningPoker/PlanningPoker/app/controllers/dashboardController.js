@@ -1,4 +1,4 @@
-﻿app.controller('dashboardController', function($scope, $http, $location, authService) {
+﻿app.controller('dashboardController', function($scope, $http, $location, authService, $route) {
     $scope.message = 'This is your dashboard ';
     $scope.userName = authService.authentication.userName;
     $scope.data = { visible: false }
@@ -34,7 +34,7 @@
 
     $scope.deleteRoom = function (id) {
         $http.delete('api/Rooms/' + id);
-        $location.refresh();
+        $route.refresh();
     };
 
 

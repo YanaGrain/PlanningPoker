@@ -7,7 +7,7 @@ app.factory('authService', ['$http', '$q', 'localStorageService', function ($htt
     var _authentication = {
         isAuth: false,
         userName: ""
-    };
+};
 
     var _saveRegistration = function (registration) {
 
@@ -31,7 +31,6 @@ app.factory('authService', ['$http', '$q', 'localStorageService', function ($htt
 
             _authentication.isAuth = true;
             _authentication.userName = loginData.userName;
-
             deferred.resolve(response);
 
         }).error(function (err, status) {
