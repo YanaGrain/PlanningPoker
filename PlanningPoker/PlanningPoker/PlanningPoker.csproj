@@ -225,7 +225,6 @@
     <Compile Include="Controllers\CardsController.cs" />
     <Compile Include="Controllers\ChoicesController.cs" />
     <Compile Include="Controllers\RoomsController.cs" />
-    <Compile Include="Controllers\UserModelsController.cs" />
     <Compile Include="Hubs\PokerHub.cs" />
     <Compile Include="Migrations\201602111016163_cards.cs" />
     <Compile Include="Migrations\201602111016163_cards.Designer.cs">

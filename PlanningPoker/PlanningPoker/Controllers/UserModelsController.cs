@@ -6,31 +6,43 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using System.Web.Http.Results;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using PlanningPoker.Models;
 
 namespace PlanningPoker.Controllers
 {
     public class UserModelsController : ApiController
     {
+        private PokerRepository _repo = null;
+
+        public UserModelsController()
+        {
+           _repo = new PokerRepository();
+        }
         private PokerContext db = new PokerContext();
 
         // GET: api/UserModels
-        public IQueryable<UserModel> GetIdentityUsers()
+        public JsonResult<List<UserModel>> GetIdentityUsers()
         {
-            return db.IdentityUsers;
+            return Json(db.IdentityUsers.ToList());
         }
 
         // GET: api/UserModels/5
         [ResponseType(typeof(UserModel))]
-        public string GetUserModel(string userName)
+        [HttpGet]
+        public JsonResult<IdentityUser> GetUserByName(string userName)
         {
-            UserModel user = db.IdentityUsers.Where(x=>x.UserName == userName).FirstOrDefault();
-            return user.Id;
+            IdentityUser user = db.IdentityUsers.Where(x => x.UserName == userName).FirstOrDefault();
+            //IdentityUser user = await _repo.FindUserByName(userName);
+            return Json(user);
+            //return Ok(user.Id);
         }
+
 
         // PUT: api/UserModels/5
         [ResponseType(typeof(void))]

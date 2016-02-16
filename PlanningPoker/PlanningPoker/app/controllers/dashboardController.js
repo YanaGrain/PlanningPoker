@@ -34,7 +34,6 @@
 
     $scope.deleteRoom = function (id) {
         $http.delete('api/Rooms/' + id);
-        $route.refresh();
     };
 
 

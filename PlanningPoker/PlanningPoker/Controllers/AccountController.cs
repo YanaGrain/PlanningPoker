@@ -5,7 +5,9 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Results;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using PlanningPoker.Models;
 
 namespace PlanningPoker.Controllers
@@ -40,6 +42,27 @@ namespace PlanningPoker.Controllers
             }
 
             return Ok();
+        }
+
+        [HttpGet]
+        [Route("{UserName}")]
+        public async Task<IHttpActionResult> GetUser(string userName)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            IdentityUser user = await _repo.FindUserByName(userName);
+
+            /*IHttpActionResult errorResult = GetErrorResult(result);
+
+            if (errorResult != null)
+            {
+                return errorResult;
+            }*/
+
+            return Ok(user.Id);
         }
 
         protected override void Dispose(bool disposing)

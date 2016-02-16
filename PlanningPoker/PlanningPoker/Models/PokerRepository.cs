@@ -39,6 +39,13 @@ namespace PlanningPoker.Models
             return user;
         }
 
+        public async Task<IdentityUser> FindUserByName(string userName)
+        {
+            IdentityUser user = await _userManager.FindByNameAsync(userName);
+
+            return user;
+        }
+
         public void Dispose()
         {
             _ctx.Dispose();
