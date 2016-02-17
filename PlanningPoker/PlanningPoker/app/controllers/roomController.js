@@ -1,25 +1,47 @@
-﻿app.controller('roomController', function ($scope, cardsService, authService, $http, $location) {
+﻿app.controller('roomController', function ($scope, cardsService, authService, $http, localStorageService) {
     var serviceBase = 'http://localhost:65020/';
     $scope.name = authService.authentication.userName;
     $scope.data = { visible: false }
     $scope.cards = [];
     $scope.newChoice = {
         UserId: "",
-        RoomId: 0,
+        RoomId: "",
         CardId: 0
     };
+
+    $scope.currentRoom = {
+        roomName: "",
+        roomDescription: "",
+        roomId: 0
+    };
+
+    var roomData = localStorageService.get('roomData');
+    if (roomData) {
+        $scope.currentRoom.roomName = roomData.roomName;
+        $scope.currentRoom.roomDescription = roomData.roomDescription;
+        $scope.currentRoom.roomId = roomData.roomId;
+        alert($scope.currentRoom.roomId);
+    };
+
+    //get all cards
     cardsService.getCards().then(function (results) {
         $scope.cards = results.data;
     }, function (error) {
         alert(error.data.message);
     });
-   $scope.cardChosen = function() {
+
+    //cardChosen Action
+   $scope.cardChosen = function(id) {
        $http.get(serviceBase + "api/account/" + this.name).success(function(result) {
            $scope.newChoice.UserId = result;
        });
-       alert($scope.newChoice.UserId);
+       $scope.newChoice.CardId = id;
+       alert("UserId: " + $scope.newChoice.UserId);
+       $scope.pokerHub.server.sendMessage($scope.name, "chose a card");
+       $scope.message = '';
    }
 
+    //signalR
    $scope.message = ''; // holds the new message
    $scope.messages = []; // collection of messages coming from server
    $scope.pokerHub = null; // holds the reference to hub
@@ -39,15 +61,7 @@
    $scope.newMessage = function () {
        // sends a new message to the server
        $scope.pokerHub.server.sendMessage($scope.name, $scope.message);
-
        $scope.message = '';
    }
-
-   /*$scope.cardMsg = function () {
-       // sends a new message to the server
-       $scope.pokerHub.server.sendMessage($scope.name, "chose a card");
-       $scope.message = '';
-   }*/
-
 
 });

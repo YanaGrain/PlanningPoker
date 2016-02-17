@@ -73,21 +73,20 @@ namespace PlanningPoker.Controllers
 
         // POST: api/Rooms
         [ResponseType(typeof(Room))]
-        public HttpResponseMessage PostRoom(Room room)
+        public IHttpActionResult PostRoom(Room room)
         {
-            if (ModelState.IsValid)
+            /*if (ModelState.IsValid)
             {
                 db.Rooms.Add(room);
-                //db.ProductDetails.Add(product.ProductDetail);
                 db.SaveChanges();
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
             else
             {
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
-            }
+            }*/
 
-            /*if (!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
@@ -95,7 +94,9 @@ namespace PlanningPoker.Controllers
             db.Rooms.Add(room);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = room.Id }, room);*/
+            return CreatedAtRoute("DefaultApi", new { id = room.Id }, room.Id);
+            
+            //return Ok(room.Id);
         }
 
         // DELETE: api/Rooms/5

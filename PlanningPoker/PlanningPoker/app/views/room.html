@@ -1,6 +1,9 @@
-<div class="container text-center" ng-controller="roomController">
+<div class="container text-center">
     <hr/>
     <h2>Welcome to the room {{name}}</h2>
+    <hr />
+    <h2>{{currentRoom.roomName}}</h2>
+    <h3>{{currentRoom.roomDescription}}</h3>
     <hr />
     <form role="form" class="form-inline">
         <div class="form-group">
@@ -11,11 +14,9 @@
     <br/>
     <p>Or choose a card</p>
     <span ng-repeat="(id, card) in cards">
-        <img src="{{card.Path}}" width="80" ng-click="cardChosen()"/>
+        <img src="{{card.Path}}" width="80" ng-click="cardChosen(card.Id)"/>
     </span>
-    
     <hr /><br />
-
     <hr /><br />
     <div>
         <ul>
