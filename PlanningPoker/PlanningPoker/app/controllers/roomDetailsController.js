@@ -6,7 +6,7 @@
     $scope.newChoice = {
         UserId: "",
         RoomId: "",
-        CardId: 0
+        CardId: null
     };
 
     $scope.currentRoom = {
@@ -35,11 +35,16 @@
         $http.get(serviceBase + "api/account/" + this.name).success(function (result) {
             $scope.newChoice.UserId = result;
         });
-        $scope.newChoice.CardId = id;
-        $scope.newChoice.RoomId = $scope.currentRoom.roomId;
-        //alert("UserId: " + $scope.newChoice.UserId + " CardId: " + $scope.newChoice.CardId + " RoomId: " + $scope.newChoice.RoomId);
-        $scope.pokerHub.server.sendMessage($scope.name, "chose a card");
-        $scope.message = '';
+        if ($scope.newChoice.CardId) {
+            alert("You already chose a card!");
+        } else {
+            $scope.newChoice.CardId = id;
+            $scope.newChoice.RoomId = $scope.currentRoom.roomId;
+            //alert("UserId: " + $scope.newChoice.UserId + " CardId: " + $scope.newChoice.CardId + " RoomId: " + $scope.newChoice.RoomId);
+            $scope.pokerHub.server.sendMessage($scope.name, "chose a card");
+            $scope.message = '';
+        }
+        
     }
 
     //signalR
