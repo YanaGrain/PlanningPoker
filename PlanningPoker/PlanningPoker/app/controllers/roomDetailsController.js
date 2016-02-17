@@ -37,7 +37,7 @@
         });
         $scope.newChoice.CardId = id;
         $scope.newChoice.RoomId = $scope.currentRoom.roomId;
-        alert("UserId: " + $scope.newChoice.UserId + " CardId: " + $scope.newChoice.CardId + " RoomId: " + $scope.newChoice.RoomId);
+        //alert("UserId: " + $scope.newChoice.UserId + " CardId: " + $scope.newChoice.CardId + " RoomId: " + $scope.newChoice.RoomId);
         $scope.pokerHub.server.sendMessage($scope.name, "chose a card");
         $scope.message = '';
     }
