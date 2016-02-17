@@ -1,5 +1,5 @@
-<div class="container text-center">
-    <hr/>
+﻿<div class="container text-center">
+    <hr />
     <h2>Welcome to the room {{name}}</h2>
     <hr />
     <h2>{{currentRoom.roomName}}</h2>
@@ -11,7 +11,7 @@
         </div>
         <button class="btn btn-success" ng-click="newMessage()">Send</button>
     </form>
-    <br/>
+    <br />
     <p>Or choose a card</p>
     <span ng-repeat="(id, card) in cards">
         <a ng-click="cardChosen(card.Id)"><img src="{{card.Path}}" width="80" /></a>
@@ -24,5 +24,5 @@
                 <span ng-bind="chat"></span>
             </li>
         </ul>
-    </div>    
+    </div>
 </div>

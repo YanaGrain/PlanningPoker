@@ -38,6 +38,7 @@
     <script src="app/controllers/roomController.js"></script>
     <script src="app/controllers/contactController.js"></script>
     <script src="app/controllers/aboutController.js"></script>
+    <script src="app/controllers/roomDetailsController.js"></script>
 </head>
 <body  >
     <div class="nav" ng-controller="indexController">
@@ -48,7 +49,7 @@
             <div class="nav">
                 <ul class="pull-right">
                     <li data-ng-hide="!authentication.isAuth"><a href="#">Welcome {{authentication.userName}}</a></li>
-                    <!--<li data-ng-hide="!authentication.isAuth"><a href="#/cards">Cards</a></li>-->
+                    <li data-ng-hide="!authentication.isAuth"><a href="#/dashboard">Dashboard</a></li>
                     <li data-ng-hide="!authentication.isAuth"><a href="" data-ng-click="logOut()" class="btn btn-primary" style="width: 100px;">Logout</a></li>
                     <li data-ng-hide="authentication.isAuth"> <a href="#/login" class="btn btn-primary" style="width: 100px;">Login</a></li>
                     <li data-ng-hide="authentication.isAuth"> <a href="#/signup" class="btn btn-primary" style="width: 100px;">Sign Up</a></li>

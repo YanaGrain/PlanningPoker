@@ -36,7 +36,7 @@
            $scope.newChoice.UserId = result;
        });
        $scope.newChoice.CardId = id;
-       alert("UserId: " + $scope.newChoice.UserId);
+       alert("UserId: " + $scope.newChoice.UserId + " CardId: " + $scope.newChoice.CardId);
        $scope.pokerHub.server.sendMessage($scope.name, "chose a card");
        $scope.message = '';
    }

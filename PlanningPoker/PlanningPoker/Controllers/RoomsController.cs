@@ -94,7 +94,7 @@ namespace PlanningPoker.Controllers
             db.Rooms.Add(room);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = room.Id }, room.Id);
+            return CreatedAtRoute("DefaultApi", new { id = room.Id }, room);
             
             //return Ok(room.Id);
         }

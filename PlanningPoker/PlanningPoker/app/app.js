@@ -35,6 +35,11 @@ $routeProvider
         templateUrl: "/app/views/room.html"
     })
 
+    .when("/room/:id", {
+        controller: "roomDetailsController",
+        templateUrl: "/app/views/roomDetails.html"
+    })
+
    .when("/signup", {
         controller: "signupController",
         templateUrl: "/app/views/signup.html"

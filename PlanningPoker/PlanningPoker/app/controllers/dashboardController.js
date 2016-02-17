@@ -12,7 +12,7 @@
     var getRooms = function (){
         roomsService.getRooms().then(function (results) {
             $scope.rooms = [];
-                $scope.rooms = results.data;
+            $scope.rooms = results.data;
             },function(error) {
                 $scope.status = 'Unable to load customer data: ' + error.message;
             });
@@ -24,7 +24,7 @@
         roomsService.createRoom(this.newroom).then(function(data) {
             $scope.rooms.push(data);
             getRooms();
-            $location.path('/room');
+            $scope.enterRoom(data.data.id);
         }),function(data) {
             $scope.error = "An Error has occured while Adding Room! " + data;
         };
@@ -36,6 +36,12 @@
         }), function(data) {
             alert("An error while deleting the room!");
         };
+    };
+
+    $scope.enterRoom = function (id) {
+        roomsService.findRoom(id).then(function (result) {
+           $location.path('/room/' + id);
+        });
     };
 
 

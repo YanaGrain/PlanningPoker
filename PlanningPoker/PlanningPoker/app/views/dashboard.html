@@ -5,10 +5,10 @@
     <div class="text-center">
         <a class="btn btn-warning" style="width: 200px;" ng-click="showRoomForm()">Create room</a>
     </div>
-    <div class="text-center" ng-hide="data.visible">
+    <!--<div class="text-center" ng-hide="data.visible">
         Or <br />
         <a class="btn btn-primary" style="width: 200px;" href="#/room">Go to current room</a>
-    </div>
+    </div>-->
     <br /><br />
     <!--the form for creating the room-->
     <form role="form" ng-show="data.visible" class="form-horizontal text-center">
@@ -40,12 +40,12 @@
         <tr ng-repeat="(id, room) in rooms">
             <td><strong>{{ room.Id }}</strong></td>
             <td>
-                <p>{{room.Name }}</p>
+                <a ng-click="enterRoom(room.Id)" style="cursor: pointer;">{{room.Name}}</a>
             </td>
             <td>
                 <p>{{ room.Description }}</p>
             </td>
-            <td><a ng-click="deleteRoom(room.Id)">Delete</a></td>
+            <td><a ng-click="deleteRoom(room.Id)" style="cursor: pointer;">Delete</a></td>
         </tr>
     </table>
 </div>
