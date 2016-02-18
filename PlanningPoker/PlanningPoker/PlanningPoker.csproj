@@ -229,21 +229,9 @@
     <Compile Include="Controllers\ChoicesController.cs" />
     <Compile Include="Controllers\RoomsController.cs" />
     <Compile Include="Hubs\PokerHub.cs" />
-    <Compile Include="Migrations\201602111016163_cards.cs" />
-    <Compile Include="Migrations\201602111016163_cards.Designer.cs">
-      <DependentUpon>201602111016163_cards.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201602111038397_second.cs" />
-    <Compile Include="Migrations\201602111038397_second.Designer.cs">
-      <DependentUpon>201602111038397_second.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201602120800247_rooms.cs" />
-    <Compile Include="Migrations\201602120800247_rooms.Designer.cs">
-      <DependentUpon>201602120800247_rooms.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201602131115008_choices new.cs" />
-    <Compile Include="Migrations\201602131115008_choices new.Designer.cs">
-      <DependentUpon>201602131115008_choices new.cs</DependentUpon>
+    <Compile Include="Migrations\201602181002096_first.cs" />
+    <Compile Include="Migrations\201602181002096_first.designer.cs">
+      <DependentUpon>201602181002096_first.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CardsModel.cs" />
@@ -270,17 +258,8 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201602111016163_cards.resx">
-      <DependentUpon>201602111016163_cards.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201602111038397_second.resx">
-      <DependentUpon>201602111038397_second.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201602120800247_rooms.resx">
-      <DependentUpon>201602120800247_rooms.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201602131115008_choices new.resx">
-      <DependentUpon>201602131115008_choices new.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201602181002096_first.resx">
+      <DependentUpon>201602181002096_first.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
