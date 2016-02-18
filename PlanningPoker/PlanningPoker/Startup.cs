@@ -7,6 +7,8 @@ using System.Web;
 using System.Web.Http;
 using Microsoft.Owin.Security.OAuth;
 using PlanningPoker.Providers;
+using System.Data.Entity;
+using PlanningPoker.Models;
 
 [assembly: OwinStartup(typeof(PlanningPoker.Startup))]
 
@@ -16,6 +18,7 @@ namespace PlanningPoker
     {
         public void Configuration(IAppBuilder app)
         {
+            Database.SetInitializer(new PokerDbInitializer());
             // Дополнительные сведения о настройке приложения см. по адресу: http://go.microsoft.com/fwlink/?LinkID=316888
             ConfigureOAuth(app);
             HttpConfiguration config = new HttpConfiguration();

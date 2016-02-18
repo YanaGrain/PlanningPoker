@@ -237,6 +237,7 @@
     <Compile Include="Models\CardsModel.cs" />
     <Compile Include="Models\ChoicesModel.cs" />
     <Compile Include="Models\PokerContext.cs" />
+    <Compile Include="Models\PokerDbInitializer.cs" />
     <Compile Include="Models\PokerRepository.cs" />
     <Compile Include="Models\RoomsModel.cs" />
     <Compile Include="Models\UserModel.cs" />
