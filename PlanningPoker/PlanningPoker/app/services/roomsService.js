@@ -7,21 +7,24 @@ app.factory('roomsService', ['$http', 'localStorageService', function($http, loc
         roomName: "",
         roomDescription: "",
         roomId: 0
-};
+    };
+
     
-    var _getRooms = function () {
-        return $http.get(urlBase + 'api/Rooms').then(function (data) {
+    var _getRooms = function (userId) {
+        debugger;
+        return $http.get(urlBase + 'api/Rooms/' + userId).then(function (data) {
+            debugger;
             return data;
         });
     };
 
     var _createRoom = function(room) {
         return $http.post(urlBase + 'api/Rooms', room).success(function(result) {
-            localStorageService.set('roomData', { roomName: room.Name, roomDescription: room.Description, roomId: result.id});
+            localStorageService.set('roomData', { roomName: room.Name, roomDescription: room.Description, roomId: result});
             
             _currentRoom.roomName = room.Name;
             _currentRoom.roomDescription = room.Description;
-            _currentRoom.roomId= result.id;
+            _currentRoom.roomId= result;
             return result;
         });
     };

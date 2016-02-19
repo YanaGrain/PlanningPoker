@@ -6,9 +6,13 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
 using System.Web.Http.Results;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using PlanningPoker.Models;
 
 namespace PlanningPoker.Controllers
@@ -16,11 +20,28 @@ namespace PlanningPoker.Controllers
     public class RoomsController : ApiController
     {
         private PokerContext db = new PokerContext();
+        private PokerRepository _repo = null;
 
-        // GET: api/Rooms
-        public JsonResult<List<Room>> GetRooms()
+        public RoomsController()
         {
-            return Json(db.Rooms.ToList());
+            _repo = new PokerRepository();
+        }
+
+        [HttpGet]
+        [Route("api/Rooms/{userid}")]
+        // GET: api/Rooms
+        public JsonResult<List<Room>> GetRooms(string userid)
+        {
+            //string userName = User.Identity.GetUserName();
+            //IdentityUser user = await _repo.FindUserByName(userName);
+            string userId = userid;
+
+            var links = db.Links
+                .Where(link => link.UserId == userId)
+                .Include(link => link.Room).ToList();
+            var rooms = links.Select(link => link.Room);
+            
+            return Json(rooms.ToList());
         }
 
         // GET: api/Rooms/5
@@ -73,19 +94,8 @@ namespace PlanningPoker.Controllers
 
         // POST: api/Rooms
         [ResponseType(typeof(Room))]
-        public IHttpActionResult PostRoom(Room room)
+        public async Task<IHttpActionResult> PostRoom(Room room)
         {
-            /*if (ModelState.IsValid)
-            {
-                db.Rooms.Add(room);
-                db.SaveChanges();
-                return Request.CreateResponse(HttpStatusCode.OK);
-            }
-            else
-            {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
-            }*/
-
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -94,12 +104,28 @@ namespace PlanningPoker.Controllers
             db.Rooms.Add(room);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = room.Id }, room);
-            
-            //return Ok(room.Id);
+            string userName = User.Identity.GetUserName();
+            IdentityUser user = await _repo.FindUserByName(userName);
+            string userId = user.Id;
+
+            var link = new UserRoomLink()
+            {
+                RoomId = room.Id,
+                UserId = userId,
+                IsAdmin = true
+            };
+
+            db.Links.Add(link);
+            db.SaveChanges();
+
+            //return CreatedAtRoute("DefaultApi", new { id = room.Id }, room);
+
+            return Ok(room.Id);
         }
 
         // DELETE: api/Rooms/5
+        [HttpDelete]
+        [Route("api/Rooms/{id}")]
         [ResponseType(typeof(Room))]
         public IHttpActionResult DeleteRoom(int id)
         {

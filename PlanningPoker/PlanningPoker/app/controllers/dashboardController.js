@@ -1,4 +1,5 @@
-﻿app.controller('dashboardController', function($scope, $http, $location, authService, localStorageService, roomsService ) {
+﻿app.controller('dashboardController', function ($scope, $http, $location, authService, localStorageService, roomsService) {
+    var serviceBase = 'http://localhost:65020/';
     $scope.message = 'This is your dashboard ';
     $scope.userName = authService.authentication.userName;
     $scope.data = { visible: false }
@@ -8,23 +9,48 @@
     $scope.closeRoomForm = function () {
         $scope.data = { visible: false }
     }
-    
-    var getRooms = function (){
-        roomsService.getRooms().then(function (results) {
-            $scope.rooms = [];
-            $scope.rooms = results.data;
-            },function(error) {
+
+    var getUserId = function () {
+        debugger;
+        $http.get(serviceBase + "api/account/" + $scope.userName).then(function (result) {
+            debugger;
+            //$scope.userId = result.data.id;
+            roomsService.getRooms(result.data.id).then(function (results) {
+                debugger;
+                $scope.rooms = [];
+                $scope.rooms = results.data;
+                debugger;
+            }, function (error) {
                 $scope.status = 'Unable to load customer data: ' + error.message;
             });
+            
+            return result.data;
+        });
     }
-    getRooms();
+    
+    //var getRooms = function () {
+    //    debugger;
+    //    roomsService.getRooms("70fd398e-1221-4439-a1fd-a2bd07aa1949").then(function (results) {
+    //        debugger;
+    //        $scope.rooms = [];
+    //        $scope.rooms = results.data;
+    //    },function(error) {
+    //            $scope.status = 'Unable to load customer data: ' + error.message;
+    //        });
+    //}
+
+    debugger;
+    getUserId();
+    debugger;
+    //getRooms();
+    debugger;
     $scope.newroom = {};
     
     $scope.createRoom = function() {
         roomsService.createRoom(this.newroom).then(function(data) {
             $scope.rooms.push(data);
             getRooms();
-            $scope.enterRoom(data.data.id);
+            $scope.enterRoom(data.data);
         }),function(data) {
             $scope.error = "An Error has occured while Adding Room! " + data;
         };
@@ -32,7 +58,7 @@
 
     $scope.deleteRoom = function (id) {
         roomsService.deleteRoom(id).then(function(data) {
-            getRooms();
+            getUserId();
         }), function(data) {
             alert("An error while deleting the room!");
         };

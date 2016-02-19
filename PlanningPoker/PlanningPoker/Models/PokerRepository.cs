@@ -46,6 +46,13 @@ namespace PlanningPoker.Models
             return user;
         }
 
+        //public  List<IdentityUser> GetAllUsers()
+        //{
+        //   List<IdentityUser> users = _userManager.Users.ToList();
+
+        //    return users;
+        //}
+
         public void Dispose()
         {
             _ctx.Dispose();

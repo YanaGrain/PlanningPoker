@@ -12,11 +12,15 @@ namespace PlanningPoker.Models
         public PokerContext()
             : base("PokerContext")
         {
-            
+            //don't forget about include if needed!
+            this.Configuration.LazyLoadingEnabled = false;
+            this.Configuration.ProxyCreationEnabled = false;
         }
         public DbSet<Card> Cards { get; set; }
         public DbSet<Room> Rooms { get; set; }
-        public DbSet<Choice> Choices { get; set; }
+        public DbSet<UserRoomLink> Links { get; set; }
         public DbSet<UserModel> IdentityUsers { get; set; }
+        public DbSet<Story> Stories { get; set; }
+        public DbSet<Choice> Choices { get; set; }
     }
 }

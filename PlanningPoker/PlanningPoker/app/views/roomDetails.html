@@ -4,7 +4,11 @@
     <hr />
     <h2>{{currentRoom.roomName}}</h2>
     <h3>{{currentRoom.roomDescription}}</h3>
-    <hr />
+    <hr/>
+    <div class="text-center">
+        <a class="btn btn-warning" style="width: 200px;">Close room</a>
+    </div>
+    <hr/>
     <form role="form" class="form-inline">
         <div class="form-group">
             <input type="text" class="form-control" id="msg" placeholder="Type your message" ng-model="message">
@@ -24,5 +28,14 @@
                 <span ng-bind="chat"></span>
             </li>
         </ul>
+    </div>
+    <div>
+        {{newChoice.RoomId}}
+    </div>
+    <div>
+        {{newChoice.CardId}}
+    </div>
+    <div>
+        {{newChoice.UserId}}
     </div>
 </div>

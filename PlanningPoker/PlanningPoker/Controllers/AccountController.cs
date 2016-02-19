@@ -22,6 +22,14 @@ namespace PlanningPoker.Controllers
             _repo = new PokerRepository();
         }
 
+        //// GET: api/Account/Users
+        //[Route("Users")]
+        //public JsonResult<List<IdentityUser>> GetUsers()
+        //{
+        //    List<IdentityUser> users = _repo.GetAllUsers();
+        //    return Json(users);
+        //}
+
         // POST api/Account/Register
         [AllowAnonymous]
         [Route("Register")]
@@ -46,15 +54,14 @@ namespace PlanningPoker.Controllers
 
         [HttpGet]
         [Route("{UserName}")]
-        public async Task<IHttpActionResult> GetUser(string userName)
+        public async Task<IdentityUser> GetUser(string userName)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return BadRequest(ModelState);
+            //}
 
             IdentityUser user = await _repo.FindUserByName(userName);
-
             /*IHttpActionResult errorResult = GetErrorResult(result);
 
             if (errorResult != null)
@@ -62,7 +69,7 @@ namespace PlanningPoker.Controllers
                 return errorResult;
             }*/
 
-            return Ok(user.Id);
+            return (user);
         }
 
         protected override void Dispose(bool disposing)
@@ -103,5 +110,11 @@ namespace PlanningPoker.Controllers
 
             return null;
         }
+
+        //public async Task<string> GetUserId(string userName)
+        //{
+        //    IdentityUser user = await _repo.FindUserByName(userName);
+        //    return user.Id;
+        //}
     }
 }

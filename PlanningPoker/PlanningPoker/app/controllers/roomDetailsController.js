@@ -1,4 +1,4 @@
-﻿app.controller('roomDetailsController', function ($scope, cardsService, authService, $http, localStorageService) {
+﻿app.controller('roomDetailsController', function ($scope, cardsService, authService, $http, localStorageService, choicesService) {
     var serviceBase = 'http://localhost:65020/';
     $scope.name = authService.authentication.userName;
     $scope.data = { visible: false }
@@ -44,7 +44,9 @@
             $scope.pokerHub.server.sendMessage($scope.name, "chose a card");
             $scope.message = '';
         }
-        
+
+
+
     }
 
     //signalR
