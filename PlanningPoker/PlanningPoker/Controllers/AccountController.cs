@@ -22,13 +22,13 @@ namespace PlanningPoker.Controllers
             _repo = new PokerRepository();
         }
 
-        //// GET: api/Account/Users
-        //[Route("Users")]
-        //public JsonResult<List<IdentityUser>> GetUsers()
-        //{
-        //    List<IdentityUser> users = _repo.GetAllUsers();
-        //    return Json(users);
-        //}
+        // GET: api/Account/Users
+        [Route("Users")]
+        public JsonResult<List<IdentityUser>> GetUsers()
+        {
+            List<IdentityUser> users = _repo.GetAllUsers();
+            return Json(users);
+        }
 
         // POST api/Account/Register
         [AllowAnonymous]

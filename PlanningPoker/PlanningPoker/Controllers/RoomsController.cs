@@ -46,6 +46,8 @@ namespace PlanningPoker.Controllers
 
         // GET: api/Rooms/5
         [ResponseType(typeof(Room))]
+        [HttpGet]
+        [Route("api/Rooms/{id}/room")]
         public IHttpActionResult GetRoom(int id)
         {
             Room room = db.Rooms.Find(id);

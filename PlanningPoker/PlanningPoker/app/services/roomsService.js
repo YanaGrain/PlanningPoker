@@ -36,7 +36,7 @@ app.factory('roomsService', ['$http', 'localStorageService', function($http, loc
     };
 
     var _findRoom = function (id) {
-        return $http.get(urlBase + 'api/Rooms/' + id).then(function (result) {
+        return $http.get(urlBase + 'api/Rooms/' + id + "/room").then(function (result) {
             localStorageService.set('roomData', { roomName: result.data.name, roomDescription: result.data.description, roomId: result.data.id });
             _currentRoom.roomName = result.data.name;
             _currentRoom.roomDescription = result.data.description;

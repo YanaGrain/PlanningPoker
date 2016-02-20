@@ -1,4 +1,4 @@
-﻿app.controller('dashboardController', function ($scope, $http, $location, authService, localStorageService, roomsService) {
+﻿app.controller('dashboardController', function ($scope, $http, $location, authService, localStorageService, roomsService, usersService) {
     var serviceBase = 'http://localhost:65020/';
     $scope.message = 'This is your dashboard ';
     $scope.userName = authService.authentication.userName;
@@ -9,12 +9,11 @@
     $scope.closeRoomForm = function () {
         $scope.data = { visible: false }
     }
-
-    var getUserId = function () {
+    
+    var getRooms = function () {
         debugger;
-        $http.get(serviceBase + "api/account/" + $scope.userName).then(function (result) {
-            debugger;
-            //$scope.userId = result.data.id;
+        usersService.getUserId($scope.userName).then(function(result) {
+            $scope.UserId = result.data.id;
             roomsService.getRooms(result.data.id).then(function (results) {
                 debugger;
                 $scope.rooms = [];
@@ -23,27 +22,10 @@
             }, function (error) {
                 $scope.status = 'Unable to load customer data: ' + error.message;
             });
-            
-            return result.data;
         });
     }
-    
-    //var getRooms = function () {
-    //    debugger;
-    //    roomsService.getRooms("70fd398e-1221-4439-a1fd-a2bd07aa1949").then(function (results) {
-    //        debugger;
-    //        $scope.rooms = [];
-    //        $scope.rooms = results.data;
-    //    },function(error) {
-    //            $scope.status = 'Unable to load customer data: ' + error.message;
-    //        });
-    //}
 
-    debugger;
-    getUserId();
-    debugger;
-    //getRooms();
-    debugger;
+    getRooms();
     $scope.newroom = {};
     
     $scope.createRoom = function() {
@@ -58,7 +40,7 @@
 
     $scope.deleteRoom = function (id) {
         roomsService.deleteRoom(id).then(function(data) {
-            getUserId();
+            getRooms();
         }), function(data) {
             alert("An error while deleting the room!");
         };

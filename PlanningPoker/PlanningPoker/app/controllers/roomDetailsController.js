@@ -3,6 +3,14 @@
     $scope.name = authService.authentication.userName;
     $scope.data = { visible: false }
     $scope.cards = [];
+    $scope.showAddForm = function () {
+        $scope.data = { visible: true }
+    }
+    $scope.closeAddForm = function () {
+        $scope.data = { visible: false }
+    }
+
+
     $scope.newChoice = {
         UserId: "",
         RoomId: "",
