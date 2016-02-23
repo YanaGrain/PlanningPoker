@@ -5,11 +5,13 @@ using System.Threading.Tasks;
 using System.Web;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Data.Entity;
 
 namespace PlanningPoker.Models
 {
     public class PokerRepository : IDisposable
     {
+        private PokerContext db = new PokerContext();
         private PokerContext _ctx;
 
         private UserManager<IdentityUser> _userManager;
@@ -46,11 +48,45 @@ namespace PlanningPoker.Models
             return user;
         }
 
-        public List<IdentityUser> GetAllUsers()
+        public List<IdentityUser> GetAllUsers(int roomId)
         {
-            List<IdentityUser> users = _userManager.Users.ToList();
+            var links = db.Links
+                .Where(link => link.RoomId == roomId)
+                .Include(link => link.User);
+            List<IdentityUser> roomUsers = links.Select(link => link.User).ToList();
 
-            return users;
+            List<IdentityUser> allUsers = _userManager.Users.ToList();
+
+            List<IdentityUser> users = (allUsers.Except(roomUsers, new UserComparer())).ToList();
+            
+
+            return (users);
+        }
+
+        public IdentityUser GetAdmin(int roomId)
+        {
+            var links = db.Links
+                .Where(link => link.RoomId == roomId && link.IsAdmin==true)
+                .Include(link => link.User);
+            var admin = links.Select(link => link.User).SingleOrDefault();
+
+            //var admin = links.Select(link=>link.IsAdmin == true).SingleOrDefault();
+            
+            return (admin);
+        }
+
+        public List<IdentityUser> GetRoomUsers(int roomId)
+        {
+            var links = db.Links
+                .Where(link => link.RoomId == roomId && link.IsAdmin == false)
+                .Include(link => link.User);
+            var users = links.Select(link => link.User);
+            
+            //var admin = links.Where(link=>link.IsAdmin == true);
+
+            //var allUsers = users.Except(admin);               
+            
+            return (users.ToList());
         }
 
         public void Dispose()

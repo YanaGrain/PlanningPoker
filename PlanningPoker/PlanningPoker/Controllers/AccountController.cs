@@ -9,12 +9,14 @@ using System.Web.Http.Results;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using PlanningPoker.Models;
+using System.Data.Entity;
 
 namespace PlanningPoker.Controllers
 {
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {
+        private PokerContext db = new PokerContext();
         private PokerRepository _repo = null;
 
         public AccountController()
@@ -23,11 +25,27 @@ namespace PlanningPoker.Controllers
         }
 
         // GET: api/Account/Users
-        [Route("Users")]
-        public JsonResult<List<IdentityUser>> GetUsers()
-        {
-            List<IdentityUser> users = _repo.GetAllUsers();
+        [Route("Users/{roomId}")]
+        public JsonResult<List<IdentityUser>> GetUsers(int roomId)
+        {            
+            List<IdentityUser> users = _repo.GetAllUsers(roomId);
             return Json(users);
+        }
+
+        // GET: api/Account/{roomId}/Users
+        [Route("{roomId}/Users")]
+        public List<IdentityUser> GetRoomUsers(int roomId)
+        {
+            List<IdentityUser> users = _repo.GetRoomUsers(roomId);
+            return (users);
+        }
+
+        // GET: api/Account/{roomId}/Admin
+        [Route("{roomId}/Admin")]
+        public IdentityUser GetAdmin(int roomId)
+        {
+            IdentityUser admin = _repo.GetAdmin(roomId);
+            return (admin);
         }
 
         // POST api/Account/Register
@@ -62,6 +80,7 @@ namespace PlanningPoker.Controllers
             //}
 
             IdentityUser user = await _repo.FindUserByName(userName);
+            
             /*IHttpActionResult errorResult = GetErrorResult(result);
 
             if (errorResult != null)

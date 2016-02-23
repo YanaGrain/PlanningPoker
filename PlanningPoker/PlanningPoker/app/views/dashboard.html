@@ -4,12 +4,8 @@
     <hr />
     <div class="text-center">
         <a class="btn btn-warning" style="width: 200px;" ng-click="showRoomForm()">Create room</a>
-    </div>
-    <!--<div class="text-center" ng-hide="data.visible">
-        Or <br />
-        <a class="btn btn-primary" style="width: 200px;" href="#/room">Go to current room</a>
-    </div>-->
-    <br /><br />
+    </div>    
+    <br />
     <!--the form for creating the room-->
     <form role="form" ng-show="data.visible" class="form-horizontal text-center">
         <div class="form-group">
@@ -30,12 +26,11 @@
 
     <hr />
     <h3 class="text-center">Recent Rooms</h3>
-    <table class="table table-hover">
+    <table class="table table-hover table-bordered text-center">
         <tr>
-            <th>Room Id</th>
-            <td>Name</td>
-            <th>Description</th>
-            <th>Delete</th>
+            <th style="width:40px;" class="text-center">#</th>
+            <th style="width:200px;" class="text-center">Name</th>
+            <th style="width:400px;" class="text-center">Description</th>            
         </tr>
         <tr ng-repeat="(id, room) in rooms">
             <td><strong>{{ room.Id }}</strong></td>
@@ -45,7 +40,7 @@
             <td>
                 <p>{{ room.Description }}</p>
             </td>
-            <td><a ng-click="deleteRoom(room.Id)" style="cursor: pointer;">Delete</a></td>
+            <td data-ng-hide="!userIsAdmin"><a ng-click="deleteRoom(room.Id)" style="cursor: pointer;">Delete</a></td>
         </tr>
     </table>
 </div>

@@ -1,27 +1,33 @@
 ﻿<div class="container text-center">
-    <hr />
-    <h2>Welcome to the room {{name}}</h2>
+    <!--<hr />
+    <h2>Welcome to the room {{name}}</h2>-->
     <hr />
     <h2>{{currentRoom.roomName}}</h2>
     <h3>{{currentRoom.roomDescription}}</h3>
     <hr/>
-    <div class="text-center">
-        <a class="btn btn-success" style="width: 200px;" ng-click="showAddForm()">Add users</a>
-        <a class="btn btn-warning" style="width: 200px;">Delete users</a>
+    <div class="text-center" data-ng-hide="!userLink.isAdmin">
+        <a class="btn btn-success" style="width: 150px;" ng-click="showAddForm()">Add users</a>
+        <a class="btn btn-warning" style="width: 150px;" ng-click="showDeleteForm()">Delete users</a>
+        <a class="btn btn-danger" style="width: 150px;" ng-click="deleteRoom()">Delete room</a>
     </div><br/>
     <div class="text-center form-inline" ng-show="data.visible">
-        <div class="form-group">
-            <select class="form-control" placeholder="Select user" style="width: 200px;"></select>
+        <div class="form-group" >
+            <select class="form-control" placeholder="Select user" style="width: 200px;" id="repeatSelect" ng-model="data.userSelect">
+                <option ng-repeat="(id, user) in users" value="{{user.Id}}">{{user.UserName}}</option>
+            </select>
+            <button class="btn btn-success" style="width: 100px;" ng-click="addUser(data.userSelect)">Add</button>
         </div>
-        <button class="btn btn-success" style="width: 100px;" ng-click="closeAddForm()">Add</button>
     </div>
 
-    <div class="text-center form-inline" ng-show="data.visibleDel">
+    <div class="text-center form-inline" ng-show="data.delVisible">
         <div class="form-group">
-            <select class="form-control" placeholder="Select user" style="width: 200px;"></select>
+            <select class="form-control" placeholder="Select user" style="width: 200px;" id="repeatSelect" ng-model="data.userSelect">
+                <option ng-repeat="(id, user) in roomUsers" value="{{user.id}}">{{user.userName}}</option>
+            </select>
+            <button class="btn btn-warning" style="width: 100px;" ng-click="deleteUser(data.userSelect)">Delete</button>
         </div>
-        <button class="btn btn-warning" style="width: 100px;" ng-click="closeDelForm()">Delete</button>
     </div>
+
     <hr/>
     <form role="form" class="form-inline">
         <div class="form-group">
@@ -35,7 +41,18 @@
         <a ng-click="cardChosen(card.Id)"><img src="{{card.Path}}" width="80" /></a>
     </span>
     <hr /><br />
+
+    <div class="text-center">
+        Admin:<br/>
+        {{admin.userName}}<br/>
+        Room members:
+        <dl>
+            <dd ng-repeat="(id, user) in roomUsers">{{user.userName}}</dd>
+        </dl>
+    </div>
+
     <hr /><br />
+
     <div>
         <ul>
             <li ng-repeat="chat in messages track by $index" style="list-style-type: none;">

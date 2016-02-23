@@ -32,8 +32,6 @@ namespace PlanningPoker.Controllers
         // GET: api/Rooms
         public JsonResult<List<Room>> GetRooms(string userid)
         {
-            //string userName = User.Identity.GetUserName();
-            //IdentityUser user = await _repo.FindUserByName(userName);
             string userId = userid;
 
             var links = db.Links

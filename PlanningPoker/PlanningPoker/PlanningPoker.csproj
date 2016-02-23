@@ -231,6 +231,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CardsController.cs" />
     <Compile Include="Controllers\RoomsController.cs" />
+    <Compile Include="Controllers\UserRoomLinksController.cs" />
     <Compile Include="Hubs\PokerHub.cs" />
     <Compile Include="Migrations\201602181002096_first.cs" />
     <Compile Include="Migrations\201602181002096_first.designer.cs">
@@ -244,10 +245,19 @@
     <Compile Include="Migrations\201602181410278_ChoicesAdedd.Designer.cs">
       <DependentUpon>201602181410278_ChoicesAdedd.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201602220843481_linksChngeda.cs" />
+    <Compile Include="Migrations\201602220843481_linksChngeda.Designer.cs">
+      <DependentUpon>201602220843481_linksChngeda.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602231003394_identityUserToChoice.cs" />
+    <Compile Include="Migrations\201602231003394_identityUserToChoice.Designer.cs">
+      <DependentUpon>201602231003394_identityUserToChoice.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CardsModel.cs" />
     <Compile Include="Models\ChoicesModel.cs" />
     <Compile Include="Models\StoriesModel.cs" />
+    <Compile Include="Models\UserComparer.cs" />
     <Compile Include="Models\UserRoomLinkModel.cs" />
     <Compile Include="Models\PokerContext.cs" />
     <Compile Include="Models\PokerDbInitializer.cs" />
@@ -280,6 +290,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201602181410278_ChoicesAdedd.resx">
       <DependentUpon>201602181410278_ChoicesAdedd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602220843481_linksChngeda.resx">
+      <DependentUpon>201602220843481_linksChngeda.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602231003394_identityUserToChoice.resx">
+      <DependentUpon>201602231003394_identityUserToChoice.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
