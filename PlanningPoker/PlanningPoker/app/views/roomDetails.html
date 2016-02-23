@@ -6,10 +6,13 @@
     <h3>{{currentRoom.roomDescription}}</h3>
     <hr/>
     <div class="text-center" data-ng-hide="!userLink.isAdmin">
-        <a class="btn btn-success" style="width: 150px;" ng-click="showAddForm()">Add users</a>
-        <a class="btn btn-warning" style="width: 150px;" ng-click="showDeleteForm()">Delete users</a>
-        <a class="btn btn-danger" style="width: 150px;" ng-click="deleteRoom()">Delete room</a>
+        <a class="btn btn-info" style="width: 150px;" ng-click="showStoriesForm()">Enter Stories</a>
+        <a class="btn btn-success" style="width: 150px;" ng-click="showAddForm()">Add Users</a>
+        <a class="btn btn-warning" style="width: 150px;" ng-click="showDeleteForm()">Delete Users</a>
+        <a class="btn btn-danger" style="width: 150px;" ng-click="deleteRoom()">Delete Room</a>
     </div><br/>
+
+    <!--adding user form-->
     <div class="text-center form-inline" ng-show="data.visible">
         <div class="form-group" >
             <select class="form-control" placeholder="Select user" style="width: 200px;" id="repeatSelect" ng-model="data.userSelect">
@@ -19,6 +22,7 @@
         </div>
     </div>
 
+    <!--deleting user form-->
     <div class="text-center form-inline" ng-show="data.delVisible">
         <div class="form-group">
             <select class="form-control" placeholder="Select user" style="width: 200px;" id="repeatSelect" ng-model="data.userSelect">
@@ -28,39 +32,80 @@
         </div>
     </div>
 
+    <!--entering stories form-->
+    <div class="text-center form-inline" ng-show="data.storiesVisible">
+        <div class="form-group">            
+            <input class="form-control" id="story" placeholder="Enter story name" data-ng-model="newStory.Name" required>            
+        </div>
+        <button class="btn btn-info" style="width: 100px;" ng-click="addStory()">Add Story</button>
+    </div>
+
     <hr/>
-    <form role="form" class="form-inline">
+
+    <!--form for typing messages-->
+    <!--<form role="form" class="form-inline">
         <div class="form-group">
             <input type="text" class="form-control" id="msg" placeholder="Type your message" ng-model="message">
         </div>
         <button class="btn btn-success" ng-click="newMessage()">Send</button>
     </form>
-    <br />
-    <p>Or choose a card</p>
+    <br />-->
+
+    <!--<h3>Choose a card</h3>
     <span ng-repeat="(id, card) in cards">
         <a ng-click="cardChosen(card.Id)"><img src="{{card.Path}}" width="80" /></a>
     </span>
-    <hr /><br />
+    <hr /><br />-->
 
-    <div class="text-center">
-        Admin:<br/>
-        {{admin.userName}}<br/>
+    <div class="text-center">        
         Room members:
         <dl>
-            <dd ng-repeat="(id, user) in roomUsers">{{user.userName}}</dd>
+            <dd>{{admin.userName}} (admin)</dd>
+            <dd ng-repeat="(id, user) in roomUsers">{{user.userName}} <img src="../../img/delete.png" ng-click="deleteUser(user.id)" width="15px;" data-ng-hide="!userLink.isAdmin" style="cursor: pointer;"/></dd>            
         </dl>
     </div>
 
-    <hr /><br />
+    <hr />
 
-    <div>
+    <!--div for messages in chat-->
+    <!--<div>
         <ul>
             <li ng-repeat="chat in messages track by $index" style="list-style-type: none;">
                 <span ng-bind="chat"></span>
             </li>
         </ul>
-    </div>
-    <div>
+    </div>-->
+
+    <!--<div class="text-center">        
+        Stories:
+        <dl>
+            <dd ng-repeat="(id, story) in stories">{{story.name}}</dd>
+        </dl>
+    </div>-->
+    <h3 class="text-center">Stories</h3>
+    <table class="table table-hover table-bordered text-center">
+        <tr>
+            <th style="width:40px;" class="text-center">#</th>
+            <th style="width:200px;" class="text-center">Name</th>
+            <th style="width:100px;" class="text-center">IsEstimated</th>
+            <th style="width:100px;" class="text-center">Points</th>
+        </tr>
+        <tr ng-repeat="(id, story) in stories">
+            <td><strong>{{ story.id }}</strong></td>
+            <td>
+                <p>{{story.name}}</p>
+            </td>
+            <td>
+                <p><img src="../../img/checkBlue.png" width="30px;" data-ng-hide="!story.isEstimated" /></p>
+                <p data-ng-hide="story.isEstimated">{{ story.isEstimated }}</p>
+            </td>
+            <td>
+                <p>{{ story.points }}</p>
+            </td>            
+        </tr>
+    </table>
+
+    <!--<div>
         {{newChoice.RoomId}}
     </div>
     <div>
@@ -68,5 +113,5 @@
     </div>
     <div>
         {{newChoice.UserId}}
-    </div>
+    </div>-->
 </div>

@@ -166,6 +166,7 @@
     <Content Include="app\services\choicesService.js" />
     <Content Include="app\services\roomsService.js" />
     <Content Include="app\services\services.js" />
+    <Content Include="app\services\storiesService.js" />
     <Content Include="app\services\usersService.js" />
     <Content Include="app\views\about.html" />
     <Content Include="app\views\cards.html" />
@@ -199,9 +200,15 @@
     <Content Include="img\cards\cardCoffee.png" />
     <Content Include="img\cards\cardHalf.png" />
     <Content Include="img\cards\cardWtf.png" />
+    <Content Include="img\check.png" />
+    <Content Include="img\checkBlue.png" />
+    <Content Include="img\cross.png" />
+    <Content Include="img\delete.png" />
+    <Content Include="img\galochka.png" />
     <Content Include="img\Logo.png" />
     <Content Include="img\mail.png" />
     <Content Include="img\phone.png" />
+    <Content Include="img\success.png" />
     <Content Include="img\work1.jpg" />
     <Content Include="index.html" />
     <Content Include="Content\bootstrap.min.css.map" />
@@ -231,6 +238,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CardsController.cs" />
     <Compile Include="Controllers\RoomsController.cs" />
+    <Compile Include="Controllers\StoriesController.cs" />
     <Compile Include="Controllers\UserRoomLinksController.cs" />
     <Compile Include="Hubs\PokerHub.cs" />
     <Compile Include="Migrations\201602181002096_first.cs" />

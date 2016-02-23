@@ -1,9 +1,10 @@
-﻿app.controller('roomDetailsController', function ($scope, cardsService, authService, $http, localStorageService, choicesService, usersService, roomsService, $location) {
+﻿app.controller('roomDetailsController', function ($scope, cardsService, authService, $http, localStorageService, choicesService, usersService, roomsService, $location, storiesService) {
     var serviceBase = 'http://localhost:65020/';
     $scope.name = authService.authentication.userName;
     $scope.data = { visible: false }
     $scope.cards = [];
     $scope.users = [];
+    $scope.stories = [];
     $scope.admin = {};
     $scope.roomUsers = [];
     $scope.data.userSelect = null;
@@ -26,7 +27,16 @@
         }        
         }
     }
-
+    $scope.showStoriesForm = function () {
+        if ($scope.data.storiesVisible) {
+            $scope.data.storiesVisible = false;
+        } else {
+            $scope.data = {
+                storiesVisible: true
+            }
+        }
+    }
+    
     $scope.newChoice = {
         UserId: "",
         RoomId: "",
@@ -43,6 +53,13 @@
         UserId: "",
         RoomId: 0,
         IsAdmin: false
+    };
+
+    $scope.newStory = {
+        Name: "",
+        Points: 0,
+        IsEstimated: false,
+        RoomId: 0
     };
 
     var roomData = localStorageService.get('roomData');
@@ -108,6 +125,14 @@
     }
     getUsers();
 
+    var getStories = function () {
+        storiesService.getStories($scope.currentRoom.roomId).then(function (results) {
+            $scope.stories = results.data;
+            debugger;
+        });
+    }
+    getStories();
+
     var getRoomUsers = function() {
         usersService.getRoomUsers($scope.currentRoom.roomId).then(function (results) {
             $scope.roomUsers = results.data;
@@ -161,4 +186,14 @@
         
     }
     getUserLink();
+
+    $scope.addStory = function () {
+        $scope.newStory.RoomId = $scope.currentRoom.roomId;
+        debugger;        
+        storiesService.addStory($scope.newStory).then(function (result) {
+            debugger;            
+            getStories();
+        })
+    }
+
 });
