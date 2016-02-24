@@ -17,7 +17,7 @@ namespace PlanningPoker.Models
 
         [ForeignKey("User")]
         public string UserId { get; set; }
-        public virtual IdentityUser User { get; set; }
+        public virtual UserModel User { get; set; }
 
         [ForeignKey("Story")]
         public int StoryId { get; set; }

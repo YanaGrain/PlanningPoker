@@ -27,14 +27,18 @@
         </form>
         <br />-->
 
-        <h3>Choose a card</h3>
-        <span ng-repeat="(id, card) in cards">
-            <a ng-click="cardChosen(card.Id)"><img src="{{card.Path}}" width="80" /></a>
-        </span> 
+        <h3>Choose a card</h3><br/>         
+            <div id="cardsList">
+                <span ng-repeat="(id, card) in cards" >
+                    <a ><img class="small" ng-src="{{card.Path}}" ng-click="selectCard(card.Id)" ng-class="{'big': card.Id == activeClass}"/></a>
+                </span>
+            </div>
+        
+
     
     <div class="col-lg-12">
         <br/>
-        <a class="btn btn-success" style="width: 100px;">Choose!</a>
+        <a class="btn btn-success" style="width: 100px;" ng-click="cardChosen()">Choose!</a>
         <hr />
     </div>
 
@@ -52,10 +56,8 @@
                 <td style="width:150px;" class="text-center"></td>                
             </tr>
             <tr ng-repeat="(id, user) in roomUsers">
-                <td>
-                    <p>{{user.userName}}</p>
-                </td>
-                <td style="width:150px;" class="text-center"></td>
+                <td>{{user.userName}}</td>
+                <td style="width:150px;" class="text-center"><img src="../../img/checkBlue.png" ng-show="user.ready" width="30px;"/></td>
                 <td style="width:150px;" class="text-center"></td>                
             </tr>
         </table>
@@ -63,11 +65,9 @@
 
     <div class="col-lg-12" data-ng-hide="!userLink.isAdmin">
         <br />
-        <a class="btn btn-warning" style="width: 200px;">Show cards</a>
-        <hr />
+        <a class="btn btn-warning" style="width: 200px;">Show cards</a>        
     </div>
-        <hr />
-
+    
         <!--div for messages in chat-->
         <!--<div>
             <ul>

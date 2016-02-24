@@ -9,10 +9,13 @@ app.factory('choicesService', ['$http', 'localStorageService', function ($http, 
         });
     };
 
-    var _getChoices = function() {
-        return $http.get(urlBase + "api/Choices").success(function(result) {
+    var _getChoices = function(storyId) {
+        return $http.get(urlBase + "api/Choices/" + storyId).success(function(result) {
             return result;
         });
     };
 
+    choicesService.createChoice = _createChoice;
+    choicesService.getChoices = _getChoices;
+    return choicesService;
 }]);

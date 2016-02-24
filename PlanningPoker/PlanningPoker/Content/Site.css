@@ -99,3 +99,26 @@ textarea {
     }
 
 
+
+img.small {
+    width: 80px;    
+    -webkit-transition: -webkit-transform 0.1s ease;
+    -moz-transition: -moz-transform 0.1s ease;
+    transition: transform 0.1s ease;
+}
+
+    img.small:hover {
+        -ms-transform: translate(0px,-25px); /* IE 9 */
+    -webkit-transform: translate(0px,-25px);/* Safari */
+    -moz-transform: translate(0px,-25px);
+    transform: translate(0px,-25px);
+    cursor: pointer;
+    }
+
+ .big {
+    -ms-transform: translate(0px,-25px); /* IE 9 */
+    -webkit-transform: translate(0px,-25px);/* Safari */
+    -moz-transform: translate(0px,-25px);
+    transform: translate(0px,-25px);
+    cursor: pointer;
+}

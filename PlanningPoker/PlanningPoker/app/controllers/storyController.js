@@ -1,8 +1,7 @@
 ﻿app.controller('storyController', function ($scope, cardsService, authService, $http, localStorageService, choicesService, usersService, roomsService, $location, storiesService) {
     var serviceBase = 'http://localhost:65020/';
     $scope.name = authService.authentication.userName;    
-    $scope.cards = [];
-    $scope.users = [];
+    $scope.cards = [];    
     $scope.stories = [];
     $scope.admin = {};
     $scope.roomUsers = [];
@@ -10,8 +9,8 @@
 
     $scope.newChoice = {
         UserId: "",
-        RoomId: "",
-        CardId: null
+        StoryId: 0,
+        CardId: 0
     };
 
     $scope.currentRoom = {
@@ -24,16 +23,34 @@
     if (roomData) {
         $scope.currentRoom.roomName = roomData.roomName;
         $scope.currentRoom.roomDescription = roomData.roomDescription;
-        $scope.currentRoom.roomId = roomData.roomId;        
-        //alert($scope.currentRoom.roomId);
+        $scope.currentRoom.roomId = roomData.roomId;
     };
 
-    var getCurrentStory = function () {
+    var getStoryChoices = function () {
         storiesService.getCurrentStory($scope.currentRoom.roomId).then(function (result) {
             $scope.currentStory = result.data;
+            choicesService.getChoices($scope.currentStory.id).then(function (results) {
+                $scope.choices = results.data;
+                debugger;
+            });
         });
     }
-    getCurrentStory();
+    getStoryChoices();
+
+    var getRoomUsers = function () {
+        usersService.getRoomUsers($scope.currentRoom.roomId).then(function (results) {
+            $scope.roomUsers = results.data;
+            debugger;
+            angular.forEach($scope.roomUsers, function (user, id) {
+                angular.forEach($scope.choices, function (choice, id) {
+                    if (user.id == choice.userId) {
+                        user.ready = true;
+                    }
+                });
+            });
+        });
+    }
+    angular.element(document).ready(getRoomUsers());
 
     //get all cards
     cardsService.getCards().then(function (results) {
@@ -43,20 +60,15 @@
     });
 
     //cardChosen Action
-    $scope.cardChosen = function (id) {
-        $http.get(serviceBase + "api/account/" + this.name).success(function (result) {
-            $scope.newChoice.UserId = result;
-        });
-        if ($scope.newChoice.CardId) {
-            alert("You already chose a card!");
-        } else {
-            $scope.newChoice.CardId = id;
-            $scope.newChoice.RoomId = $scope.currentRoom.roomId;
-            //alert("UserId: " + $scope.newChoice.UserId + " CardId: " + $scope.newChoice.CardId + " RoomId: " + $scope.newChoice.RoomId);
-            $scope.pokerHub.server.sendMessage($scope.name, "chose a card");
-            $scope.message = '';
+    $scope.cardChosen = function () {        
+        //if ($scope.newChoice.CardId) {
+        //    alert("You already chose a card!");
+        //} else {
+            choicesService.createChoice($scope.newChoice).then(function (result) {
+                alert("Done!");
+            });
         }
-    }
+    
 
     //signalR
     $scope.message = ''; // holds the new message
@@ -81,14 +93,7 @@
         $scope.message = '';
     }
 
-    var getUsers = function () {
-        usersService.getUsers($scope.currentRoom.roomId).then(function (results) {
-            $scope.users = results.data;
-            debugger;
-        });
-    }
-    getUsers();
-
+    
     var getStories = function () {
         storiesService.getStories($scope.currentRoom.roomId).then(function (results) {
             $scope.stories = results.data;
@@ -96,14 +101,7 @@
         });
     }
     getStories();
-
-    var getRoomUsers = function () {
-        usersService.getRoomUsers($scope.currentRoom.roomId).then(function (results) {
-            $scope.roomUsers = results.data;
-            debugger;
-        });
-    }
-    getRoomUsers();
+    
 
     var getAdmin = function () {
         usersService.getAdmin($scope.currentRoom.roomId).then(function (results) {
@@ -127,5 +125,19 @@
     $scope.toRoom = function () {
         $location.path('room/' + $scope.currentRoom.id)
     }
+
+    $scope.selectCard = function (id) {
+        if ($scope.activeClass == id) {
+            $scope.activeClass = null;
+            $scope.newChoice = {};
+        }
+        else {
+            $scope.activeClass = id;
+            $scope.newChoice.StoryId = $scope.currentStory.id;
+            $scope.newChoice.UserId = $scope.UserId;
+            $scope.newChoice.CardId = id;
+        }
+             
+    };
 
 });
