@@ -4,14 +4,15 @@
     <hr />
     <h2>{{currentRoom.roomName}}</h2>
     <h3>{{currentRoom.roomDescription}}</h3>
-    <hr/>
+    
     <div class="text-center" data-ng-hide="!userLink.isAdmin">
+        <hr />
         <a class="btn btn-info" style="width: 150px;" ng-click="showStoriesForm()">Enter Stories</a>
         <a class="btn btn-success" style="width: 150px;" ng-click="showAddForm()">Add Users</a>
-        <a class="btn btn-warning" style="width: 150px;" ng-click="showDeleteForm()">Delete Users</a>
-        <a class="btn btn-danger" style="width: 150px;" ng-click="deleteRoom()">Delete Room</a>
-    </div><br/>
-
+        <!--<a class="btn btn-warning" style="width: 150px;" ng-click="showDeleteForm()">Delete Users</a>-->
+        <a class="btn btn-danger" style="width: 150px;" ng-click="deleteRoom()">Delete Room</a>        
+    </div>
+    <br />
     <!--adding user form-->
     <div class="text-center form-inline" ng-show="data.visible">
         <div class="form-group" >
@@ -41,77 +42,62 @@
     </div>
 
     <hr/>
-
-    <!--form for typing messages-->
-    <!--<form role="form" class="form-inline">
-        <div class="form-group">
-            <input type="text" class="form-control" id="msg" placeholder="Type your message" ng-model="message">
-        </div>
-        <button class="btn btn-success" ng-click="newMessage()">Send</button>
-    </form>
-    <br />-->
-
-    <!--<h3>Choose a card</h3>
-    <span ng-repeat="(id, card) in cards">
-        <a ng-click="cardChosen(card.Id)"><img src="{{card.Path}}" width="80" /></a>
-    </span>
-    <hr /><br />-->
-
-    <div class="text-center">        
-        Room members:
-        <dl>
-            <dd>{{admin.userName}} (admin)</dd>
-            <dd ng-repeat="(id, user) in roomUsers">{{user.userName}} <img src="../../img/delete.png" ng-click="deleteUser(user.id)" width="15px;" data-ng-hide="!userLink.isAdmin" style="cursor: pointer;"/></dd>            
-        </dl>
+    <div class="col-lg-offset-4 col-lg-4 text-center">
+        <h3 class="text-center">Room members</h3>
+        <table class="table table-hover table-bordered text-center">
+            <tr>
+                <th style="width:150px;" class="text-center">Name</th>
+                <th style="width:100px;" class="text-center" data-ng-hide="!userLink.isAdmin">Delete</th>
+            </tr>
+            <tr>
+                <td style="width:150px;" class="text-center">{{admin.userName}} (admin)</td>
+                <td data-ng-hide="!userLink.isAdmin">
+                    <p></p>
+                </td>
+            </tr>
+            <tr ng-repeat="(id, user) in roomUsers">
+                <td>
+                    <p>{{user.userName}}</p>
+                </td>
+                <td data-ng-hide="!userLink.isAdmin">
+                    <p><img src="../../img/delete.png" width="30px;" style="cursor: pointer;" ng-click="deleteUser(user.id)" /></p>
+                </td>
+            </tr>
+        </table>
     </div>
-
-    <hr />
-
-    <!--div for messages in chat-->
-    <!--<div>
-        <ul>
-            <li ng-repeat="chat in messages track by $index" style="list-style-type: none;">
-                <span ng-bind="chat"></span>
-            </li>
-        </ul>
-    </div>-->
-
-    <!--<div class="text-center">        
-        Stories:
-        <dl>
-            <dd ng-repeat="(id, story) in stories">{{story.name}}</dd>
-        </dl>
-    </div>-->
-    <h3 class="text-center">Stories</h3>
-    <table class="table table-hover table-bordered text-center">
-        <tr>
-            <th style="width:40px;" class="text-center">#</th>
-            <th style="width:200px;" class="text-center">Name</th>
-            <th style="width:100px;" class="text-center">IsEstimated</th>
-            <th style="width:100px;" class="text-center">Points</th>
-        </tr>
-        <tr ng-repeat="(id, story) in stories">
-            <td><strong>{{ story.id }}</strong></td>
-            <td>
-                <p>{{story.name}}</p>
-            </td>
-            <td>
-                <p><img src="../../img/checkBlue.png" width="30px;" data-ng-hide="!story.isEstimated" /></p>
-                <p data-ng-hide="story.isEstimated">{{ story.isEstimated }}</p>
-            </td>
-            <td>
-                <p>{{ story.points }}</p>
-            </td>            
-        </tr>
-    </table>
-
-    <!--<div>
-        {{newChoice.RoomId}}
+    
+    <div class="col-lg-12">
+        <hr />
     </div>
-    <div>
-        {{newChoice.CardId}}
+    
+    <div class="col-lg-offset-2 col-lg-8 text-center">
+        <h3 class="text-center">Stories</h3>
+        <p><a class="btn btn-success" style="width: 150px;" ng-click="goToStory()">Go to current Story</a></p>
+        <table class="table table-hover table-bordered text-center">
+            <tr>
+                <th style="width:40px;" class="text-center">#</th>
+                <th style="width:200px;" class="text-center">Name</th>
+                <th style="width:100px;" class="text-center">IsEstimated</th>
+                <th style="width:100px;" class="text-center">Points</th>
+                <th style="width:50px;" class="text-center" data-ng-hide="!userLink.isAdmin">Delete</th>
+            </tr>
+            <tr ng-repeat="(id, story) in stories">
+                <td><strong>{{ story.id }}</strong></td>
+                <td>
+                    <h4>{{story.name}} <img src="../../img/current_logo.png" width="55px;" data-ng-hide="!(story.id == currentStory.id)" /></h4>
+                    
+                </td>
+                <td>
+                    <p><img src="../../img/checkBlue.png" width="30px;" data-ng-hide="!story.isEstimated" /></p>
+                    <p><img src="../../img/crossBlue1.png" width="30px;" data-ng-hide="story.isEstimated" /></p>                    
+                </td>
+                <td>
+                    <h4>{{ story.points }}</h4>
+                </td>
+                <td data-ng-hide="!userLink.isAdmin">
+                    <p><img src="../../img/delete.png" width="30px;" style="cursor: pointer;" ng-click="deleteStory(story.id)" /></p>
+                </td>
+            </tr>
+        </table>
     </div>
-    <div>
-        {{newChoice.UserId}}
-    </div>-->
 </div>

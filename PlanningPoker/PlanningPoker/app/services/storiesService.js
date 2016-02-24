@@ -17,13 +17,21 @@ app.factory('storiesService', ['$http', 'localStorageService', 'authService', fu
         })
     }
 
-    var _deleteStory = function (roomId, storyId) {
-        return $http.get(urlBase + "api/Stories/" + roomId, storyId).then(function (result) {
+    var _getCurrentStory = function (roomId) {
+        return $http.get(urlBase + "api/Stories/" + roomId + "/current").then(function (result) {
+            return result;
+        })
+    }
+
+    var _deleteStory = function (id) {
+        return $http.delete(urlBase + "api/Stories/" + id).then(function (result) {
             return result;
         })
     }
 
     storiesService.addStory = _addStory;
     storiesService.getStories = _getStories;
+    storiesService.deleteStory = _deleteStory;
+    storiesService.getCurrentStory = _getCurrentStory;
     return storiesService;
 }]);

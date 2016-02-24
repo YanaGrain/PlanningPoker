@@ -157,9 +157,9 @@
     <Content Include="app\controllers\homeController.js" />
     <Content Include="app\controllers\indexController.js" />
     <Content Include="app\controllers\loginController.js" />
-    <Content Include="app\controllers\roomController.js" />
     <Content Include="app\controllers\roomDetailsController.js" />
     <Content Include="app\controllers\signupController.js" />
+    <Content Include="app\controllers\storyController.js" />
     <Content Include="app\services\authInterceptorService.js" />
     <Content Include="app\services\authService.js" />
     <Content Include="app\services\cardsService.js" />
@@ -174,9 +174,9 @@
     <Content Include="app\views\dashboard.html" />
     <Content Include="app\views\home.html" />
     <Content Include="app\views\login.html" />
-    <Content Include="app\views\room.html" />
     <Content Include="app\views\roomDetails.html" />
     <Content Include="app\views\signup.html" />
+    <Content Include="app\views\story.html" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\font-awesome.css" />
@@ -200,11 +200,13 @@
     <Content Include="img\cards\cardCoffee.png" />
     <Content Include="img\cards\cardHalf.png" />
     <Content Include="img\cards\cardWtf.png" />
-    <Content Include="img\check.png" />
     <Content Include="img\checkBlue.png" />
     <Content Include="img\cross.png" />
+    <Content Include="img\crossBlue.png" />
+    <Content Include="img\crossBlue1.png" />
+    <Content Include="img\current.png" />
+    <Content Include="img\current_logo.png" />
     <Content Include="img\delete.png" />
-    <Content Include="img\galochka.png" />
     <Content Include="img\Logo.png" />
     <Content Include="img\mail.png" />
     <Content Include="img\phone.png" />

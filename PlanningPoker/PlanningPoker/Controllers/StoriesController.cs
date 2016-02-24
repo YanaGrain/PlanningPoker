@@ -27,15 +27,11 @@ namespace PlanningPoker.Controllers
 
         // GET: api/Stories/5
         [ResponseType(typeof(Story))]
-        public IHttpActionResult GetStory(int id)
+        [Route("api/Stories/{roomId}/current")]
+        public Story GetCurrentStory(int roomId)
         {
-            Story story = db.Stories.Find(id);
-            if (story == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(story);
+            Story story = db.Stories.Where(st=>st.RoomId == roomId && st.IsEstimated == false).FirstOrDefault();
+            return (story);
         }
 
         // PUT: api/Stories/5
@@ -90,6 +86,8 @@ namespace PlanningPoker.Controllers
 
         // DELETE: api/Stories/5
         [ResponseType(typeof(Story))]
+        [HttpDelete]
+        [Route("api/Stories/{id}")]
         public IHttpActionResult DeleteStory(int id)
         {
             Story story = db.Stories.Find(id);

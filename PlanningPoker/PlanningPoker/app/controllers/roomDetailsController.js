@@ -1,11 +1,11 @@
 ﻿app.controller('roomDetailsController', function ($scope, cardsService, authService, $http, localStorageService, choicesService, usersService, roomsService, $location, storiesService) {
     var serviceBase = 'http://localhost:65020/';
     $scope.name = authService.authentication.userName;
-    $scope.data = { visible: false }
-    $scope.cards = [];
+    $scope.data = { visible: false }    
     $scope.users = [];
     $scope.stories = [];
     $scope.admin = {};
+    $scope.currentStory = {};
     $scope.roomUsers = [];
     $scope.data.userSelect = null;
     $scope.showAddForm = function () {
@@ -15,7 +15,7 @@
         {
             $scope.data = {
                 visible: true
-        }        
+            }        
         }
     }
     $scope.showDeleteForm = function () {
@@ -24,7 +24,7 @@
         } else {
             $scope.data = {
                 delVisible: true
-        }        
+            }        
         }
     }
     $scope.showStoriesForm = function () {
@@ -37,12 +37,6 @@
         }
     }
     
-    $scope.newChoice = {
-        UserId: "",
-        RoomId: "",
-        CardId: null
-    };
-
     $scope.currentRoom = {
         roomName: "",
         roomDescription: "",
@@ -71,52 +65,7 @@
         //alert($scope.currentRoom.roomId);
     };
 
-    //get all cards
-    cardsService.getCards().then(function (results) {
-        $scope.cards = results.data;
-    }, function (error) {
-        alert(error.data.message);
-    });
-
-    //cardChosen Action
-    $scope.cardChosen = function (id) {
-        $http.get(serviceBase + "api/account/" + this.name).success(function (result) {
-            $scope.newChoice.UserId = result;
-        });
-        if ($scope.newChoice.CardId) {
-            alert("You already chose a card!");
-        } else {
-            $scope.newChoice.CardId = id;
-            $scope.newChoice.RoomId = $scope.currentRoom.roomId;
-            //alert("UserId: " + $scope.newChoice.UserId + " CardId: " + $scope.newChoice.CardId + " RoomId: " + $scope.newChoice.RoomId);
-            $scope.pokerHub.server.sendMessage($scope.name, "chose a card");
-            $scope.message = '';
-        }
-    }
-
-    //signalR
-    $scope.message = ''; // holds the new message
-    $scope.messages = []; // collection of messages coming from server
-    $scope.pokerHub = null; // holds the reference to hub
-
-    $scope.pokerHub = $.connection.pokerHub; // initializes hub
-    $.connection.hub.start(); // starts hub
-
-    // register a client method on hub to be invoked by the server
-    $scope.pokerHub.client.broadcastMessage = function (name, message) {
-        var newMessage = name + ' : ' + message;
-
-        // push the newly coming message to the collection of messages
-        $scope.messages.push(newMessage);
-        $scope.$apply();
-    };
-
-    $scope.newMessage = function () {
-        // sends a new message to the server
-        $scope.pokerHub.server.sendMessage($scope.name, $scope.message);
-        $scope.message = '';
-    }
-
+    
     var getUsers = function() {
         usersService.getUsers($scope.currentRoom.roomId).then(function (results) {
             $scope.users = results.data;
@@ -155,6 +104,7 @@
         usersService.addUser($scope.newLink).then(function (result) {
             debugger;
             //alert("User added.");
+            getUsers();
             getRoomUsers();
         })
     }
@@ -164,6 +114,7 @@
         usersService.deleteUser(userId, $scope.currentRoom.roomId).then(function (result) {
             debugger;
             //alert("User deleted.");
+            getUsers();
             getRoomUsers();
         })
     }
@@ -173,6 +124,15 @@
             $location.path("/dashboard");
         }), function (data) {
             alert("An error while deleting the room!");
+        };
+    };
+
+    $scope.deleteStory = function (storyId) {
+        storiesService.deleteStory(storyId).then(function (data) {
+            getStories();
+            getCurrentStory();
+        }), function (data) {
+            alert("An error while deleting the story!");
         };
     };
 
@@ -193,7 +153,19 @@
         storiesService.addStory($scope.newStory).then(function (result) {
             debugger;            
             getStories();
+            getCurrentStory();
         })
-    }
+}
+
+    $scope.goToStory = function () {
+        $location.path('/room/' + $scope.currentRoom.roomId + '/' +$scope.currentStory.id);       
+    };
+
+    var getCurrentStory = function () {
+        storiesService.getCurrentStory($scope.currentRoom.roomId).then(function (result) {
+            $scope.currentStory = result.data;            
+        });        
+}
+    getCurrentStory();
 
 });
