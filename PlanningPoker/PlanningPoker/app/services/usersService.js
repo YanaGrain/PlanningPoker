@@ -4,56 +4,51 @@ app.factory('usersService', ['$http', 'localStorageService', 'authService', func
     var usersService = {};
     //var userName = authService.authentication.userName;
 
-    var _getUserId = function (userName) {
-        debugger;
-        return $http.get(urlBase + "api/account/" + userName).then(function (result) {
-            debugger;
+    var _getUserId = function (userName) {        
+        return $http.get(urlBase + "api/account/" + userName).then(function (result) {            
             //$scope.userId = result.data.id;
             return result;
         });
     }
 
-    var _getUsers = function (roomId) {
-        debugger;
+    var _getUsers = function (roomId) {        
         return $http.get(urlBase + "api/account/Users/" + roomId).then(function (result) {
             return result;
         });
     }
 
-    var _getRoomUsers = function (roomId) {
-        debugger;
+    var _getRoomUsers = function (roomId) {        
         return $http.get(urlBase + "api/account/" + roomId + "/Users").then(function (result) {
             return result;
         });
     }
 
-    var _getAdmin = function (roomId) {
-        debugger;
+    var _getAdmin = function (roomId) {        
         return $http.get(urlBase + "api/account/" + roomId + "/Admin").then(function (result) {
             return result;
         });
     }
 
-    var _addUser = function (link) {
-        debugger;
-        return $http.post(urlBase + "api/userRoomLinks", link).then(function (result) {
-            debugger;
+    var _addUser = function (link) {        
+        return $http.post(urlBase + "api/userRoomLinks", link).then(function (result) {            
             return result;
         });
     }
 
-    var _deleteUser = function (userId, roomId) {
-        debugger;
-        return $http.delete(urlBase + "api/userRoomLinks/"+ userId +"/" + roomId).then(function (result) {
-            debugger;
+    var _deleteUser = function (userId, roomId) {        
+        return $http.delete(urlBase + "api/userRoomLinks/"+ userId +"/" + roomId).then(function (result) {            
             return result;
         });
     }
 
-    var _getLink = function (userId, roomId) {
-        debugger;
-        return $http.get(urlBase + "api/userRoomLinks/" + userId + "/" + roomId).then(function (result) {
-            debugger;
+    var _getLink = function (userId, roomId) {       
+        return $http.get(urlBase + "api/userRoomLinks/" + userId + "/" + roomId).then(function (result) {            
+            return result;
+        });
+    }
+
+    var _getUserByLink = function (linkId) {        
+        return $http.get(urlBase + "api/account/adduser/" + linkId).then(function (result) {            
             return result;
         });
     }
@@ -65,5 +60,6 @@ app.factory('usersService', ['$http', 'localStorageService', 'authService', func
     usersService.addUser = _addUser;
     usersService.deleteUser = _deleteUser;
     usersService.getLink = _getLink;
+    usersService.getUserByLink = _getUserByLink;
     return usersService;
 }]);

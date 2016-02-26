@@ -75,16 +75,21 @@ namespace PlanningPoker.Models
             return (admin);
         }
 
+        public IdentityUser GetUserByLink(int linkId)
+        {
+            var links = db.Links
+                .Where(link => link.Id == linkId)
+                .Include(link => link.User);
+            var user = links.Select(link => link.User).SingleOrDefault();
+            return (user);
+        }
+
         public List<IdentityUser> GetRoomUsers(int roomId)
         {
             var links = db.Links
-                .Where(link => link.RoomId == roomId && link.IsAdmin == false)
+                .Where(link => link.RoomId == roomId /*&& link.IsAdmin == false*/)
                 .Include(link => link.User);
-            var users = links.Select(link => link.User);
-            
-            //var admin = links.Where(link=>link.IsAdmin == true);
-
-            //var allUsers = users.Except(admin);               
+            var users = links.Select(link => link.User);                      
             
             return (users.ToList());
         }

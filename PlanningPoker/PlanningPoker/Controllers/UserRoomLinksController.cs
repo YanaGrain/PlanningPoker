@@ -22,18 +22,7 @@ namespace PlanningPoker.Controllers
             return db.Links;
         }
 
-        // GET: api/UserRoomLinks/5
-        //[ResponseType(typeof(UserRoomLink))]
-        //public IHttpActionResult GetUserRoomLink(int id)
-        //{
-        //    UserRoomLink userRoomLink = db.Links.Find(id);
-        //    if (userRoomLink == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return Ok(userRoomLink);
-        //}
+        
 
         [ResponseType(typeof(UserRoomLink))]
         [Route("api/UserRoomLinks/{userid}/{roomid}")]

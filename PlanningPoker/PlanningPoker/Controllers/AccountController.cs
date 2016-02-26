@@ -48,6 +48,14 @@ namespace PlanningPoker.Controllers
             return (admin);
         }
 
+        // GET: api/Account/{linkId}
+        [Route("addUser/{linkId}")]
+        public IdentityUser GetUserByLink(int linkId)
+        {
+            IdentityUser user = _repo.GetUserByLink(linkId);
+            return (user);
+        }
+
         // POST api/Account/Register
         [AllowAnonymous]
         [Route("Register")]

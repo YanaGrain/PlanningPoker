@@ -48,19 +48,13 @@
             <tr>
                 <th style="width:150px;" class="text-center">Name</th>
                 <th style="width:100px;" class="text-center" data-ng-hide="!userLink.isAdmin">Delete</th>
-            </tr>
-            <tr>
-                <td style="width:150px;" class="text-center">{{admin.userName}} (admin)</td>
-                <td data-ng-hide="!userLink.isAdmin">
-                    <p></p>
-                </td>
-            </tr>
-            <tr ng-repeat="(id, user) in roomUsers">
+            </tr>            
+            <tr ng-repeat="(id, user) in roomUsers track by $index">
                 <td>
-                    <p>{{user.userName}}</p>
+                    <p ng-bind="user.userName"></p>
                 </td>
                 <td data-ng-hide="!userLink.isAdmin">
-                    <p><img src="../../img/delete.png" width="30px;" style="cursor: pointer;" ng-click="deleteUser(user.id)" /></p>
+                    <p><img src="../../img/delete.png" width="30px;" style="cursor: pointer;" ng-click="deleteUser(user.id)" data-ng-hide="admin.userName == user.userName"/></p>
                 </td>
             </tr>
         </table>

@@ -165,7 +165,6 @@
     <Content Include="app\services\cardsService.js" />
     <Content Include="app\services\choicesService.js" />
     <Content Include="app\services\roomsService.js" />
-    <Content Include="app\services\services.js" />
     <Content Include="app\services\storiesService.js" />
     <Content Include="app\services\usersService.js" />
     <Content Include="app\views\about.html" />

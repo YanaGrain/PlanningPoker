@@ -68,57 +68,33 @@
     
     var getUsers = function() {
         usersService.getUsers($scope.currentRoom.roomId).then(function (results) {
-            $scope.users = results.data;
-            debugger;
+            $scope.users = results.data;            
         });
     }
     getUsers();
 
     var getStories = function () {
         storiesService.getStories($scope.currentRoom.roomId).then(function (results) {
-            $scope.stories = results.data;
-            debugger;
+            $scope.stories = results.data;            
         });
     }
     getStories();
 
     var getRoomUsers = function() {
         usersService.getRoomUsers($scope.currentRoom.roomId).then(function (results) {
-            $scope.roomUsers = results.data;
-            debugger;
+            $scope.roomUsers = results.data;            
         });
     }
     getRoomUsers();
 
     var getAdmin = function () {
         usersService.getAdmin($scope.currentRoom.roomId).then(function (results) {
-            $scope.admin = results.data;
-            debugger;
+            $scope.admin = results.data;            
         });
     }
     getAdmin();
 
-    $scope.addUser = function (userId) {
-        debugger;
-        $scope.newLink.UserId = userId;
-        usersService.addUser($scope.newLink).then(function (result) {
-            debugger;
-            //alert("User added.");
-            getUsers();
-            getRoomUsers();
-        })
-    }
-
-    $scope.deleteUser = function (userId) {
-        debugger;
-        usersService.deleteUser(userId, $scope.currentRoom.roomId).then(function (result) {
-            debugger;
-            //alert("User deleted.");
-            getUsers();
-            getRoomUsers();
-        })
-    }
-
+    
     $scope.deleteRoom = function () {
         roomsService.deleteRoom($scope.currentRoom.roomId).then(function (data) {
             $location.path("/dashboard");
@@ -148,10 +124,8 @@
     getUserLink();
 
     $scope.addStory = function () {
-        $scope.newStory.RoomId = $scope.currentRoom.roomId;
-        debugger;        
-        storiesService.addStory($scope.newStory).then(function (result) {
-            debugger;            
+        $scope.newStory.RoomId = $scope.currentRoom.roomId;        
+        storiesService.addStory($scope.newStory).then(function (result) {              
             getStories();
             getCurrentStory();
         })
@@ -167,5 +141,64 @@
         });        
 }
     getCurrentStory();
+
+
+    //signalR
+    $scope.newUser = {}; // holds the new user
+    $scope.delUser = {};
+    //$scope.usersFromServer = []; // collection of users coming from server    
+    var connection = $.hubConnection(); // initializes hub
+    var pokerHubProxy = connection.createHubProxy('pokerHub');
+    //connection.start(); // starts hub
+
+    pokerHubProxy.on('showNewUser', function (userId, userName) {
+        debugger;
+        $scope.newUser.Id = userId;
+        $scope.newUser.userName = userName;
+        debugger;
+        $scope.roomUsers.push($scope.newUser);
+        getRoomUsers();
+        $scope.newUser = {};
+        debugger;
+        $scope.$apply();
+    });
+
+    pokerHubProxy.on('hideDeletedUser', function (userId) {
+        angular.forEach($scope.roomUsers, function (user, id) {
+            if(user.Id == userId){
+                $scope.delUser = user;
+            };
+        });        
+        $scope.roomUsers.splice($scope.roomUsers.indexOf($scope.delUser), 1);
+        getRoomUsers();
+        $scope.delUser = {};
+        debugger;
+        $scope.$apply();
+    });
+   
+    
+    connection.start().done(function () {
+        //adding New User
+        $scope.addUser = function (userId) {
+            $scope.newLink.UserId = userId;
+            usersService.addUser($scope.newLink).then(function (result) {                
+                usersService.getUserByLink(result.data.id).then(function (results) {
+                    pokerHubProxy.invoke('addRoomUser', results.data);
+                    //$scope.roomUsers.push(result.data);
+                })
+                getUsers();
+            })
+        }
+
+        $scope.deleteUser = function (userId) {
+            usersService.deleteUser(userId, $scope.currentRoom.roomId).then(function (result) {
+                //alert("User deleted.");
+                pokerHubProxy.invoke('deleteRoomUser', userId);
+                getUsers();
+                getRoomUsers();
+            })
+        }
+
+    });   
 
 });
