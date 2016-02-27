@@ -103,14 +103,7 @@
         };
     };
 
-    $scope.deleteStory = function (storyId) {
-        storiesService.deleteStory(storyId).then(function (data) {
-            getStories();
-            getCurrentStory();
-        }), function (data) {
-            alert("An error while deleting the story!");
-        };
-    };
+    
 
     var getUserLink = function () {
         usersService.getUserId($scope.name).then(function (result) {
@@ -123,14 +116,7 @@
     }
     getUserLink();
 
-    $scope.addStory = function () {
-        $scope.newStory.RoomId = $scope.currentRoom.roomId;        
-        storiesService.addStory($scope.newStory).then(function (result) {              
-            getStories();
-            getCurrentStory();
-        })
-}
-
+    
     $scope.goToStory = function () {
         $location.path('/room/' + $scope.currentRoom.roomId + '/' +$scope.currentStory.id);       
     };
@@ -175,6 +161,35 @@
         debugger;
         $scope.$apply();
     });
+
+    pokerHubProxy.on('showNewStory', function (storyId, storyIsEstimated, storyName, storyPoints) {
+        $scope.addedStory = {
+            Id: storyId,
+            IsEstimated: storyIsEstimated,
+            Name: storyName,
+            Points: storyPoints
+        }
+        $scope.stories.push($scope.addedStory);
+        getStories();
+        getCurrentStory();
+        $scope.addedStory = {};
+        debugger;
+        $scope.$apply();
+    });
+
+    pokerHubProxy.on('hideDeletedStory', function (storyId) {
+        angular.forEach($scope.stories, function (story, id) {
+            if (story.Id == storyId) {
+                $scope.delStory = story;
+            };
+        });
+        $scope.stories.splice($scope.stories.indexOf($scope.delStory), 1);
+        getStories();
+        getCurrentStory();
+        $scope.delStory = {};
+        debugger;
+        $scope.$apply();
+    });
    
     
     connection.start().done(function () {
@@ -199,6 +214,24 @@
             })
         }
 
+        $scope.addStory = function () {
+            $scope.newStory.RoomId = $scope.currentRoom.roomId;
+            storiesService.addStory($scope.newStory).then(function (result) {
+                pokerHubProxy.invoke('addRoomStory', result.data);
+                getStories();
+                getCurrentStory();
+            })
+        }
+
+        $scope.deleteStory = function (storyId) {
+            storiesService.deleteStory(storyId).then(function (data) {
+                pokerHubProxy.invoke('deleteRoomStory', storyId);
+                getStories();
+                getCurrentStory();
+            }), function (data) {
+                alert("An error while deleting the story!");
+            };
+        };
     });   
 
 });

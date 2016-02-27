@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.Identity.EntityFramework;
+using PlanningPoker.Models;
 
 namespace PlanningPoker.Hubs
 {
@@ -23,6 +24,16 @@ namespace PlanningPoker.Hubs
         public void DeleteRoomUser(string userId)
         {
             Clients.All.hideDeletedUser(userId);
+        }
+
+        public void AddRoomStory(Story story)
+        {
+            Clients.All.showNewStory(story.Id, story.IsEstimated, story.Name, story.Points);
+        }
+
+        public void DeleteRoomStory(int storyId)
+        {
+            Clients.All.hideDeletedStory(storyId);
         }
     }
     
