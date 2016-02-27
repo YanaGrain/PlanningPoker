@@ -7,13 +7,13 @@ namespace PlanningPoker.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class identityUserToChoice : IMigrationMetadata
+    public sealed partial class closedStories : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(identityUserToChoice));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(closedStories));
         
         string IMigrationMetadata.Id
         {
-            get { return "201602231003394_identityUserToChoice"; }
+            get { return "201602271757424_closedStories"; }
         }
         
         string IMigrationMetadata.Source

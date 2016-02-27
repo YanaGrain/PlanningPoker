@@ -30,7 +30,7 @@ namespace PlanningPoker.Controllers
         [Route("api/Stories/{roomId}/current")]
         public Story GetCurrentStory(int roomId)
         {
-            Story story = db.Stories.Where(st=>st.RoomId == roomId && st.IsEstimated == false).FirstOrDefault();
+            Story story = db.Stories.Where(st=>st.RoomId == roomId && st.IsClosed == false).FirstOrDefault();
             return (story);
         }
 

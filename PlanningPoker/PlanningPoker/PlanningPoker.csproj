@@ -260,9 +260,9 @@
     <Compile Include="Migrations\201602220843481_linksChngeda.Designer.cs">
       <DependentUpon>201602220843481_linksChngeda.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201602231003394_identityUserToChoice.cs" />
-    <Compile Include="Migrations\201602231003394_identityUserToChoice.Designer.cs">
-      <DependentUpon>201602231003394_identityUserToChoice.cs</DependentUpon>
+    <Compile Include="Migrations\201602271757424_closedStories.cs" />
+    <Compile Include="Migrations\201602271757424_closedStories.Designer.cs">
+      <DependentUpon>201602271757424_closedStories.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CardsModel.cs" />
@@ -305,8 +305,8 @@
     <EmbeddedResource Include="Migrations\201602220843481_linksChngeda.resx">
       <DependentUpon>201602220843481_linksChngeda.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201602231003394_identityUserToChoice.resx">
-      <DependentUpon>201602231003394_identityUserToChoice.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201602271757424_closedStories.resx">
+      <DependentUpon>201602271757424_closedStories.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

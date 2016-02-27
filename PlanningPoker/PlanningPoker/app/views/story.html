@@ -19,7 +19,7 @@
     </div>
 
         <!--form for typing messages-->
-    <div ng-show="cardsShown" class="text-center">
+    <div ng-show="currentStory.isEstimated" class="text-center">
         <h4>Share your thoughts:</h4>
         <form role="form" class="form-inline" >
             <div class="form-group">
@@ -40,7 +40,7 @@
         <hr/>
     </div>
 
-    <div ng-show="!cardsShown">
+    <div ng-show="!currentStory.isEstimated">
         <h3>Choose a card</h3><br />
         <div id="cardsList">
             <span ng-repeat="(id, card) in cards">
@@ -61,20 +61,20 @@
             <tr>
                 <th style="width:150px;" class="text-center">Name</th>
                 <th style="width:150px;" class="text-center">Ready</th>
-                <th style="width:150px;" class="text-center" ng-show="cardsShown">Card</th>                
+                <th style="width:150px;" class="text-center" ng-show="currentStory.isEstimated">Card</th>                
             </tr>
             
             <tr ng-repeat="(id, user) in roomUsers">
                 <td>{{user.userName}}</td>
                 <td style="width:150px;" class="text-center"><img src="../../img/checkBlue.png" ng-show="user.ready" width="30px;"/></td>
-                <td style="width:150px;" class="text-center" ng-show="cardsShown" ><span >{{user.value}}</span></td>                
+                <td style="width:150px;" class="text-center" ng-show="currentStory.isEstimated"><span >{{user.value}}</span></td>                
             </tr>
         </table>
     </div>
 
     <div class="col-lg-12" data-ng-hide="!userLink.isAdmin">
         <br />
-        <a class="btn btn-warning" style="width: 200px;" ng-show="showCard" ng-click="showCards()">Show cards</a>        
+        <a class="btn btn-warning" style="width: 200px;" ng-show="showCard && !currentStory.isEstimated" ng-click="showCards()">Show cards</a>        
     </div>
        
     

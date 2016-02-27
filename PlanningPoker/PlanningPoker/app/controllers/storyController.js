@@ -36,12 +36,10 @@
             $scope.roomUsers = results.data;
             if ($scope.roomUsers.length == $scope.choices.length) {
                 debugger;
-                $scope.currentStory.isEstimated = true;
+                //$scope.currentStory.isEstimated = true;
                 $scope.showCard = true;
                 debugger;
-                //storiesService.estimateStory($scope.currentStory.id, $scope.currentStory).then(function (result) {
-                //    alert("Room is Estimated!");
-                //});
+                
             }
             debugger;
             angular.forEach($scope.roomUsers, function (user, id) {
@@ -123,8 +121,8 @@
     });
 
     pokerHubProxy.on('showCards', function () {
-        $scope.showCard = false;
-        $scope.cardsShown = true;
+        //$scope.showCard = false;
+        $scope.currentStory.isEstimated = true;
         $scope.$apply();
     });
 
@@ -144,9 +142,14 @@
         }
 
         $scope.showCards = function () {
-            //$scope.showCard = false;
+            $scope.showCard = false;
             //$scope.cardsShown = true;
+            $scope.currentStory.isEstimated = true;
+            storiesService.estimateStory($scope.currentStory.id, $scope.currentStory).then(function (result) {
+                alert("Room is Estimated!");
+            });
             pokerHubProxy.invoke('showStoryCards');
+            
         }
 
         $scope.newMessage = function () {
