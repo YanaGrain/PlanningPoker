@@ -2,6 +2,7 @@
 app.factory('storiesService', ['$http', 'localStorageService', 'authService', function ($http, localStorageService, authService) {
     var urlBase = 'http://localhost:65020/';
     var storiesService = {};
+    
 
     var _addStory = function (story) {
         debugger;
@@ -29,9 +30,16 @@ app.factory('storiesService', ['$http', 'localStorageService', 'authService', fu
         })
     }
 
+    var _estimateStory = function (id, story) {
+        return $http.put(urlBase + "api/Stories/" + id, story).then(function (result) {
+            return result;
+        })
+    }
+
     storiesService.addStory = _addStory;
     storiesService.getStories = _getStories;
     storiesService.deleteStory = _deleteStory;
     storiesService.getCurrentStory = _getCurrentStory;
+    storiesService.estimateStory = _estimateStory;
     return storiesService;
 }]);

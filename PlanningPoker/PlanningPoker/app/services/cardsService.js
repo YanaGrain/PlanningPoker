@@ -7,6 +7,13 @@ app.factory('cardsService', ['$http', function ($http) {
             return results;
         });
     };
+
+    var _getValue = function (id) {
+        return $http.get(urlBase + 'api/Cards/' + id).then(function (results) {
+            return results;
+        });
+    };
     cardsService.getCards = _getCards;
+    cardsService.getValue = _getValue;
     return cardsService;
 }]);

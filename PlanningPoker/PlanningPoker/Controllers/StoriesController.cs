@@ -35,7 +35,9 @@ namespace PlanningPoker.Controllers
         }
 
         // PUT: api/Stories/5
+        [HttpPut]
         [ResponseType(typeof(void))]
+        [Route("api/Stories/{id}")]
         public IHttpActionResult PutStory(int id, Story story)
         {
             if (!ModelState.IsValid)

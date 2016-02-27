@@ -24,15 +24,11 @@ namespace PlanningPoker.Controllers
 
         // GET: api/Cards/5
         [ResponseType(typeof(Card))]
-        public IHttpActionResult GetCard(int id)
+        public Card GetCard(int id)
         {
-            Card card = db.Cards.Find(id);
-            if (card == null)
-            {
-                return NotFound();
-            }
+            Card card = db.Cards.Find(id);           
 
-            return Ok(card);
+            return card;
         }
 
         // PUT: api/Cards/5

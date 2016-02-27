@@ -7,6 +7,10 @@
     $scope.roomUsers = [];
     $scope.currentStory = {};
     $scope.done = false;
+    $scope.showCard = false;
+    $scope.cardsShown = false;
+    $scope.minValue = 100;
+    $scope.maxValue = 0;
 
     $scope.newChoice = {
         UserId: "",
@@ -29,12 +33,22 @@
 
    var getRoomUsers = function () {
         usersService.getRoomUsers($scope.currentRoom.roomId).then(function (results) {
-            $scope.roomUsers = results.data;            
+            $scope.roomUsers = results.data;
+            if ($scope.roomUsers.length == $scope.choices.length) {
+                debugger;
+                $scope.currentStory.isEstimated = true;
+                $scope.showCard = true;
+                debugger;
+                //storiesService.estimateStory($scope.currentStory.id, $scope.currentStory).then(function (result) {
+                //    alert("Room is Estimated!");
+                //});
+            }
             debugger;
             angular.forEach($scope.roomUsers, function (user, id) {
                 angular.forEach($scope.choices, function (choice, id) {
                     if (user.id == choice.userId) {
-                        user.ready = true;                        
+                        user.ready = true;
+                        user.value = choice.value;
                     }
                     if (user.id == choice.userId && user.userName == $scope.name) {
                         $scope.done = true;
@@ -47,9 +61,22 @@
    var getStoryChoices = function () {
        storiesService.getCurrentStory($scope.currentRoom.roomId).then(function (result) {
            $scope.currentStory = result.data;
+           debugger;
            choicesService.getChoices($scope.currentStory.id).then(function (results) {
                debugger;
                $scope.choices = results.data;
+               angular.forEach($scope.choices, function (choice, id) {
+                   cardsService.getValue(choice.cardId).then(function (result) {
+                       choice.value = result.data.value;
+                       if (choice.value < $scope.minValue) {
+                           $scope.minValue = choice.value;
+                       }
+                       if (choice.value > $scope.maxValue) {
+                           $scope.maxValue = choice.value;
+                       }
+                   });
+
+               });
                debugger;
                getRoomUsers();
            });
@@ -65,11 +92,12 @@
         alert(error.data.message);
     });
 
-    //cardChosen Action
-    
+        
 
     //signalR
     $scope.addedChoice = {}; // holds the new user  
+    $scope.message = ''; // holds the new message
+    $scope.messages = []; // collection of messages coming from server
     var connection = $.hubConnection(); // initializes hub
     var pokerHubProxy = connection.createHubProxy('pokerHub');
     
@@ -87,6 +115,19 @@
         $scope.$apply();
     });
 
+    pokerHubProxy.on('broadcastMessage', function (name, message) {
+        var newMessage = name + ' : ' + message;
+        // push the newly coming message to the collection of messages
+        $scope.messages.push(newMessage);
+        $scope.$apply();
+    });
+
+    pokerHubProxy.on('showCards', function () {
+        $scope.showCard = false;
+        $scope.cardsShown = true;
+        $scope.$apply();
+    });
+
     connection.start().done(function () {
         $scope.cardChosen = function () {
             if ($scope.done) {
@@ -101,6 +142,19 @@
                 });
             }
         }
+
+        $scope.showCards = function () {
+            //$scope.showCard = false;
+            //$scope.cardsShown = true;
+            pokerHubProxy.invoke('showStoryCards');
+        }
+
+        $scope.newMessage = function () {
+            // sends a new message to the server
+            pokerHubProxy.invoke('sendMessage', $scope.name, $scope.message);            
+            $scope.message = '';
+        }
+
     })
     
     var getStories = function () {

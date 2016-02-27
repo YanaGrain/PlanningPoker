@@ -40,6 +40,16 @@ namespace PlanningPoker.Hubs
         {
             Clients.All.showNewChoice(choice.Id, choice.UserId, choice.CardId, choice.StoryId);
         }
+
+        public void AddDashRoom(Room room)
+        {
+            Clients.All.showNewRoom(room.Id, room.Name, room.Description);
+        }
+
+        public void ShowStoryCards()
+        {
+            Clients.All.showCards();
+        }
     }
     
 }

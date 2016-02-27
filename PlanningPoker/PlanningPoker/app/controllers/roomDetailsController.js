@@ -199,6 +199,7 @@
             usersService.addUser($scope.newLink).then(function (result) {                
                 usersService.getUserByLink(result.data.id).then(function (results) {
                     pokerHubProxy.invoke('addRoomUser', results.data);
+                    //pokerHubProxy.invoke('addDashRoom', $scope.currentRoom);
                     //$scope.roomUsers.push(result.data);
                 })
                 getUsers();
