@@ -50,11 +50,7 @@
                 <th style="width:150px;" class="text-center">Ready</th>
                 <th style="width:150px;" class="text-center">Card</th>                
             </tr>
-            <tr>
-                <td style="width:150px;" class="text-center">{{admin.userName}} (admin)</td>
-                <td style="width:150px;" class="text-center"></td>
-                <td style="width:150px;" class="text-center"></td>                
-            </tr>
+            
             <tr ng-repeat="(id, user) in roomUsers">
                 <td>{{user.userName}}</td>
                 <td style="width:150px;" class="text-center"><img src="../../img/checkBlue.png" ng-show="user.ready" width="30px;"/></td>

@@ -35,6 +35,11 @@ namespace PlanningPoker.Hubs
         {
             Clients.All.hideDeletedStory(storyId);
         }
+
+        public void AddStoryChoice(Choice choice)
+        {
+            Clients.All.showNewChoice(choice.Id, choice.UserId, choice.CardId, choice.StoryId);
+        }
     }
     
 }

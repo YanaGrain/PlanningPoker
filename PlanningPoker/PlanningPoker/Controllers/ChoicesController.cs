@@ -24,6 +24,7 @@ namespace PlanningPoker.Controllers
 
         // GET: api/Choices/5
         [ResponseType(typeof(Choice))]
+        [Route("api/Choices/{storyId}")]
         public List<Choice> GetChoice(int storyId)
         {
 
