@@ -11,29 +11,30 @@ namespace PlanningPoker.Hubs
     public class PokerHub : Hub
     {
         //static List<IdentityUser> Users = new List<IdentityUser>();
-        public void SendMessage(string name, string message)
+        
+        public void SendMessage(string name, string message, int storyId)
         {
-            Clients.All.broadcastMessage(name, message);
+            Clients.All.broadcastMessage(name, message, storyId);
         }
 
-       public void AddRoomUser(IdentityUser user)
+        public void AddRoomUser(IdentityUser user, int roomId)
         {
-            Clients.All.showNewUser(user.Id, user.UserName);
+            Clients.All.showNewUser(user.Id, user.UserName, roomId);
         }
 
-        public void DeleteRoomUser(string userId)
+        public void DeleteRoomUser(string userId, int roomId)
         {
-            Clients.All.hideDeletedUser(userId);
+            Clients.All.hideDeletedUser(userId, roomId);
         }
 
-        public void AddRoomStory(Story story)
+        public void AddRoomStory(Story story, int roomId)
         {
-            Clients.All.showNewStory(story.Id, story.IsEstimated, story.Name, story.Points);
+            Clients.All.showNewStory(story.Id, story.IsEstimated, story.Name, story.Points, roomId);
         }
 
-        public void DeleteRoomStory(int storyId)
+        public void DeleteRoomStory(int storyId, int roomId)
         {
-            Clients.All.hideDeletedStory(storyId);
+            Clients.All.hideDeletedStory(storyId, roomId);
         }
 
         public void AddStoryChoice(Choice choice)
@@ -41,14 +42,19 @@ namespace PlanningPoker.Hubs
             Clients.All.showNewChoice(choice.Id, choice.UserId, choice.CardId, choice.StoryId);
         }
 
-        public void AddDashRoom(Room room)
+        public void AddDashRoom(/*Room room*/)
         {
-            Clients.All.showNewRoom(room.Id, room.Name, room.Description);
+            Clients.All.showNewRoom(/*room.Id, room.Name, room.Description*/);
         }
 
-        public void ShowStoryCards()
+        public void ShowStoryCards(int storyId)
         {
-            Clients.All.showCards();
+            Clients.All.showCards(storyId);
+        }
+
+        public void CloseStory(int storyId)
+        {
+            Clients.All.closeTheStory(storyId);
         }
     }
     

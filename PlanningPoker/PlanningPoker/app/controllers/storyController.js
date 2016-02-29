@@ -101,30 +101,44 @@
     var pokerHubProxy = connection.createHubProxy('pokerHub');
     
     pokerHubProxy.on('showNewChoice', function (choiceId, userId, cardId, storyId) {
-        debugger;
-        $scope.addedChoice.Id = choiceId;
-        $scope.addedChoice.UserId = userId;
-        $scope.addedChoice.CardId = cardId;
-        $scope.addedChoice.StoryId = storyId;
-        debugger;
-        $scope.choices.push($scope.addedChoice);
-        getStoryChoices();
-        $scope.addedChoice = {};
-        debugger;
-        $scope.$apply();
+        if (storyId == $scope.currentStory.id) {
+            debugger;
+            $scope.addedChoice.Id = choiceId;
+            $scope.addedChoice.UserId = userId;
+            $scope.addedChoice.CardId = cardId;
+            $scope.addedChoice.StoryId = storyId;
+            $scope.choices.push($scope.addedChoice);
+            getStoryChoices();
+            $scope.addedChoice = {};
+            $scope.$apply();
+        }        
     });
 
-    pokerHubProxy.on('broadcastMessage', function (name, message) {
-        var newMessage = name + ' : ' + message;
-        // push the newly coming message to the collection of messages
-        $scope.messages.push(newMessage);
-        $scope.$apply();
+    pokerHubProxy.on('broadcastMessage', function (name, message, storyId) {
+        if (storyId == $scope.currentStory.id) {
+            var newMessage = name + ' : ' + message;
+            // push the newly coming message to the collection of messages
+            $scope.messages.push(newMessage);
+            $scope.$apply();
+        }
+        
     });
 
-    pokerHubProxy.on('showCards', function () {
+    pokerHubProxy.on('closeTheStory', function (storyId) {
+        if (storyId == $scope.currentStory.id) {
+            debugger;
+            $location.path('room/' + $scope.currentRoom.roomId);
+            $scope.$apply();
+        }
+
+    });
+
+    pokerHubProxy.on('showCards', function (storyId) {
         //$scope.showCard = false;
-        $scope.currentStory.isEstimated = true;
-        $scope.$apply();
+        if (storyId == $scope.currentStory.id) {
+            $scope.currentStory.isEstimated = true;
+            $scope.$apply();
+        }
     });
 
     connection.start().done(function () {
@@ -149,14 +163,27 @@
             storiesService.estimateStory($scope.currentStory.id, $scope.currentStory).then(function (result) {
                 //alert("Room is Estimated!");
             });
-            pokerHubProxy.invoke('showStoryCards');
+            pokerHubProxy.invoke('showStoryCards', $scope.currentStory.id);
             
         }
 
         $scope.newMessage = function () {
             // sends a new message to the server
-            pokerHubProxy.invoke('sendMessage', $scope.name, $scope.message);            
+            pokerHubProxy.invoke('sendMessage', $scope.name, $scope.message, $scope.currentStory.id);            
             $scope.message = '';
+        }
+
+        $scope.enterPoints = function () {
+            $scope.currentStory.points = $scope.points;
+            $scope.currentStory.isClosed = true;
+            storiesService.estimateStory($scope.currentStory.id, $scope.currentStory).then(function (result) {
+                //alert("Points are written!");
+                $scope.currentStory.points = 0;
+                pokerHubProxy.invoke('closeStory', $scope.currentStory.id);
+                //storiesService.getCurrentStory($scope.currentRoom.roomId).then(function (result) {
+                //    $scope.currentStory = result.data;
+                //});
+            });
         }
 
     })
@@ -190,21 +217,10 @@
     getUserLink();
 
     $scope.toRoom = function () {
-        $location.path('room/' + $scope.currentRoom.id)
+        $location.path('room/' + $scope.currentRoom.roomId);
     }
 
-    $scope.enterPoints = function () {
-        $scope.currentStory.points = $scope.points;
-        $scope.currentStory.isClosed = true;
-        storiesService.estimateStory($scope.currentStory.id, $scope.currentStory).then(function (result) {
-            //alert("Points are written!");
-            $scope.currentStory.points = 0;
-            storiesService.getCurrentStory($scope.currentRoom.roomId).then(function (result) {
-                $scope.currentStory = result.data;
-            });
-        });
-    }
-
+    
     $scope.goToStory = function () {
         $location.path('/room/' + $scope.currentRoom.roomId + '/' + $scope.currentStory.id);
     };

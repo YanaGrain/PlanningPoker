@@ -137,69 +137,79 @@
     var pokerHubProxy = connection.createHubProxy('pokerHub');
     //connection.start(); // starts hub
 
-    pokerHubProxy.on('showNewUser', function (userId, userName) {
-        debugger;
-        $scope.newUser.Id = userId;
-        $scope.newUser.userName = userName;
-        debugger;
-        $scope.roomUsers.push($scope.newUser);
-        getRoomUsers();
-        $scope.newUser = {};
-        debugger;
-        $scope.$apply();
-    });
-
-    pokerHubProxy.on('hideDeletedUser', function (userId) {
-        angular.forEach($scope.roomUsers, function (user, id) {
-            if(user.Id == userId){
-                $scope.delUser = user;
-            };
-        });        
-        $scope.roomUsers.splice($scope.roomUsers.indexOf($scope.delUser), 1);
-        getRoomUsers();
-        $scope.delUser = {};
-        debugger;
-        $scope.$apply();
-    });
-
-    pokerHubProxy.on('showNewStory', function (storyId, storyIsEstimated, storyName, storyPoints) {
-        $scope.addedStory = {
-            Id: storyId,
-            IsEstimated: storyIsEstimated,
-            Name: storyName,
-            Points: storyPoints
+    pokerHubProxy.on('showNewUser', function (userId, userName, roomId) {
+        if (roomId == $scope.currentRoom.roomId) {
+            $scope.newUser.Id = userId;
+            $scope.newUser.userName = userName;        
+            $scope.roomUsers.push($scope.newUser);
+            getRoomUsers();
+            $scope.newUser = {};        
+            $scope.$apply();
         }
-        $scope.stories.push($scope.addedStory);
-        getStories();
-        getCurrentStory();
-        $scope.addedStory = {};
-        debugger;
-        $scope.$apply();
+        
     });
 
-    pokerHubProxy.on('hideDeletedStory', function (storyId) {
-        angular.forEach($scope.stories, function (story, id) {
-            if (story.Id == storyId) {
-                $scope.delStory = story;
-            };
-        });
-        $scope.stories.splice($scope.stories.indexOf($scope.delStory), 1);
-        getStories();
-        getCurrentStory();
-        $scope.delStory = {};
-        debugger;
-        $scope.$apply();
+    pokerHubProxy.on('hideDeletedUser', function (userId, roomId) {
+        if (roomId == $scope.currentRoom.roomId) {
+            angular.forEach($scope.roomUsers, function (user, id) {
+                if (user.Id == userId) {
+                    $scope.delUser = user;
+                };
+            });
+            $scope.roomUsers.splice($scope.roomUsers.indexOf($scope.delUser), 1);
+            getRoomUsers();
+            $scope.delUser = {};
+            debugger;
+            $scope.$apply();
+        }
+    });
+
+    pokerHubProxy.on('showNewStory', function (storyId, storyIsEstimated, storyName, storyPoints, roomId) {
+        if (roomId == $scope.currentRoom.roomId) {
+            $scope.addedStory = {
+                Id: storyId,
+                IsEstimated: storyIsEstimated,
+                Name: storyName,
+                Points: storyPoints
+            }
+            $scope.stories.push($scope.addedStory);
+            getStories();
+            getCurrentStory();
+            $scope.addedStory = {};
+            debugger;
+            $scope.$apply();
+        }        
+    });
+
+    pokerHubProxy.on('hideDeletedStory', function (storyId, roomId) {
+        if ($scope.currentRoom.roomId == roomId) {
+            angular.forEach($scope.stories, function (story, id) {
+                if (story.Id == storyId) {
+                    $scope.delStory = story;
+                };
+            });
+            $scope.stories.splice($scope.stories.indexOf($scope.delStory), 1);
+            getStories();
+            getCurrentStory();
+            $scope.delStory = {};
+            debugger;
+            $scope.$apply();
+        }        
     });
    
-    
+    pokerHubProxy.on('showNewRoom', function () {            
+            //getRooms();            
+            $scope.$apply();
+        });
+
     connection.start().done(function () {
         //adding New User
         $scope.addUser = function (userId) {
             $scope.newLink.UserId = userId;
             usersService.addUser($scope.newLink).then(function (result) {                
                 usersService.getUserByLink(result.data.id).then(function (results) {
-                    pokerHubProxy.invoke('addRoomUser', results.data);
-                    //pokerHubProxy.invoke('addDashRoom', $scope.currentRoom);
+                    pokerHubProxy.invoke('addRoomUser', results.data, $scope.currentRoom.roomId);
+                    pokerHubProxy.invoke('addDashRoom');
                     //$scope.roomUsers.push(result.data);
                 })
                 getUsers();
@@ -209,7 +219,7 @@
         $scope.deleteUser = function (userId) {
             usersService.deleteUser(userId, $scope.currentRoom.roomId).then(function (result) {
                 //alert("User deleted.");
-                pokerHubProxy.invoke('deleteRoomUser', userId);
+                pokerHubProxy.invoke('deleteRoomUser', userId, $scope.currentRoom.roomId);
                 getUsers();
                 getRoomUsers();
             })
@@ -218,15 +228,16 @@
         $scope.addStory = function () {
             $scope.newStory.RoomId = $scope.currentRoom.roomId;
             storiesService.addStory($scope.newStory).then(function (result) {
-                pokerHubProxy.invoke('addRoomStory', result.data);
+                pokerHubProxy.invoke('addRoomStory', result.data, $scope.currentRoom.roomId);
                 getStories();
                 getCurrentStory();
+                $scope.newStory = {};
             })
         }
 
         $scope.deleteStory = function (storyId) {
             storiesService.deleteStory(storyId).then(function (data) {
-                pokerHubProxy.invoke('deleteRoomStory', storyId);
+                pokerHubProxy.invoke('deleteRoomStory', storyId, $scope.currentRoom.roomId);
                 getStories();
                 getCurrentStory();
             }), function (data) {

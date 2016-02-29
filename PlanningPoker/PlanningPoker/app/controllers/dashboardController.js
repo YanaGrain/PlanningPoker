@@ -49,25 +49,25 @@
 
     $scope.enterRoom = function (id) {
         roomsService.findRoom(id).then(function (result) {
-           $location.path('/room/' + id);
+            $location.path('/room/' + id);
         });
     };
 
-    //signalR
-    $scope.addedRoom = {}; // holds the new user  
-    var connection = $.hubConnection(); // initializes hub
-    var pokerHubProxy = connection.createHubProxy('pokerHub');
-    pokerHubProxy.on('showNewRoom', function (id, name, description) {
-        debugger;
-        $scope.addedRoom.Id = id;
-        $scope.addedRoom.Name = name;
-        $scope.addedRoom.Description = description;        
-        debugger;
-        $scope.rooms.push($scope.addedRoom);
-        getRooms();
-        $scope.addedRoom = {};
-        debugger;
-        $scope.$apply();
-    });
+    ////signalR
+    //$scope.addedRoom = {}; // holds the new user  
+    //var connection = $.hubConnection(); // initializes hub
+    //var pokerHubProxy = connection.createHubProxy('pokerHub');
+    //pokerHubProxy.on('showNewRoom', function () {
+    //    //debugger;
+    //    //$scope.addedRoom.Id = id;
+    //    //$scope.addedRoom.Name = name;
+    //    //$scope.addedRoom.Description = description;        
+    //    //debugger;
+    //    //$scope.rooms.push($scope.addedRoom);
+    //    getRooms();
+    //    //$scope.addedRoom = {};
+    //    //debugger;
+    //    $scope.$apply();
+    //});
 }); 
 
