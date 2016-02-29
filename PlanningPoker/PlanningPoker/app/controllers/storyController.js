@@ -95,6 +95,7 @@
     //signalR
     $scope.addedChoice = {}; // holds the new user  
     $scope.message = ''; // holds the new message
+    $scope.points = 0;
     $scope.messages = []; // collection of messages coming from server
     var connection = $.hubConnection(); // initializes hub
     var pokerHubProxy = connection.createHubProxy('pokerHub');
@@ -135,7 +136,7 @@
                     pokerHubProxy.invoke('addStoryChoice', result.data);
                     debugger;
                     $scope.done = true;
-                    alert("Done!");
+                    //alert("Done!");
                     getStoryChoices();
                 });
             }
@@ -146,7 +147,7 @@
             //$scope.cardsShown = true;
             $scope.currentStory.isEstimated = true;
             storiesService.estimateStory($scope.currentStory.id, $scope.currentStory).then(function (result) {
-                alert("Room is Estimated!");
+                //alert("Room is Estimated!");
             });
             pokerHubProxy.invoke('showStoryCards');
             
@@ -191,6 +192,22 @@
     $scope.toRoom = function () {
         $location.path('room/' + $scope.currentRoom.id)
     }
+
+    $scope.enterPoints = function () {
+        $scope.currentStory.points = $scope.points;
+        $scope.currentStory.isClosed = true;
+        storiesService.estimateStory($scope.currentStory.id, $scope.currentStory).then(function (result) {
+            //alert("Points are written!");
+            $scope.currentStory.points = 0;
+            storiesService.getCurrentStory($scope.currentRoom.roomId).then(function (result) {
+                $scope.currentStory = result.data;
+            });
+        });
+    }
+
+    $scope.goToStory = function () {
+        $location.path('/room/' + $scope.currentRoom.roomId + '/' + $scope.currentStory.id);
+    };
 
     $scope.selectCard = function (id) {
         if ($scope.activeClass == id) {

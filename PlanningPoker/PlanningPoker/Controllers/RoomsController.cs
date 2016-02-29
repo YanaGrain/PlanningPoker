@@ -29,6 +29,7 @@ namespace PlanningPoker.Controllers
 
         [HttpGet]
         [Route("api/Rooms/{userid}")]
+        [Authorize]
         // GET: api/Rooms
         public JsonResult<List<Room>> GetRooms(string userid)
         {
@@ -45,6 +46,7 @@ namespace PlanningPoker.Controllers
         // GET: api/Rooms/5
         [ResponseType(typeof(Room))]
         [HttpGet]
+        [Authorize]
         [Route("api/Rooms/{id}/room")]
         public IHttpActionResult GetRoom(int id)
         {

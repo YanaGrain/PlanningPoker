@@ -11,7 +11,7 @@
             <h3>{{currentStory.name}}</h3>
         </div>
         <div class="col-lg-4">
-            <h3 data-ng-hide="!userLink.isAdmin"><a class="btn btn-primary" style="width: 160px;">Next Story <i class="fa fa-arrow-right"></i></a></h3>
+            <h3 data-ng-hide="!userLink.isAdmin"><a class="btn btn-primary" style="width: 160px;" ng-click="goToStory()">Next Story <i class="fa fa-arrow-right"></i></a></h3>
         </div>    
     </div>
     <div class="col-lg-12">
@@ -31,11 +31,10 @@
         <hr/>
         <!--div for messages in chat-->
         <div>
-            <ul>
-                <li ng-repeat="chat in messages track by $index" style="list-style-type: none;">
+            <h4>Discussion</h4>            
+                <div ng-repeat="chat in messages track by $index" style="list-style-type: none;">
                     <span ng-bind="chat"></span>
-                </li>
-            </ul>
+                </div>            
         </div>
         <hr/>
     </div>
@@ -74,24 +73,16 @@
 
     <div class="col-lg-12" data-ng-hide="!userLink.isAdmin">
         <br />
-        <a class="btn btn-warning" style="width: 200px;" ng-show="showCard && !currentStory.isEstimated" ng-click="showCards()">Show cards</a>        
+        <a class="btn btn-warning" style="width: 150px;" ng-show="showCard && !currentStory.isEstimated" ng-click="showCards()">Show cards</a>        
     </div>
-       
-    
-        
-        <!--<div class="text-center">
-            Stories:
-            <dl>
-                <dd ng-repeat="(id, story) in stories">{{story.name}}</dd>
-            </dl>
-        </div>-->
-        <!--<div>
-            {{newChoice.RoomId}}
-        </div>
-        <div>
-            {{newChoice.CardId}}
-        </div>
-        <div>
-            {{newChoice.UserId}}
-        </div>-->
+
+    <div class="col-lg-12" ng-show="currentStory.isEstimated && userLink.isAdmin">       
+        <form role="form" class="form-inline">
+            <div class="form-group">
+                <input type="text" class="form-control" style="width: 90px;" id="points" placeholder="Points" ng-model="points" required>
+            </div>
+            <button class="btn btn-primary" ng-click="enterPoints()">Enter Points</button>
+        </form>        
+    </div> 
+
     </div>
