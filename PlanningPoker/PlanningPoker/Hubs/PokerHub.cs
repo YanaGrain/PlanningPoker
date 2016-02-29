@@ -22,9 +22,9 @@ namespace PlanningPoker.Hubs
             Clients.All.showNewUser(user.Id, user.UserName, roomId);
         }
 
-        public void DeleteRoomUser(string userId, int roomId)
+        public void DeleteRoomUser(string userId, int roomId, string userName)
         {
-            Clients.All.hideDeletedUser(userId, roomId);
+            Clients.All.hideDeletedUser(userId, roomId, userName);
         }
 
         public void AddRoomStory(Story story, int roomId)
@@ -42,9 +42,14 @@ namespace PlanningPoker.Hubs
             Clients.All.showNewChoice(choice.Id, choice.UserId, choice.CardId, choice.StoryId);
         }
 
-        public void AddDashRoom(/*Room room*/)
+        public void AddDashRoom(string userId)
         {
-            Clients.All.showNewRoom(/*room.Id, room.Name, room.Description*/);
+            Clients.All.showNewRoom(userId);
+        }
+
+        public void DelDashRoom(string userId)
+        {
+            Clients.All.hideDelRoom(userId);
         }
 
         public void ShowStoryCards(int storyId)

@@ -54,20 +54,24 @@
     };
 
     ////signalR
-    //$scope.addedRoom = {}; // holds the new user  
-    //var connection = $.hubConnection(); // initializes hub
-    //var pokerHubProxy = connection.createHubProxy('pokerHub');
-    //pokerHubProxy.on('showNewRoom', function () {
-    //    //debugger;
-    //    //$scope.addedRoom.Id = id;
-    //    //$scope.addedRoom.Name = name;
-    //    //$scope.addedRoom.Description = description;        
-    //    //debugger;
-    //    //$scope.rooms.push($scope.addedRoom);
-    //    getRooms();
-    //    //$scope.addedRoom = {};
-    //    //debugger;
-    //    $scope.$apply();
-    //});
+    $scope.addedRoom = {}; // holds the new user  
+    var connection = $.hubConnection(); // initializes hub
+    var pokerHubProxy = connection.createHubProxy('pokerHub');
+    pokerHubProxy.on('showNewRoom', function (userId) {
+        if ($scope.UserId == userId) {
+            getRooms();
+            $scope.$apply();
+        }
+        
+    });
+
+    pokerHubProxy.on('hideDelRoom', function (userId) {
+        if ($scope.UserId == userId) {
+            getRooms();
+            $scope.$apply();
+        }
+
+    });
+    connection.start();
 }); 
 

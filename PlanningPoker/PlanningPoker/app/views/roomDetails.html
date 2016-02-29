@@ -54,7 +54,7 @@
                     <p ng-bind="user.userName"></p>
                 </td>
                 <td data-ng-hide="!userLink.isAdmin">
-                    <p><img src="../../img/delete.png" width="30px;" style="cursor: pointer;" ng-click="deleteUser(user.id)" data-ng-hide="admin.userName == user.userName"/></p>
+                    <p><img src="../../img/delete.png" width="30px;" style="cursor: pointer;" ng-click="deleteUser(user.id, user.userName)" data-ng-hide="admin.userName == user.userName"/></p>
                 </td>
             </tr>
         </table>
