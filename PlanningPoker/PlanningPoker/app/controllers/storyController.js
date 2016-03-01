@@ -135,16 +135,17 @@
     });
 
     pokerHubProxy.on('broadcastMessage', function (name, message, storyId) {
+        debugger;
         if (storyId == $scope.currentStory.id) {
             var newMessage = name + ' : ' + message;
             // push the newly coming message to the collection of messages
-            $scope.messages.push(newMessage);
-            var chat = document.getElementById("chat");
-            chat.scrollTop = chat.scrollHeight;
+            $scope.messages.push(newMessage);            
             if (name != $scope.name) {
+                debugger;
                 toastr.info(newMessage, "New message");
             }                      
             $scope.$apply();
+            $('#chat').scrollTop($('#chat')[0].scrollHeight - $('#chat')[0].clientHeight);
         }
         
     });
@@ -194,9 +195,11 @@
         }
 
         $scope.newMessage = function () {
-            // sends a new message to the server
-            pokerHubProxy.invoke('sendMessage', $scope.name, $scope.message, $scope.currentStory.id);            
-            $scope.message = '';
+            if ($scope.message != '') {
+                // sends a new message to the server
+                pokerHubProxy.invoke('sendMessage', $scope.name, $scope.message, $scope.currentStory.id);
+                $scope.message = '';
+            }            
         }
 
         $scope.enterPoints = function () {

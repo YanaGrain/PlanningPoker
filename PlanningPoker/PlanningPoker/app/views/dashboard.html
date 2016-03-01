@@ -2,40 +2,19 @@
     <hr />
     <h2 class="text-center">{{ message }} {{userName}}</h2>
     <hr />
+    <!--Trigger the modal with a button-->    
     <div class="text-center">
-        <a class="btn btn-warning" style="width: 200px;" ng-click="showRoomForm()" >Create room</a>
+        <a class="btn btn-warning" style="width: 200px;" data-toggle="modal" data-target="#myModal">Create room</a>
     </div>    
     <br />
-    <!--the form for creating the room-->
-    <form role="form" ng-show="data.visible" class="form-horizontal text-center">
-        <div class="form-group">
-            <label for="rName" class="control-label">Name</label>
-            <div align="center">
-                <input type="text" class="form-control" id="rName" placeholder="Enter room name" data-ng-model="newroom.Name" required />
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="rDescription" class="control-label">Description</label>
-            <div align="center">
-                <textarea class="form-control" rows="3" data-ng-model="newroom.Description" id="rDescription"></textarea>
-            </div>
-        </div>
-        <button class="btn btn-success" ng-click="createRoom()">Create</button>
-        <button class="btn btn-default" ng-click="closeRoomForm()">Cancel</button>
-    </form>
-
-    <!--<!--<!--<!-- Trigger the modal with a button
-    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Open Modal</button>
-
-    <!-- Modal 
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+     <!--Modal--> 
+    <div class="modal fade" id="myModal" role="dialog" >
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header text-center">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">Room creation</h4>
-
-                    <p>Fill the form to create the room.</p>
+                    <h3 class="modal-title" id="myModalLabel">Room creation</h3>
+                    <h4>Fill the form to create the room.</h4>
                 </div>
                 <div class="modal-body">
                     <form class="form-horizontal" role="form">
@@ -51,22 +30,16 @@
                             <div class="col-sm-push-2 col-sm-10">
                                 <textarea class="form-control" rows="3" data-ng-model="newroom.Description" id="rDescription"></textarea>
                             </div>
-                        </div>
-
-                        <div class="form-group remove-bottom">
-                            <div class="col-sm-push-4 col-sm-10">
-                                <button class="btn btn-success" ng-click="createRoom()">Create</button>
-                            </div>
-                        </div>
+                        </div>                        
                     </form>                    
                 </div>
-                <div class="modal-footer remove-top">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button class="btn btn-success" ng-click="createRoom()">Create</button>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" ng-click="createRoom()" data-dismiss="modal">Create</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>                    
                 </div>
             </div>
         </div>
-    </div>-->-->-->
+    </div>
 
     <hr />
     <h3 class="text-center">Recent Rooms</h3>

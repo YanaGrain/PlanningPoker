@@ -36,6 +36,8 @@
             }
         }
     }
+
+   
     
     $scope.currentRoom = {
         roomName: "",
@@ -143,7 +145,7 @@
             $scope.newUser.userName = userName;        
             $scope.roomUsers.push($scope.newUser);
             getRoomUsers();
-            $scope.newUser = {};        
+            $scope.newUser = {};
             $scope.$apply();
         }
         
