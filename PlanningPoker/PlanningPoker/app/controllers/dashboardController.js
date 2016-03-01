@@ -30,7 +30,7 @@
     $scope.newroom = {};
     
     $scope.createRoom = function() {
-        roomsService.createRoom(this.newroom).then(function(data) {
+        roomsService.createRoom(this.newroom, $scope.userName).then(function (data) {
             $scope.rooms.push(data);
             getRooms();
             $scope.enterRoom(data.data);

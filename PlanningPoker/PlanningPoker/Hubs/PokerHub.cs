@@ -37,9 +37,9 @@ namespace PlanningPoker.Hubs
             Clients.All.hideDeletedStory(storyId, roomId);
         }
 
-        public void AddStoryChoice(Choice choice)
+        public void AddStoryChoice(Choice choice, string name)
         {
-            Clients.All.showNewChoice(choice.Id, choice.UserId, choice.CardId, choice.StoryId);
+            Clients.All.showNewChoice(choice.Id, choice.UserId, choice.CardId, choice.StoryId, name);
         }
 
         public void AddDashRoom(string userId)

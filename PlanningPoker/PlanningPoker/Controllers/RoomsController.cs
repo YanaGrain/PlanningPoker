@@ -93,8 +93,10 @@ namespace PlanningPoker.Controllers
         }
 
         // POST: api/Rooms
+        [HttpPost]
+        [Route("api/Rooms/{name}")]
         [ResponseType(typeof(Room))]
-        public async Task<IHttpActionResult> PostRoom(Room room)
+        public async Task<IHttpActionResult> PostRoom(Room room, string name)
         {
             if (!ModelState.IsValid)
             {
@@ -104,8 +106,8 @@ namespace PlanningPoker.Controllers
             db.Rooms.Add(room);
             db.SaveChanges();
 
-            string userName = User.Identity.GetUserName();
-            IdentityUser user = await _repo.FindUserByName(userName);
+            //string userName = User.Identity.GetUserName();
+            IdentityUser user = await _repo.FindUserByName(name);
             string userId = user.Id;
 
             var link = new UserRoomLink()

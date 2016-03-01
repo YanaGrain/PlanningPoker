@@ -64,34 +64,39 @@
         <hr />
     </div>
     
-    <div class="col-md-offset-2 col-md-8 text-center">
-        <h3 class="text-center">Stories</h3>
-        <p><a class="btn btn-success" style="width: 150px;" ng-click="goToStory()">Go to current Story</a></p>
-        <table class="table table-hover table-bordered text-center">
-            <tr>
-                <th style="width:40px;" class="text-center">#</th>
-                <th style="width:200px;" class="text-center">Name</th>
-                <th style="width:100px;" class="text-center">IsEstimated</th>
-                <th style="width:100px;" class="text-center">Points</th>
-                <th style="width:50px;" class="text-center" data-ng-hide="!userLink.isAdmin">Delete</th>
-            </tr>
-            <tr ng-repeat="(id, story) in stories">
-                <td><strong>{{ story.id }}</strong></td>
-                <td>
-                    <h4>{{story.name}} <img src="../../img/current_logo.png" width="55px;" data-ng-hide="!(story.id == currentStory.id)" /></h4>
-                    
-                </td>
-                <td>
-                    <p><img src="../../img/checkBlue.png" width="30px;" data-ng-hide="!story.isEstimated" /></p>
-                    <p><img src="../../img/crossBlue1.png" width="30px;" data-ng-hide="story.isEstimated" /></p>                    
-                </td>
-                <td>
-                    <h4>{{ story.points }}</h4>
-                </td>
-                <td data-ng-hide="!userLink.isAdmin">
-                    <p><img src="../../img/delete.png" width="30px;" style="cursor: pointer;" ng-click="deleteStory(story.id)" /></p>
-                </td>
-            </tr>
-        </table>
+    <div class="col-md-offset-2 col-md-8 text-center" >
+        <h4 ng-show="stories.length == 0" style="color:crimson"><b>You have no stories</b></h4>
+        <div ng-show="stories.length > 0">
+            <h3 class="text-center">Stories</h3>
+            <h4 ng-show="!currentStory" style="color:dodgerblue"><b>You have no current stories</b></h4>
+            <p><a class="btn btn-success" style="width: 150px;" ng-click="goToStory()" ng-show="currentStory">Current Story</a></p>
+            <table class="table table-hover table-bordered text-center">
+                <tr>
+                    <th style="width:40px;" class="text-center">#</th>
+                    <th style="width:200px;" class="text-center">Name</th>
+                    <th style="width:100px;" class="text-center">IsEstimated</th>
+                    <th style="width:100px;" class="text-center">Points</th>
+                    <th style="width:50px;" class="text-center" data-ng-hide="!userLink.isAdmin">Delete</th>
+                </tr>
+                <tr ng-repeat="(id, story) in stories">
+                    <td><strong>{{ story.id }}</strong></td>
+                    <td>
+                        <h4>{{story.name}} <img src="../../img/current_logo.png" width="55px;" data-ng-hide="!(story.id == currentStory.id)" /></h4>
+
+                    </td>
+                    <td>
+                        <p><img src="../../img/checkBlue.png" width="30px;" data-ng-hide="!story.isEstimated" /></p>
+                        <p><img src="../../img/crossBlue1.png" width="30px;" data-ng-hide="story.isEstimated" /></p>
+                    </td>
+                    <td>
+                        <h4>{{ story.points }}</h4>
+                    </td>
+                    <td data-ng-hide="!userLink.isAdmin">
+                        <p><img src="../../img/delete.png" width="30px;" style="cursor: pointer;" ng-click="deleteStory(story.id)" /></p>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </div>
+    
 </div>

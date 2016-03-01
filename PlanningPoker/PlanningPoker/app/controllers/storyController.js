@@ -11,6 +11,7 @@
     $scope.cardsShown = false;
     $scope.minValue = 100;
     $scope.maxValue = 0;
+    $scope.choiceDone = false;
 
     $scope.newChoice = {
         UserId: "",
@@ -23,6 +24,20 @@
         roomDescription: "",
         roomId: 0
     };
+
+    toastr.options = {
+        "closeButton": true,        
+        "newestOnTop": true,        
+        "positionClass": "toast-bottom-right",
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    }
        
     var roomData = localStorageService.get('roomData');
     if (roomData) {
@@ -30,6 +45,8 @@
         $scope.currentRoom.roomDescription = roomData.roomDescription;
         $scope.currentRoom.roomId = roomData.roomId;
     };
+
+      
 
    var getRoomUsers = function () {
         usersService.getRoomUsers($scope.currentRoom.roomId).then(function (results) {
@@ -100,7 +117,7 @@
     var connection = $.hubConnection(); // initializes hub
     var pokerHubProxy = connection.createHubProxy('pokerHub');
     
-    pokerHubProxy.on('showNewChoice', function (choiceId, userId, cardId, storyId) {
+    pokerHubProxy.on('showNewChoice', function (choiceId, userId, cardId, storyId, name) {
         if (storyId == $scope.currentStory.id) {
             debugger;
             $scope.addedChoice.Id = choiceId;
@@ -110,6 +127,9 @@
             $scope.choices.push($scope.addedChoice);
             getStoryChoices();
             $scope.addedChoice = {};
+            if (name != $scope.name) {
+                toastr.success(name + " made a choice");
+            }            
             $scope.$apply();
         }        
     });
@@ -119,6 +139,11 @@
             var newMessage = name + ' : ' + message;
             // push the newly coming message to the collection of messages
             $scope.messages.push(newMessage);
+            var chat = document.getElementById("chat");
+            chat.scrollTop = chat.scrollHeight;
+            if (name != $scope.name) {
+                toastr.info(newMessage, "New message");
+            }                      
             $scope.$apply();
         }
         
@@ -144,10 +169,11 @@
     connection.start().done(function () {
         $scope.cardChosen = function () {
             if ($scope.done) {
-                alert("You already chose a card!");
+                //alert("You already chose a card!");
+                $scope.choiceDone = true;
             } else {
                 choicesService.createChoice($scope.newChoice).then(function (result) {
-                    pokerHubProxy.invoke('addStoryChoice', result.data);
+                    pokerHubProxy.invoke('addStoryChoice', result.data, $scope.name);
                     debugger;
                     $scope.done = true;
                     //alert("Done!");
