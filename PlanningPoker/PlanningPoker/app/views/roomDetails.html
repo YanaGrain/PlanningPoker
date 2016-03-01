@@ -4,13 +4,32 @@
     <hr />
     <h2>{{currentRoom.roomName}}</h2>
     <h3>{{currentRoom.roomDescription}}</h3>
+
+    <!--Modal for deleting the room-->
+    <div class="modal" id="deleteModal">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Delete the room?</h4>
+                </div>
+                <!--<div class="modal-body text-center">
+                    <h4>You can't restore it</h4>
+                </div>-->
+                <div class="modal-body text-center center-block">
+                    <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="deleteRoom()">Yes</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>                    
+                </div>
+            </div>
+        </div>
+    </div>
     
     <div class="text-center" data-ng-hide="!userLink.isAdmin">
         <hr />
         <a class="btn btn-info" style="width: 150px;" ng-click="showStoriesForm()">Enter Stories</a>
         <a class="btn btn-success" style="width: 150px;" ng-click="showAddForm()">Add Users</a>
         <!--<a class="btn btn-warning" style="width: 150px;" ng-click="showDeleteForm()">Delete Users</a>-->
-        <a class="btn btn-danger" style="width: 150px;" ng-click="deleteRoom()">Delete Room</a>        
+        <a class="btn btn-danger" style="width: 150px;" data-toggle="modal" data-target="#deleteModal">Delete Room</a>        
     </div>
     <br />
     <!--adding user form-->
