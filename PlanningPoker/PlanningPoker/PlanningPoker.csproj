@@ -201,11 +201,12 @@
     <Content Include="img\cards\cardCoffee.png" />
     <Content Include="img\cards\cardHalf.png" />
     <Content Include="img\cards\cardWtf.png" />
+    <Content Include="img\case_closed.png" />
     <Content Include="img\checkBlue.png" />
+    <Content Include="img\closed-stamp.png" />
     <Content Include="img\cross.png" />
     <Content Include="img\crossBlue.png" />
     <Content Include="img\crossBlue1.png" />
-    <Content Include="img\current.png" />
     <Content Include="img\current_logo.png" />
     <Content Include="img\delete.png" />
     <Content Include="img\Logo.png" />

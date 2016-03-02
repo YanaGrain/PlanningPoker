@@ -58,7 +58,9 @@ namespace PlanningPoker.Controllers
         }
 
         // PUT: api/Rooms/5
+        [HttpPut]
         [ResponseType(typeof(void))]
+        [Route("api/Rooms/{id}")]        
         public IHttpActionResult PutRoom(int id, Room room)
         {
             if (!ModelState.IsValid)

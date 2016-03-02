@@ -76,7 +76,7 @@
    var getStoryChoices = function () {
        storiesService.getCurrentStory($scope.currentRoom.roomId).then(function (result) {
            $scope.currentStory = result.data;
-           $scope.messages = localStorageService.get($scope.currentStory.id); // collection of messages coming from server
+           $scope.messages = localStorageService.get($scope.currentStory.id) || []; // collection of messages coming from server
            debugger;
            choicesService.getChoices($scope.currentStory.id).then(function (results) {
                debugger;

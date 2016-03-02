@@ -7,7 +7,7 @@
     $scope.admin = {};
     $scope.currentStory = {};
     $scope.roomUsers = [];
-    $scope.data.userSelect = null;
+    $scope.data.userSelect = null;    
     $scope.showAddForm = function () {
         if ($scope.data.visible) {
             $scope.data.visible = false;
@@ -18,15 +18,15 @@
             }        
         }
     }
-    $scope.showDeleteForm = function () {
-        if ($scope.data.delVisible) {
-            $scope.data.delVisible = false;
-        } else {
-            $scope.data = {
-                delVisible: true
-            }        
-        }
-    }
+    //$scope.showDeleteForm = function () {
+    //    if ($scope.data.delVisible) {
+    //        $scope.data.delVisible = false;
+    //    } else {
+    //        $scope.data = {
+    //            delVisible: true
+    //        }        
+    //    }
+    //}
     $scope.showStoriesForm = function () {
         if ($scope.data.storiesVisible) {
             $scope.data.storiesVisible = false;
@@ -35,14 +35,13 @@
                 storiesVisible: true
             }
         }
-    }
-
-   
+    }   
     
     $scope.currentRoom = {
         roomName: "",
         roomDescription: "",
-        roomId: 0
+        roomId: 0,
+        isClosed: false
     };
 
     $scope.newLink = {
@@ -63,6 +62,13 @@
         $scope.currentRoom.roomName = roomData.roomName;
         $scope.currentRoom.roomDescription = roomData.roomDescription;
         $scope.currentRoom.roomId = roomData.roomId;
+        $scope.currentRoom.roomIsClosed = roomData.roomIsClosed;
+        if ($scope.currentRoom.roomIsClosed) {
+            $scope.roomIsClosed = true;
+        }
+        else {
+            $scope.roomIsClosed = false;
+        }
         $scope.newLink.RoomId = roomData.roomId;
         //alert($scope.currentRoom.roomId);
     };
@@ -105,7 +111,21 @@
         };
     };
 
-    
+    $scope.closeRoom = function () {
+        $scope.room = {
+            name: $scope.currentRoom.roomName,
+            description: $scope.currentRoom.roomDescription,
+            id: $scope.currentRoom.roomId,
+            isClosed: true
+        };        
+        roomsService.closeRoom($scope.room.id, $scope.room).then(function (data) {
+            debugger;
+            $scope.roomIsClosed = true;
+            $scope.$apply;
+        }), function (data) {
+            alert("An error while closing the room!");
+        };
+    };
 
     var getUserLink = function () {
         usersService.getUserId($scope.name).then(function (result) {

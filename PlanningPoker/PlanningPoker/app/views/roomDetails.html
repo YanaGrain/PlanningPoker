@@ -23,12 +23,32 @@
             </div>
         </div>
     </div>
+
+    <!--Modal for closing the room-->
+    <div class="modal" id="closeModal">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Close the room?</h4>
+                </div>
+                <!--<div class="modal-body text-center">
+                    <h4>You can't restore it</h4>
+                </div>-->
+                <div class="modal-body text-center center-block">
+                    <h4>If you close the room you won't be able to add stories and users.</h4>
+                    <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="closeRoom()">Yes</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
     
     <div class="text-center" data-ng-hide="!userLink.isAdmin">
         <hr />
-        <a class="btn btn-info" style="width: 150px;" ng-click="showStoriesForm()">Enter Stories</a>
-        <a class="btn btn-success" style="width: 150px;" ng-click="showAddForm()">Add Users</a>
-        <!--<a class="btn btn-warning" style="width: 150px;" ng-click="showDeleteForm()">Delete Users</a>-->
+        <a class="btn btn-info" style="width: 150px;" ng-click="showStoriesForm()" ng-show="!roomIsClosed">Enter Stories</a>
+        <a class="btn btn-success" style="width: 150px;" ng-click="showAddForm()" ng-show="!roomIsClosed">Add Users</a>
+        <a class="btn btn-warning" style="width: 150px;" data-toggle="modal" data-target="#closeModal" ng-show="!roomIsClosed">Close Room</a>
         <a class="btn btn-danger" style="width: 150px;" data-toggle="modal" data-target="#deleteModal">Delete Room</a>        
     </div>
     <br />

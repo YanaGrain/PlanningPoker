@@ -85,7 +85,7 @@
     pokerHubProxy.on('hideDelRoom', function (userId) {
         if ($scope.UserId == userId) {
             getRooms();
-            toastr.error("You were deleted from room.");
+            toastr.error("You were deleted from the room.");
             $scope.$apply();
         }
 
