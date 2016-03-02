@@ -7,11 +7,19 @@
     $scope.roomUsers = [];
     $scope.currentStory = {};
     $scope.done = false;
-    $scope.showCard = false;
-    $scope.cardsShown = false;
+    $scope.showCard = false;    
     $scope.minValue = 100;
-    $scope.maxValue = 0;
-    $scope.choiceDone = false;
+    $scope.maxValue = 0;    
+    $scope.showChat = false;
+
+    $scope.showChatForm = function () {
+        if ($scope.showChat == false) {
+            $scope.showChat = true;
+        }
+        else {
+            $scope.showChat = false;
+        }
+    }
 
     $scope.newChoice = {
         UserId: "",
@@ -84,10 +92,10 @@
                angular.forEach($scope.choices, function (choice, id) {
                    cardsService.getValue(choice.cardId).then(function (result) {
                        choice.value = result.data.value;
-                       if (choice.value < $scope.minValue) {
+                       if (choice.value <= $scope.minValue) {
                            $scope.minValue = choice.value;
                        }
-                       if (choice.value > $scope.maxValue) {
+                       if (choice.value >= $scope.maxValue) {
                            $scope.maxValue = choice.value;
                        }
                    });
@@ -170,19 +178,15 @@
     });
 
     connection.start().done(function () {
-        $scope.cardChosen = function () {
-            if ($scope.done) {
-                //alert("You already chose a card!");
-                $scope.choiceDone = true;
-            } else {
+
+        $scope.cardChosen = function () {            
                 choicesService.createChoice($scope.newChoice).then(function (result) {
                     pokerHubProxy.invoke('addStoryChoice', result.data, $scope.name);
                     debugger;
                     $scope.done = true;
                     //alert("Done!");
                     getStoryChoices();
-                });
-            }
+                });            
         }
 
         $scope.showCards = function () {

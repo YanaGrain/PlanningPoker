@@ -16,7 +16,7 @@
     </div>
 
         <!--form for typing messages-->
-    <div ng-show="currentStory.isEstimated" class="text-center">
+    <div class="text-center">
         <h4>Share your thoughts:</h4>
         <form role="form" class="form-inline" >
             <div class="form-group">
@@ -27,8 +27,8 @@
         <br />
         <hr/>
         <!--div for messages in chat-->
-        <div>
-            <h4>Discussion</h4>   
+        <button class="btn btn-primary" ng-click="showChatForm()">Discussion</button>
+        <div ng-show="showChat">            
             <div style="overflow-y:scroll;height:200px; text-align:left; border: 1px solid #DDDDDD;" class="col-lg-offset-3 col-lg-6" id="chat">
                 <h4 ng-repeat="chat in messages track by $index" style="list-style-type: none;">{{chat}}
                     <!--<span ng-bind="chat"></span>-->                    
@@ -40,7 +40,7 @@
         </div>
     </div>
 
-    <div ng-show="!currentStory.isEstimated">
+    <div ng-show="!done" class="col-lg-12">
         <h3>Choose a card</h3><br />
         <div id="cardsList">
             <span ng-repeat="(id, card) in cards">
@@ -48,8 +48,7 @@
             </span>
         </div>
 
-        <div class="col-lg-12">
-            <h4 ng-show="choiceDone" style="color:crimson"><b>You've made a choice already</b></h4>
+        <div class="col-lg-12">           
             <br />
             <a class="btn btn-success" style="width: 100px;" ng-click="cardChosen()">Choose!</a>
             <hr />
@@ -68,7 +67,7 @@
             <tr ng-repeat="(id, user) in roomUsers">
                 <td>{{user.userName}}</td>
                 <td style="width:150px;" class="text-center"><img src="../../img/checkBlue.png" ng-show="user.ready" width="30px;"/></td>
-                <td style="width:150px;" class="text-center" ng-show="currentStory.isEstimated"><span >{{user.value}}</span></td>                
+                <td style="width:150px;" class="text-center" ng-show="currentStory.isEstimated" ng-class="{'text-success': user.value == minValue, 'text-danger': user.value == maxValue }"><span ><b>{{user.value}}</b></span></td>                
             </tr>
         </table>
     </div>
