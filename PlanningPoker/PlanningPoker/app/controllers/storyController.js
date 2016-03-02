@@ -76,6 +76,7 @@
    var getStoryChoices = function () {
        storiesService.getCurrentStory($scope.currentRoom.roomId).then(function (result) {
            $scope.currentStory = result.data;
+           $scope.messages = localStorageService.get($scope.currentStory.id); // collection of messages coming from server
            debugger;
            choicesService.getChoices($scope.currentStory.id).then(function (results) {
                debugger;
@@ -106,14 +107,13 @@
     }, function (error) {
         alert(error.data.message);
     });
-
-        
-
+     
     //signalR
     $scope.addedChoice = {}; // holds the new user  
     $scope.message = ''; // holds the new message
     $scope.points = 0;
-    $scope.messages = []; // collection of messages coming from server
+    
+    debugger;
     var connection = $.hubConnection(); // initializes hub
     var pokerHubProxy = connection.createHubProxy('pokerHub');
     
@@ -139,7 +139,8 @@
         if (storyId == $scope.currentStory.id) {
             var newMessage = name + ' : ' + message;
             // push the newly coming message to the collection of messages
-            $scope.messages.push(newMessage);            
+            $scope.messages.push(newMessage);
+            localStorageService.set($scope.currentStory.id, $scope.messages);
             if (name != $scope.name) {
                 debugger;
                 toastr.info(newMessage, "New message");
@@ -154,6 +155,7 @@
         if (storyId == $scope.currentStory.id) {
             debugger;
             $location.path('room/' + $scope.currentRoom.roomId);
+            localStorageService.remove($scope.currentStory.id)
             $scope.$apply();
         }
 
