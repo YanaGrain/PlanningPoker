@@ -75,7 +75,8 @@
     var pokerHubProxy = connection.createHubProxy('pokerHub');
     pokerHubProxy.on('showNewRoom', function (userId) {
         if ($scope.UserId == userId) {
-            getRooms();            
+            getRooms();
+            debugger;
             toastr.info("You were added to the room.");            
             $scope.$apply();
         }
@@ -85,6 +86,7 @@
     pokerHubProxy.on('hideDelRoom', function (userId) {
         if ($scope.UserId == userId) {
             getRooms();
+            debugger;            
             toastr.error("You were deleted from the room.");
             $scope.$apply();
         }

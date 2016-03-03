@@ -46,17 +46,17 @@
     <div class="col-lg-offset-3 col-lg-6">
         <table class="table table-hover table-bordered text-center">
             <tr>
-                <!--<th style="width:40px;" class="text-center">#</th>-->
+                <th style="width:40px;" class="text-center">#</th>
                 <th style="width:200px;" class="text-center">Name</th>
                 <th style="width:400px;" class="text-center">Description</th>
             </tr>
             <tr ng-repeat="(id, room) in rooms">
-                <!--<td><strong>{{ room.Id }}</strong></td>-->
+                <td><strong>{{ $index+1 }}</strong></td>
                 <td>
-                   <h4 ng-click="enterRoom(room.Id)" style="cursor: pointer;">{{room.Name}}&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i></h4>
+                   <h4 ng-click="enterRoom(room.Id)" style="cursor: pointer;" class="text-primary">{{room.Name}}&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i></h4>
                 </td>
                 <td>
-                    <p>{{ room.Description }}&nbsp;&nbsp;<img src="../../img/closed-stamp.png" width="90px;" ng-show="room.IsClosed" /></p>
+                    <p>{{ room.Description }}&nbsp;&nbsp;<img src="../../img/closed-stamp.png" width="100px;" ng-show="room.IsClosed" /></p>
                 </td>
                 <!--<td data-ng-hide="!userIsAdmin"><a ng-click="deleteRoom(room.Id)" style="cursor: pointer;">Delete</a></td>-->
             </tr>

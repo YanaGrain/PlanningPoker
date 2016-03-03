@@ -10,6 +10,7 @@ using PlanningPoker.Providers;
 using System.Data.Entity;
 using PlanningPoker.Models;
 
+
 [assembly: OwinStartup(typeof(PlanningPoker.Startup))]
 
 namespace PlanningPoker
@@ -41,6 +42,7 @@ namespace PlanningPoker
             // Token Generation
             app.UseOAuthAuthorizationServer(OAuthServerOptions);
             app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
+
         }
     }
 }

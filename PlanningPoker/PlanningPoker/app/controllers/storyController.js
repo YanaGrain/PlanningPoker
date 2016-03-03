@@ -136,6 +136,7 @@
             getStoryChoices();
             $scope.addedChoice = {};
             if (name != $scope.name) {
+                debugger;
                 toastr.success(name + " made a choice");
             }            
             $scope.$apply();

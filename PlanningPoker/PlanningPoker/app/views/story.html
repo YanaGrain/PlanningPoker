@@ -27,8 +27,9 @@
         <br />
         <hr/>
         <!--div for messages in chat-->
-        <button class="btn btn-primary" ng-click="showChatForm()">Discussion</button>
-        <div ng-show="showChat">            
+        <button class="btn btn-primary" ng-click="showChatForm()">Discussion&nbsp;&nbsp;<i class="fa fa-arrow-down"></i></button>        
+        <div ng-show="showChat"> 
+            <br />           
             <div style="overflow-y:scroll;height:200px; text-align:left; border: 1px solid #DDDDDD;" class="col-lg-offset-3 col-lg-6" id="chat">
                 <h4 ng-repeat="chat in messages track by $index" style="list-style-type: none;">{{chat}}
                     <!--<span ng-bind="chat"></span>-->                    

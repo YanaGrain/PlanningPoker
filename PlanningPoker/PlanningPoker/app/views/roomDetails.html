@@ -85,10 +85,12 @@
         <h3 class="text-center">Room members</h3>
         <table class="table table-hover table-bordered text-center">
             <tr>
+                <th style="width:50px;" class="text-center">#</th>
                 <th style="width:150px;" class="text-center">Name</th>
                 <th style="width:100px;" class="text-center" data-ng-hide="!userLink.isAdmin">Delete</th>
             </tr>            
             <tr ng-repeat="(id, user) in roomUsers track by $index">
+                <td><strong>{{$index+1}}</strong></td>
                 <td>
                     <p ng-bind="user.userName"></p>
                 </td>
@@ -113,12 +115,12 @@
                 <tr>
                     <th style="width:40px;" class="text-center">#</th>
                     <th style="width:200px;" class="text-center">Name</th>
-                    <th style="width:100px;" class="text-center">IsEstimated</th>
+                    <th style="width:100px;" class="text-center">Is Estimated</th>
                     <th style="width:100px;" class="text-center">Points</th>
                     <th style="width:50px;" class="text-center" data-ng-hide="!userLink.isAdmin">Delete</th>
                 </tr>
                 <tr ng-repeat="(id, story) in stories">
-                    <td><strong>{{ story.id }}</strong></td>
+                    <td><strong>{{$index+1}}</strong></td>
                     <td>
                         <h4>{{story.name}} <img src="../../img/current_logo.png" width="55px;" data-ng-hide="!(story.id == currentStory.id)" /></h4>
 
