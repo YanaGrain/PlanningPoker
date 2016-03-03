@@ -18,15 +18,8 @@
             }        
         }
     }
-    //$scope.showDeleteForm = function () {
-    //    if ($scope.data.delVisible) {
-    //        $scope.data.delVisible = false;
-    //    } else {
-    //        $scope.data = {
-    //            delVisible: true
-    //        }        
-    //    }
-    //}
+      
+    
     $scope.showStoriesForm = function () {
         if ($scope.data.storiesVisible) {
             $scope.data.storiesVisible = false;

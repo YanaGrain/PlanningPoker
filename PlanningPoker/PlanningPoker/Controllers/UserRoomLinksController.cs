@@ -1,40 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
+﻿using System.Data.Entity.Infrastructure;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using PlanningPoker.Models;
+using PlanningPoker.Repositories;
 
 namespace PlanningPoker.Controllers
 {
     public class UserRoomLinksController : ApiController
     {
-        private PokerContext db = new PokerContext();
-
-        // GET: api/UserRoomLinks
-        public IQueryable<UserRoomLink> GetLinks()
-        {
-            return db.Links;
-        }
-
-        
+        UnitOfWork unitOfWork = new UnitOfWork();
+        //private PokerContext db = new PokerContext();
 
         [ResponseType(typeof(UserRoomLink))]
         [Route("api/UserRoomLinks/{userid}/{roomid}")]
-        public IHttpActionResult GetUserRoomLink(string userId, int roomId)
+        public UserRoomLink GetUserRoomLink(string userId, int roomId)
         {
-            UserRoomLink userRoomLink = db.Links.Where<UserRoomLink>(l=>l.RoomId == roomId && l.UserId==userId).FirstOrDefault();
-            if (userRoomLink == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(userRoomLink);
+            UserRoomLink userRoomLink = unitOfWork.Links.GetLink(userId, roomId);
+            return (userRoomLink);
         }
 
         // PUT: api/UserRoomLinks/5
@@ -51,15 +34,15 @@ namespace PlanningPoker.Controllers
                 return BadRequest();
             }
 
-            db.Entry(userRoomLink).State = EntityState.Modified;
+           unitOfWork.Links.Update(userRoomLink);
 
             try
             {
-                db.SaveChanges();
+                unitOfWork.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UserRoomLinkExists(id))
+                if (!unitOfWork.Links.IsExist(id))
                 {
                     return NotFound();
                 }
@@ -81,8 +64,8 @@ namespace PlanningPoker.Controllers
                 return BadRequest(ModelState);
             }
             
-            db.Links.Add(userRoomLink);
-            db.SaveChanges();
+            unitOfWork.Links.Add(userRoomLink);
+            unitOfWork.SaveChanges();
 
             return CreatedAtRoute("DefaultApi", new { id = userRoomLink.Id }, userRoomLink);
         }
@@ -92,16 +75,16 @@ namespace PlanningPoker.Controllers
         [Route("api/UserRoomLinks/{userid}/{roomid}")]
         public IHttpActionResult DeleteUserRoomLink(string userId, int roomId)
         {
-            int id = db.Links.Where(link => link.UserId == userId && link.RoomId == roomId).SingleOrDefault().Id;
+            int id = unitOfWork.Links.GetLink(userId, roomId).Id;
 
-            UserRoomLink userRoomLink = db.Links.Find(id);
+            UserRoomLink userRoomLink = unitOfWork.Links.GetById(id);
             if (userRoomLink == null)
             {
                 return NotFound();
             }
 
-            db.Links.Remove(userRoomLink);
-            db.SaveChanges();
+            unitOfWork.Links.Remove(userRoomLink);
+            unitOfWork.SaveChanges();
 
             return Ok(userRoomLink);
         }
@@ -110,14 +93,9 @@ namespace PlanningPoker.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                unitOfWork.Dispose();
             }
             base.Dispose(disposing);
-        }
-
-        private bool UserRoomLinkExists(int id)
-        {
-            return db.Links.Count(e => e.Id == id) > 0;
         }
     }
 }

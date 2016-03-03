@@ -224,6 +224,7 @@
     <Content Include="Content\fonts\FontAwesome.otf" />
     <Content Include="Content\toastr.scss" />
     <Content Include="Content\toastr.less" />
+    <Content Include="Content\select2-bootstrap.scss" />
     <None Include="Scripts\jquery-2.0.0.intellisense.js" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-local-storage.js" />
@@ -232,6 +233,8 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-2.0.0.js" />
     <Content Include="Scripts\jquery-2.0.0.min.js" />
+    <Content Include="Scripts\jquery.browser.js" />
+    <Content Include="Scripts\jquery.searchabledropdown-1.0.8.min.js" />
     <Content Include="Scripts\jquery.signalR-2.2.0.js" />
     <Content Include="Scripts\jquery.signalR-2.2.0.min.js" />
     <Content Include="Scripts\loading-bar.js" />
@@ -279,11 +282,19 @@
     <Compile Include="Models\UserRoomLinkModel.cs" />
     <Compile Include="Models\PokerContext.cs" />
     <Compile Include="Models\PokerDbInitializer.cs" />
-    <Compile Include="Models\PokerRepository.cs" />
     <Compile Include="Models\RoomsModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\SimpleAuthorizationServerProvider.cs" />
+    <Compile Include="Repositories\AccountRepository.cs" />
+    <Compile Include="Repositories\CardRepository.cs" />
+    <Compile Include="Repositories\ChoiceRepository.cs" />
+    <Compile Include="Repositories\IRepository.cs" />
+    <Compile Include="Repositories\LinksRepository.cs" />
+    <Compile Include="Repositories\Repository.cs" />
+    <Compile Include="Repositories\RoomRepository.cs" />
+    <Compile Include="Repositories\StoryRepository.cs" />
+    <Compile Include="Repositories\UnitOfWork.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>

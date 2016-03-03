@@ -1,40 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
-using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using PlanningPoker.Models;
+using PlanningPoker.Repositories;
 
 namespace PlanningPoker.Controllers
 {
     public class ChoicesController : ApiController
     {
-        private PokerContext db = new PokerContext();
-
-        // GET: api/Choices
-        public IQueryable<Choice> GetChoices()
-        {
-            return db.Choices;
-        }
-
+        UnitOfWork unitOfWork = new UnitOfWork();
+        
         // GET: api/Choices/5
         [ResponseType(typeof(Choice))]
         [Route("api/Choices/{storyId}")]
-        public List<Choice> GetChoice(int storyId)
+        public List<Choice> GetChoices(int storyId)
         {
-
-            List<Choice> choices = db.Choices.Where(choice=>choice.StoryId == storyId).ToList();
-            //if (choice == null)
-            //{
-            //    return NotFound();
-            //}
-
-            return (choices);
+            return unitOfWork.Choices.GetChoices(storyId);
         }
 
         // PUT: api/Choices/5
@@ -51,15 +34,15 @@ namespace PlanningPoker.Controllers
                 return BadRequest();
             }
 
-            db.Entry(choice).State = EntityState.Modified;
+            unitOfWork.Choices.Update(choice);
 
             try
             {
-                db.SaveChanges();
+                unitOfWork.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ChoiceExists(id))
+                if (!unitOfWork.Choices.IsExist(id))
                 {
                     return NotFound();
                 }
@@ -81,8 +64,8 @@ namespace PlanningPoker.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Choices.Add(choice);
-            db.SaveChanges();
+            unitOfWork.Choices.Add(choice);
+            unitOfWork.SaveChanges();
 
             return CreatedAtRoute("DefaultApi", new { id = choice.Id }, choice);
         }
@@ -91,14 +74,14 @@ namespace PlanningPoker.Controllers
         [ResponseType(typeof(Choice))]
         public IHttpActionResult DeleteChoice(int id)
         {
-            Choice choice = db.Choices.Find(id);
+            Choice choice = unitOfWork.Choices.GetById(id);
             if (choice == null)
             {
                 return NotFound();
             }
 
-            db.Choices.Remove(choice);
-            db.SaveChanges();
+            unitOfWork.Choices.Remove(choice);
+            unitOfWork.SaveChanges();
 
             return Ok(choice);
         }
@@ -107,14 +90,10 @@ namespace PlanningPoker.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                unitOfWork.Dispose();
             }
             base.Dispose(disposing);
         }
-
-        private bool ChoiceExists(int id)
-        {
-            return db.Choices.Count(e => e.Id == id) > 0;
-        }
+        
     }
 }

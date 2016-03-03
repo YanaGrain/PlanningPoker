@@ -7,6 +7,7 @@ using System.Web;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security.OAuth;
 using PlanningPoker.Models;
+using PlanningPoker.Repositories;
 
 namespace PlanningPoker.Providers
 {
@@ -21,8 +22,8 @@ namespace PlanningPoker.Providers
         {
 
             context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
-
-            using (PokerRepository _repo = new PokerRepository())
+            AccountRepository _repo = new AccountRepository(new PokerContext());
+            //using (AccountRepository _repo = new AccountRepository(new PokerContext()))
             {
                 IdentityUser user = await _repo.FindUser(context.UserName, context.Password);
 

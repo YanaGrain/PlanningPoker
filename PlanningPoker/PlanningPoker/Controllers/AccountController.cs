@@ -1,34 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Results;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using PlanningPoker.Models;
-using System.Data.Entity;
+using PlanningPoker.Repositories;
 
 namespace PlanningPoker.Controllers
 {
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {
-        private PokerContext db = new PokerContext();
-        private PokerRepository _repo = null;
+        UnitOfWork unitOfWork = new UnitOfWork();
+        //private PokerContext db = new PokerContext();
+        //private AccountRepository _repo = null;
 
         public AccountController()
         {
-            _repo = new PokerRepository();
+            unitOfWork = new UnitOfWork();
+            //_repo = new AccountRepository;
         }
 
         // GET: api/Account/Users
         [Route("Users/{roomId}")]
         public JsonResult<List<IdentityUser>> GetUsers(int roomId)
         {            
-            List<IdentityUser> users = _repo.GetAllUsers(roomId);
+            List<IdentityUser> users = unitOfWork.Accounts.GetAllUsers(roomId);
             return Json(users);
         }
 
@@ -36,7 +34,7 @@ namespace PlanningPoker.Controllers
         [Route("{roomId}/Users")]
         public List<IdentityUser> GetRoomUsers(int roomId)
         {
-            List<IdentityUser> users = _repo.GetRoomUsers(roomId);
+            List<IdentityUser> users = unitOfWork.Accounts.GetRoomUsers(roomId);
             return (users);
         }
 
@@ -44,7 +42,7 @@ namespace PlanningPoker.Controllers
         [Route("{roomId}/Admin")]
         public IdentityUser GetAdmin(int roomId)
         {
-            IdentityUser admin = _repo.GetAdmin(roomId);
+            IdentityUser admin = unitOfWork.Accounts.GetAdmin(roomId);
             return (admin);
         }
 
@@ -52,7 +50,7 @@ namespace PlanningPoker.Controllers
         [Route("addUser/{linkId}")]
         public IdentityUser GetUserByLink(int linkId)
         {
-            IdentityUser user = _repo.GetUserByLink(linkId);
+            IdentityUser user = unitOfWork.Accounts.GetUserByLink(linkId);
             return (user);
         }
 
@@ -66,7 +64,7 @@ namespace PlanningPoker.Controllers
                 return BadRequest(ModelState);
             }
 
-            IdentityResult result = await _repo.RegisterUser(userModel);
+            IdentityResult result = await unitOfWork.Accounts.RegisterUser(userModel);
 
             IHttpActionResult errorResult = GetErrorResult(result);
 
@@ -87,27 +85,26 @@ namespace PlanningPoker.Controllers
             //    return BadRequest(ModelState);
             //}
 
-            IdentityUser user = await _repo.FindUserByName(userName);
-            
+            IdentityUser user = await unitOfWork.Accounts.FindUserByName(userName);
+
             /*IHttpActionResult errorResult = GetErrorResult(result);
 
             if (errorResult != null)
             {
                 return errorResult;
-            }*/
-
+            }*/           
             return (user);
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                _repo.Dispose();
-            }
+        //protected override void Dispose(bool disposing)
+        //{
+        //    if (disposing)
+        //    {
+        //        unitOfWork.Accounts.Dispose();
+        //    }
 
-            base.Dispose(disposing);
-        }
+        //    base.Dispose(disposing);
+        //}
 
         private IHttpActionResult GetErrorResult(IdentityResult result)
         {

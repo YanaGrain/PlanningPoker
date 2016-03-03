@@ -1,30 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
 using System.Web.Http.Results;
-using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using PlanningPoker.Models;
+using PlanningPoker.Repositories;
 
 namespace PlanningPoker.Controllers
 {
     public class RoomsController : ApiController
     {
-        private PokerContext db = new PokerContext();
-        private PokerRepository _repo = null;
+        private UnitOfWork unitOfWork = new UnitOfWork();
+        //private PokerContext db = new PokerContext();
+        private AccountRepository _repo = null;
 
         public RoomsController()
         {
-            _repo = new PokerRepository();
+            _repo = new AccountRepository(new PokerContext());
         }
 
         [HttpGet]
@@ -34,9 +30,7 @@ namespace PlanningPoker.Controllers
         {
             string userId = userid;
 
-            var links = db.Links
-                .Where(link => link.UserId == userId)
-                .Include(link => link.Room).ToList();
+            var links = unitOfWork.Links.GetLinks(userId);
             var rooms = links.Select(link => link.Room);
             
             return Json(rooms.ToList());
@@ -46,15 +40,11 @@ namespace PlanningPoker.Controllers
         [ResponseType(typeof(Room))]
         [HttpGet]        
         [Route("api/Rooms/{id}/room")]
-        public IHttpActionResult GetRoom(int id)
+        public Room GetRoom(int id)
         {
-            Room room = db.Rooms.Find(id);
-            if (room == null)
-            {
-                return NotFound();
-            }
+            Room room = unitOfWork.Rooms.GetById(id);           
 
-            return Ok(room);
+            return (room);
         }
 
         // PUT: api/Rooms/5
@@ -73,15 +63,15 @@ namespace PlanningPoker.Controllers
                 return BadRequest();
             }
 
-            db.Entry(room).State = EntityState.Modified;
+            unitOfWork.Rooms.Update(room);
 
             try
             {
-                db.SaveChanges();
+                unitOfWork.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!RoomExists(id))
+                if (!unitOfWork.Rooms.IsExist(id))
                 {
                     return NotFound();
                 }
@@ -105,8 +95,8 @@ namespace PlanningPoker.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Rooms.Add(room);
-            db.SaveChanges();
+            unitOfWork.Rooms.Add(room);
+            unitOfWork.SaveChanges();
 
             //string userName = User.Identity.GetUserName();
             IdentityUser user = await _repo.FindUserByName(name);
@@ -119,8 +109,8 @@ namespace PlanningPoker.Controllers
                 IsAdmin = true
             };
 
-            db.Links.Add(link);
-            db.SaveChanges();
+            unitOfWork.Links.Add(link);
+            unitOfWork.SaveChanges();
 
             //return CreatedAtRoute("DefaultApi", new { id = room.Id }, room);
 
@@ -133,14 +123,14 @@ namespace PlanningPoker.Controllers
         [ResponseType(typeof(Room))]
         public IHttpActionResult DeleteRoom(int id)
         {
-            Room room = db.Rooms.Find(id);
+            Room room = unitOfWork.Rooms.GetById(id);
             if (room == null)
             {
                 return NotFound();
             }
 
-            db.Rooms.Remove(room);
-            db.SaveChanges();
+            unitOfWork.Rooms.Remove(room);
+            unitOfWork.SaveChanges();
 
             return Ok(room);
         }
@@ -149,14 +139,11 @@ namespace PlanningPoker.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                
+                unitOfWork.Dispose();
             }
             base.Dispose(disposing);
         }
 
-        private bool RoomExists(int id)
-        {
-            return db.Rooms.Count(e => e.Id == id) > 0;
-        }
     }
 }

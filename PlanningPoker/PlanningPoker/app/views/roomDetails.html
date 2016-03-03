@@ -54,7 +54,7 @@
     <br />
     <!--adding user form-->
     <div class="text-center form-inline" ng-show="data.visible">
-        <div class="form-group" >
+        <div class="form-group search" >
             <select class="form-control" placeholder="Select user" style="width: 200px;" id="repeatSelect" ng-model="data.userSelect">
                 <option ng-repeat="(id, user) in users" value="{{user.Id}}">{{user.UserName}}</option>
             </select>

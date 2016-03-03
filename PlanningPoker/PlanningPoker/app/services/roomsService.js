@@ -8,7 +8,7 @@ app.factory('roomsService', ['$http', 'localStorageService', function($http, loc
         roomDescription: "",
         roomId: 0
     };
-
+    
     
     var _getRooms = function (userId) {
         debugger;
