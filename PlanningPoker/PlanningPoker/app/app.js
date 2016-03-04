@@ -1,4 +1,4 @@
-﻿var app = angular.module('PokerApp', ['ngRoute', 'LocalStorageModule', 'ngAnimate']);
+﻿var app = angular.module('PokerApp', ['ngRoute', 'LocalStorageModule', 'ngAnimate', 'angucomplete-alt', 'ngSanitize', 'ui.select']);
 
 app.config(function ($routeProvider) {
 $routeProvider
@@ -34,12 +34,6 @@ $routeProvider
         controller: "dashboardController",
         templateUrl: "/app/views/dashboard.html",
         access: { allowAnonymous: false }        
-    })
-
-    .when("/room", {
-        controller: "roomController",
-        templateUrl: "/app/views/room.html",
-        access: { allowAnonymous: false }
     })
 
     .when("/room/:id", {

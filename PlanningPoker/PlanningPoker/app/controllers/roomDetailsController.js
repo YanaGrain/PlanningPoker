@@ -1,4 +1,4 @@
-﻿app.controller('roomDetailsController', function ($scope, cardsService, authService, $http, localStorageService, choicesService, usersService, roomsService, $location, storiesService) {
+﻿app.controller('roomDetailsController', function($scope, cardsService, authService, $http, localStorageService, choicesService, usersService, roomsService, $location, storiesService, $sce) {
     var serviceBase = 'http://localhost:65020/';
     $scope.name = authService.authentication.userName;
     $scope.data = { visible: false }    
@@ -227,14 +227,15 @@
         //adding New User
         $scope.addUser = function (userId) {
             $scope.newLink.UserId = userId;
-            usersService.addUser($scope.newLink).then(function (result) {                
-                usersService.getUserByLink(result.data.id).then(function (results) {
+            usersService.addUser($scope.newLink).then(function(result) {
+                usersService.getUserByLink(result.data.id).then(function(results) {
                     pokerHubProxy.invoke('addRoomUser', results.data, $scope.currentRoom.roomId);
                     pokerHubProxy.invoke('addDashRoom', $scope.newLink.UserId);
                     //$scope.roomUsers.push(result.data);
-                })
+                });
                 getUsers();
-            })
+                $scope.data.userSelect = undefined;
+            });
         }
 
         $scope.deleteUser = function (userId, userName) {
@@ -250,12 +251,12 @@
 
         $scope.addStory = function () {
             $scope.newStory.RoomId = $scope.currentRoom.roomId;
-            storiesService.addStory($scope.newStory).then(function (result) {
+            storiesService.addStory($scope.newStory).then(function(result) {
                 pokerHubProxy.invoke('addRoomStory', result.data, $scope.currentRoom.roomId);
                 getStories();
                 getCurrentStory();
                 $scope.newStory = {};
-            })
+            });
         }
 
         $scope.deleteStory = function (storyId) {
@@ -267,6 +268,41 @@
                 alert("An error while deleting the story!");
             };
         };
-    });   
+    });
 
+    $scope.trustAsHtml = function (value) {
+        return $sce.trustAsHtml(value);
+    };
+
+});
+
+app.filter('propsFilter', function () {
+    return function (items, props) {
+        var out = [];
+
+        if (angular.isArray(items)) {
+            items.forEach(function (item) {
+                var itemMatches = false;
+
+                var keys = Object.keys(props);
+                for (var i = 0; i < keys.length; i++) {
+                    var prop = keys[i];
+                    var text = props[prop].toLowerCase();
+                    if (item[prop].toString().toLowerCase().indexOf(text) !== -1) {
+                        itemMatches = true;
+                        break;
+                    }
+                }
+
+                if (itemMatches) {
+                    out.push(item);
+                }
+            });
+        } else {
+            // Let the output be the input untouched
+            out = items;
+        }
+
+        return out;
+    }
 });

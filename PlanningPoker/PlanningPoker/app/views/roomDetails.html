@@ -18,11 +18,13 @@
                 </div>-->
                 <div class="modal-body text-center center-block">
                     <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="deleteRoom()">Yes</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>                    
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
                 </div>
             </div>
         </div>
     </div>
+
+    
 
     <!--Modal for closing the room-->
     <div class="modal" id="closeModal">
@@ -43,44 +45,50 @@
             </div>
         </div>
     </div>
-    
+
     <div class="text-center" data-ng-hide="!userLink.isAdmin">
         <hr />
         <a class="btn btn-info" style="width: 150px;" ng-click="showStoriesForm()" ng-show="!roomIsClosed">Enter Stories</a>
         <a class="btn btn-success" style="width: 150px;" ng-click="showAddForm()" ng-show="!roomIsClosed">Add Users</a>
         <a class="btn btn-warning" style="width: 150px;" data-toggle="modal" data-target="#closeModal" ng-show="!roomIsClosed">Close Room</a>
-        <a class="btn btn-danger" style="width: 150px;" data-toggle="modal" data-target="#deleteModal">Delete Room</a>        
+        <a class="btn btn-danger" style="width: 150px;" data-toggle="modal" data-target="#deleteModal">Delete Room</a>
     </div>
     <br />
     <!--adding user form-->
-    <div class="text-center form-inline" ng-show="data.visible">
-        <div class="form-group search" >
-            <select class="form-control" placeholder="Select user" style="width: 200px;" id="repeatSelect" ng-model="data.userSelect">
-                <option ng-repeat="(id, user) in users" value="{{user.Id}}">{{user.UserName}}</option>
-            </select>
-            <button class="btn btn-success" style="width: 100px;" ng-click="addUser(data.userSelect)">Add</button>
-        </div>
-    </div>
+    <div ng-show="data.visible" >
+        <!--<select class="form-control" placeholder="Select user" style="width: 200px;" id="repeatSelect" ng-model="data.userSelect">
+            <option ng-repeat="(id, user) in users" value="{{user.Id}}">{{user.UserName}}</option>
+        </select>-->
+        <div class="col-lg-offset-5">
+            <ui-select ng-model="data.userSelect"
+                       theme="bootstrap"
+                       ng-disabled="disabled"
+                       reset-search-input="true" style="width: 200px !important; ">
+                <ui-select-match placeholder="Select or search user" style="width: 200px !important;">{{$select.selected.UserName}}</ui-select-match>
+                <ui-select-choices repeat="user in users | filter: $select.search" style="width: 200px !important; ">
+                    <span ng-bind-html="trustAsHtml((user.UserName | highlight: $select.search))" style="width: 200px !important; "></span>
+                </ui-select-choices>
+            </ui-select>
+        </div><br/>
+            <button class="btn btn-success" style="width: 100px;" ng-click="addUser(data.userSelect.Id)">Add</button>
+     </div>
 
-    <!--deleting user form-->
-    <div class="text-center form-inline" ng-show="data.delVisible">
-        <div class="form-group">
-            <select class="form-control" placeholder="Select user" style="width: 200px;" id="repeatSelect" ng-model="data.userSelect">
-                <option ng-repeat="(id, user) in roomUsers" value="{{user.id}}">{{user.userName}}</option>
-            </select>
-            <button class="btn btn-warning" style="width: 100px;" ng-click="deleteUser(data.userSelect)">Delete</button>
-        </div>
-    </div>
+    <!--<div ng-show="data.visible" class="col-lg-offset-4 col-lg-4">
+        
+        <button class="btn btn-success" style="width: 100px;" ng-click="addUser(data.userSelect.Id)">Add</button>
+    </div>-->
 
     <!--entering stories form-->
     <div class="text-center form-inline" ng-show="data.storiesVisible">
-        <div class="form-group">            
-            <input class="form-control" id="story" placeholder="Enter story name" data-ng-model="newStory.Name" required>            
+        <div class="form-group">
+            <input class="form-control" id="story" style="width: 300px;" placeholder="Enter story name" data-ng-model="newStory.Name" required>
         </div>
         <button class="btn btn-info" style="width: 100px;" ng-click="addStory()">Add Story</button>
     </div>
 
-    <hr/>
+    <div class="col-lg-12">
+        <hr />
+    </div>
     <div class="col-md-offset-4 col-md-4 text-center">
         <h3 class="text-center">Room members</h3>
         <table class="table table-hover table-bordered text-center">
@@ -88,24 +96,24 @@
                 <th style="width:50px;" class="text-center">#</th>
                 <th style="width:150px;" class="text-center">Name</th>
                 <th style="width:100px;" class="text-center" data-ng-hide="!userLink.isAdmin">Delete</th>
-            </tr>            
+            </tr>
             <tr ng-repeat="(id, user) in roomUsers track by $index">
                 <td><strong>{{$index+1}}</strong></td>
                 <td>
                     <p ng-bind="user.userName"></p>
                 </td>
                 <td data-ng-hide="!userLink.isAdmin">
-                    <p><img src="../../img/delete.png" width="30px;" style="cursor: pointer;" ng-click="deleteUser(user.id, user.userName)" data-ng-hide="admin.userName == user.userName"/></p>
+                    <p><img src="../../img/delete.png" width="30px;" style="cursor: pointer;" ng-click="deleteUser(user.id, user.userName)" data-ng-hide="admin.userName == user.userName" /></p>
                 </td>
             </tr>
         </table>
     </div>
-    
+
     <div class="col-lg-12">
         <hr />
     </div>
-    
-    <div class="col-md-offset-2 col-md-8 text-center" >
+
+    <div class="col-md-offset-2 col-md-8 text-center">
         <h4 ng-show="stories.length == 0" style="color:crimson"><b>You have no stories</b></h4>
         <div ng-show="stories.length > 0">
             <h3 class="text-center">Stories</h3>
@@ -139,5 +147,7 @@
             </table>
         </div>
     </div>
-    
+    <div class="col-lg-12">
+        <hr />
+    </div>
 </div>
