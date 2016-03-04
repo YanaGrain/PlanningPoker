@@ -24,17 +24,17 @@ namespace PlanningPoker.Controllers
 
         // GET: api/Account/Users
         [Route("Users/{roomId}")]
-        public JsonResult<List<IdentityUser>> GetUsers(int roomId)
+        public JsonResult<List<UserModel>> GetUsers(int roomId)
         {            
-            List<IdentityUser> users = unitOfWork.Accounts.GetAllUsers(roomId);
+            List<UserModel> users = unitOfWork.Accounts.GetAllUsers(roomId);
             return Json(users);
         }
 
         // GET: api/Account/{roomId}/Users
         [Route("{roomId}/Users")]
-        public List<IdentityUser> GetRoomUsers(int roomId)
+        public List<UserModel> GetRoomUsers(int roomId)
         {
-            List<IdentityUser> users = unitOfWork.Accounts.GetRoomUsers(roomId);
+            List<UserModel> users = unitOfWork.Accounts.GetRoomUsers(roomId);
             return (users);
         }
 

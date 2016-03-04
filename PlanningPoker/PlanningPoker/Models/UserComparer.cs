@@ -6,14 +6,14 @@ using System.Web;
 
 namespace PlanningPoker.Models
 {
-    public class UserComparer:IEqualityComparer<IdentityUser>
+    public class UserComparer:IEqualityComparer<UserModel>
     {
-        public bool Equals(IdentityUser x, IdentityUser y)
+        public bool Equals(UserModel x, UserModel y)
         {
             return (x.Id == y.Id);               
         }
 
-        public int GetHashCode(IdentityUser obj)
+        public int GetHashCode(UserModel obj)
         {
             return obj.Id.GetHashCode();
         }

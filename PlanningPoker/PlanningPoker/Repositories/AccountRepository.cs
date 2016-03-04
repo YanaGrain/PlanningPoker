@@ -8,61 +8,62 @@ using PlanningPoker.Models;
 
 namespace PlanningPoker.Repositories
 {
-    public class AccountRepository : Repository<IdentityUser, string>
+    public class AccountRepository : Repository<UserModel, string>
     {
         //private PokerContext db = new PokerContext();
         //private PokerContext _ctx;
 
-        private UserManager<IdentityUser> _userManager;
+        private UserManager<UserModel> _userManager;
 
         public AccountRepository(PokerContext _ctx): base (_ctx)
         {
             //this._ctx = _ctx;
-            _userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(_ctx));
+            _userManager = new UserManager<UserModel>(new UserStore<UserModel>(_ctx));
         }
       
         public async Task<IdentityResult> RegisterUser(UserModel userModel)
         {
-            IdentityUser user = new IdentityUser
+            UserModel user = new UserModel
             {
-                UserName = userModel.UserName
+                UserName = userModel.UserName,
+
             };
 
-            var result = await _userManager.CreateAsync(user, userModel.Password);
+            var result = await _userManager.CreateAsync(userModel, userModel.Password);
 
             return result;
         }
 
-        public async Task<IdentityUser> FindUser(string userName, string password)
+        public async Task<UserModel> FindUser(string userName, string password)
         {
-            IdentityUser user = await _userManager.FindAsync(userName, password);
+            UserModel user = await _userManager.FindAsync(userName, password);
 
             return user;
         }
 
-        public async Task<IdentityUser> FindUserByName(string userName)
+        public async Task<UserModel> FindUserByName(string userName)
         {
-            IdentityUser user = await _userManager.FindByNameAsync(userName);
+            UserModel user = await _userManager.FindByNameAsync(userName);
 
             return user;
         }
 
-        public List<IdentityUser> GetAllUsers(int roomId)
+        public List<UserModel> GetAllUsers(int roomId)
         {
             var links = ctx.Links
                 .Where(link => link.RoomId == roomId)
                 .Include(link => link.User);
-            List<IdentityUser> roomUsers = links.Select(link => link.User).ToList();
+            List<UserModel> roomUsers = links.Select(link => link.User).ToList();
 
-            List<IdentityUser> allUsers = _userManager.Users.ToList();
+            List<UserModel> allUsers = _userManager.Users.ToList();
 
-            List<IdentityUser> users = (allUsers.Except(roomUsers, new UserComparer())).ToList();
+            List<UserModel> users = (allUsers.Except(roomUsers, new UserComparer())).ToList();
 
 
             return (users);
         }
 
-        public IdentityUser GetAdmin(int roomId)
+        public UserModel GetAdmin(int roomId)
         {
             var links = ctx.Links
                 .Where(link => link.RoomId == roomId && link.IsAdmin == true)
@@ -74,7 +75,7 @@ namespace PlanningPoker.Repositories
             return (admin);
         }
 
-        public IdentityUser GetUserByLink(int linkId)
+        public UserModel GetUserByLink(int linkId)
         {
             var links = ctx.Links
                 .Where(link => link.Id == linkId)
@@ -83,7 +84,7 @@ namespace PlanningPoker.Repositories
             return (user);
         }
 
-        public List<IdentityUser> GetRoomUsers(int roomId)
+        public List<UserModel> GetRoomUsers(int roomId)
         {
             var links = ctx.Links
                 .Where(link => link.RoomId == roomId /*&& link.IsAdmin == false*/)

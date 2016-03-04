@@ -7,13 +7,13 @@ namespace PlanningPoker.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class linksAndStories : IMigrationMetadata
+    public sealed partial class _new : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(linksAndStories));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(_new));
         
         string IMigrationMetadata.Id
         {
-            get { return "201602181350393_linksAnd Stories"; }
+            get { return "201603042006531_new"; }
         }
         
         string IMigrationMetadata.Source

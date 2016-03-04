@@ -22,17 +22,32 @@ namespace PlanningPoker.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        Card_Id = c.Int(),
-                        Room_Id = c.Int(),
-                        User_Id = c.String(maxLength: 128),
+                        CardId = c.Int(nullable: false),
+                        UserId = c.String(maxLength: 128),
+                        StoryId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Cards", t => t.Card_Id)
-                .ForeignKey("dbo.Rooms", t => t.Room_Id)
-                .ForeignKey("dbo.AspNetUsers", t => t.User_Id)
-                .Index(t => t.Card_Id)
-                .Index(t => t.Room_Id)
-                .Index(t => t.User_Id);
+                .ForeignKey("dbo.Cards", t => t.CardId, cascadeDelete: true)
+                .ForeignKey("dbo.Stories", t => t.StoryId, cascadeDelete: true)
+                .ForeignKey("dbo.AspNetUsers", t => t.UserId)
+                .Index(t => t.CardId)
+                .Index(t => t.UserId)
+                .Index(t => t.StoryId);
+            
+            CreateTable(
+                "dbo.Stories",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Name = c.String(),
+                        IsEstimated = c.Boolean(nullable: false),
+                        IsClosed = c.Boolean(nullable: false),
+                        Points = c.Int(nullable: false),
+                        RoomId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Rooms", t => t.RoomId, cascadeDelete: true)
+                .Index(t => t.RoomId);
             
             CreateTable(
                 "dbo.Rooms",
@@ -44,6 +59,21 @@ namespace PlanningPoker.Migrations
                         IsClosed = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "dbo.UserRoomLinks",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        UserId = c.String(maxLength: 128),
+                        RoomId = c.Int(nullable: false),
+                        IsAdmin = c.Boolean(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Rooms", t => t.RoomId, cascadeDelete: true)
+                .ForeignKey("dbo.AspNetUsers", t => t.UserId)
+                .Index(t => t.UserId)
+                .Index(t => t.RoomId);
             
             CreateTable(
                 "dbo.AspNetUsers",
@@ -124,24 +154,32 @@ namespace PlanningPoker.Migrations
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
-            DropForeignKey("dbo.Choices", "User_Id", "dbo.AspNetUsers");
-            DropForeignKey("dbo.Choices", "Room_Id", "dbo.Rooms");
-            DropForeignKey("dbo.Choices", "Card_Id", "dbo.Cards");
+            DropForeignKey("dbo.Choices", "UserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.Choices", "StoryId", "dbo.Stories");
+            DropForeignKey("dbo.Stories", "RoomId", "dbo.Rooms");
+            DropForeignKey("dbo.UserRoomLinks", "UserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.UserRoomLinks", "RoomId", "dbo.Rooms");
+            DropForeignKey("dbo.Choices", "CardId", "dbo.Cards");
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
-            DropIndex("dbo.Choices", new[] { "User_Id" });
-            DropIndex("dbo.Choices", new[] { "Room_Id" });
-            DropIndex("dbo.Choices", new[] { "Card_Id" });
+            DropIndex("dbo.UserRoomLinks", new[] { "RoomId" });
+            DropIndex("dbo.UserRoomLinks", new[] { "UserId" });
+            DropIndex("dbo.Stories", new[] { "RoomId" });
+            DropIndex("dbo.Choices", new[] { "StoryId" });
+            DropIndex("dbo.Choices", new[] { "UserId" });
+            DropIndex("dbo.Choices", new[] { "CardId" });
             DropTable("dbo.AspNetRoles");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
+            DropTable("dbo.UserRoomLinks");
             DropTable("dbo.Rooms");
+            DropTable("dbo.Stories");
             DropTable("dbo.Choices");
             DropTable("dbo.Cards");
         }

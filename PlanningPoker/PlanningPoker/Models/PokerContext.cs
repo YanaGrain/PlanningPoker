@@ -7,7 +7,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace PlanningPoker.Models
 {
-    public class PokerContext : IdentityDbContext<IdentityUser>
+    public class PokerContext : IdentityDbContext<UserModel>
     {
         public PokerContext()
             : base("PokerContext")
@@ -19,7 +19,6 @@ namespace PlanningPoker.Models
         public DbSet<Card> Cards { get; set; }
         public DbSet<Room> Rooms { get; set; }
         public DbSet<UserRoomLink> Links { get; set; }
-        public DbSet<UserModel> IdentityUsers { get; set; }
         public DbSet<Story> Stories { get; set; }
         public DbSet<Choice> Choices { get; set; }
     }

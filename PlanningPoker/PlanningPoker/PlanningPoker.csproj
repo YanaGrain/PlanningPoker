@@ -270,25 +270,13 @@
     <Compile Include="Controllers\StoriesController.cs" />
     <Compile Include="Controllers\UserRoomLinksController.cs" />
     <Compile Include="Hubs\PokerHub.cs" />
-    <Compile Include="Migrations\201602181002096_first.cs" />
-    <Compile Include="Migrations\201602181002096_first.designer.cs">
-      <DependentUpon>201602181002096_first.cs</DependentUpon>
+    <Compile Include="Migrations\201603041957590_first.cs" />
+    <Compile Include="Migrations\201603041957590_first.Designer.cs">
+      <DependentUpon>201603041957590_first.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201602181350393_linksAnd Stories.cs" />
-    <Compile Include="Migrations\201602181350393_linksAnd Stories.Designer.cs">
-      <DependentUpon>201602181350393_linksAnd Stories.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201602181410278_ChoicesAdedd.cs" />
-    <Compile Include="Migrations\201602181410278_ChoicesAdedd.Designer.cs">
-      <DependentUpon>201602181410278_ChoicesAdedd.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201602220843481_linksChngeda.cs" />
-    <Compile Include="Migrations\201602220843481_linksChngeda.Designer.cs">
-      <DependentUpon>201602220843481_linksChngeda.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201602271757424_closedStories.cs" />
-    <Compile Include="Migrations\201602271757424_closedStories.Designer.cs">
-      <DependentUpon>201602271757424_closedStories.cs</DependentUpon>
+    <Compile Include="Migrations\201603042006531_new.cs" />
+    <Compile Include="Migrations\201603042006531_new.Designer.cs">
+      <DependentUpon>201603042006531_new.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CardsModel.cs" />
@@ -327,20 +315,11 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201602181002096_first.resx">
-      <DependentUpon>201602181002096_first.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201603041957590_first.resx">
+      <DependentUpon>201603041957590_first.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201602181350393_linksAnd Stories.resx">
-      <DependentUpon>201602181350393_linksAnd Stories.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201602181410278_ChoicesAdedd.resx">
-      <DependentUpon>201602181410278_ChoicesAdedd.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201602220843481_linksChngeda.resx">
-      <DependentUpon>201602220843481_linksChngeda.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201602271757424_closedStories.resx">
-      <DependentUpon>201602271757424_closedStories.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201603042006531_new.resx">
+      <DependentUpon>201603042006531_new.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
