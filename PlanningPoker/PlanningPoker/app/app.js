@@ -1,4 +1,4 @@
-﻿var app = angular.module('PokerApp', ['ngRoute', 'LocalStorageModule', 'ngAnimate', 'angucomplete-alt', 'ngSanitize', 'ui.select']);
+﻿var app = angular.module('PokerApp', ['ngRoute', 'LocalStorageModule', 'angular-loading-bar','ngAnimate', 'angucomplete-alt', 'ngSanitize', 'ui.select']);
 
 app.config(function ($routeProvider) {
 $routeProvider

@@ -12,12 +12,13 @@ namespace PlanningPoker.Controllers
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {
+        
         UnitOfWork unitOfWork = new UnitOfWork();
-        //private PokerContext db = new PokerContext();
+        
         //private AccountRepository _repo = null;
 
         public AccountController()
-        {
+        {  
             unitOfWork = new UnitOfWork();
             //_repo = new AccountRepository;
         }
@@ -65,7 +66,7 @@ namespace PlanningPoker.Controllers
             }
 
             IdentityResult result = await unitOfWork.Accounts.RegisterUser(userModel);
-
+            
             IHttpActionResult errorResult = GetErrorResult(result);
 
             if (errorResult != null)

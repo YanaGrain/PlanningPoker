@@ -25,7 +25,7 @@ namespace PlanningPoker.Providers
             AccountRepository _repo = new AccountRepository(new PokerContext());
             //using (AccountRepository _repo = new AccountRepository(new PokerContext()))
             {
-                IdentityUser user = await _repo.FindUser(context.UserName, context.Password);
+                UserModel user = await _repo.FindUser(context.UserName, context.Password);
 
                 if (user == null)
                 {

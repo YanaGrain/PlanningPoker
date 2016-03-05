@@ -1,8 +1,8 @@
 ﻿<form class="form-login" role="form">
     <h2 class="form-login-heading">Login</h2>
-    <input type="text" class="form-control" placeholder="Username" data-ng-model="loginData.userName" required autofocus>
+    <input type="text" class="form-control" placeholder="Email" data-ng-model="loginData.userName" required autofocus>
     <input type="password" class="form-control" placeholder="Password" data-ng-model="loginData.password" required>
-    <button class="btn btn-md btn-success btn-block" type="submit" data-ng-click="login()" style="width: 280px;">Login</button>
+    <button class="btn btn-md btn-success btn-block" type="submit" data-ng-click="login()" style="width: 280px;">Log In</button>
     <div data-ng-hide="message == ''" class="alert alert-danger" style="width: 280px;">
         {{message}}
     </div>

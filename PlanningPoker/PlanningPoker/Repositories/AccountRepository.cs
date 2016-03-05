@@ -13,12 +13,12 @@ namespace PlanningPoker.Repositories
         //private PokerContext db = new PokerContext();
         //private PokerContext _ctx;
 
-        private UserManager<UserModel> _userManager;
+        private UserModelManager _userManager;
 
         public AccountRepository(PokerContext _ctx): base (_ctx)
         {
             //this._ctx = _ctx;
-            _userManager = new UserManager<UserModel>(new UserStore<UserModel>(_ctx));
+            _userManager = new UserModelManager(new UserStore<UserModel>(_ctx));
         }
       
         public async Task<IdentityResult> RegisterUser(UserModel userModel)
@@ -26,7 +26,9 @@ namespace PlanningPoker.Repositories
             UserModel user = new UserModel
             {
                 UserName = userModel.UserName,
-
+                Email = userModel.UserName,
+                FirstName = userModel.FirstName,
+                LastName =  userModel.LastName
             };
 
             var result = await _userManager.CreateAsync(userModel, userModel.Password);

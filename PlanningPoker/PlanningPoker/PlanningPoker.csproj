@@ -278,11 +278,16 @@
     <Compile Include="Migrations\201603042006531_new.Designer.cs">
       <DependentUpon>201603042006531_new.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603051007505_firstLastName.cs" />
+    <Compile Include="Migrations\201603051007505_firstLastName.Designer.cs">
+      <DependentUpon>201603051007505_firstLastName.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CardsModel.cs" />
     <Compile Include="Models\ChoicesModel.cs" />
     <Compile Include="Models\StoriesModel.cs" />
     <Compile Include="Models\UserComparer.cs" />
+    <Compile Include="Models\UserModelManager.cs" />
     <Compile Include="Models\UserRoomLinkModel.cs" />
     <Compile Include="Models\PokerContext.cs" />
     <Compile Include="Models\PokerDbInitializer.cs" />
@@ -320,6 +325,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603042006531_new.resx">
       <DependentUpon>201603042006531_new.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603051007505_firstLastName.resx">
+      <DependentUpon>201603051007505_firstLastName.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
