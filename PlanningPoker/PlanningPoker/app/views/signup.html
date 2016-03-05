@@ -1,11 +1,11 @@
 ﻿<form class="form-login" role="form">
     <fieldset>
         <legend class="form-login-heading">Sign up</legend>
-        <input type="email" class="form-control" placeholder="Email" data-ng-model="registration.userName" required autofocus>
-        <input type="text" class="form-control" placeholder="First Name" data-ng-model="registration.firstName" required>
-        <input type="text" class="form-control" placeholder="Last Name" data-ng-model="registration.lastName" required>
+        <input type="text" class="form-control" placeholder="Username" data-ng-model="registration.userName" required>
+        <input type="text" class="form-control" placeholder="Full Name" data-ng-model="registration.fullName" required>
         <input type="password" class="form-control" placeholder="Password" data-ng-model="registration.password" required>
         <input type="password" class="form-control" placeholder="Confirm Password" data-ng-model="registration.confirmPassword" required>
+        
         <button class="btn btn-md btn-success btn-block" type="submit" data-ng-click="signUp()" style="width: 280px;">Register</button>
         <div data-ng-hide="message == ''" data-ng-class="(savedSuccessfully) ? 'alert alert-success' : 'alert alert-danger'" style="width: 280px;">
             {{message}}

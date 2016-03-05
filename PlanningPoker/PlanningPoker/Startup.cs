@@ -19,7 +19,8 @@ namespace PlanningPoker
     {
         public void Configuration(IAppBuilder app)
         {
-            Database.SetInitializer(new PokerDbInitializer());
+            PokerContext ctx = new PokerContext();
+            new PokerDbInitializer().InitializeDatabase(ctx);
             // Дополнительные сведения о настройке приложения см. по адресу: http://go.microsoft.com/fwlink/?LinkID=316888
             ConfigureOAuth(app);
             HttpConfiguration config = new HttpConfiguration();

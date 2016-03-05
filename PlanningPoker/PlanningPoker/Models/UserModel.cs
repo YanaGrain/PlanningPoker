@@ -10,13 +10,10 @@ namespace PlanningPoker.Models
 {
     public class UserModel : IdentityUser
     {
-        [Required]
-        [Display(Name = "First Name")]
-        public string FirstName { get; set; }
 
         [Required]
-        [Display(Name = "Last Name")]
-        public string LastName { get; set; }
+        [Display(Name = "Full Name")]
+        public string FullName { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]

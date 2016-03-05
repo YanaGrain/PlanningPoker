@@ -98,6 +98,13 @@ textarea {
         border-top-right-radius: 0;
     }
 
+    .form-login input[type="text"] {
+        margin-top:5px;
+        margin-bottom: 5px;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
+
 
 
 img.small {

@@ -22,7 +22,7 @@ namespace PlanningPoker.Models
             db.Cards.Add(new Card { Value = "100", Path = "../../img/cards/card100.png" });
             db.Cards.Add(new Card { Value = "?", Path = "../../img/cards/cardWtf.png" });
             db.Cards.Add(new Card { Value = "Coffee", Path = "../../img/cards/cardCoffee.png" });
-
+            db.SaveChanges();
             base.Seed(db);
         }
     }

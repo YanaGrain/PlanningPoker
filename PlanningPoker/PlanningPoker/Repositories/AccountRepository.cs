@@ -26,9 +26,9 @@ namespace PlanningPoker.Repositories
             UserModel user = new UserModel
             {
                 UserName = userModel.UserName,
-                Email = userModel.UserName,
-                FirstName = userModel.FirstName,
-                LastName =  userModel.LastName
+                //FirstName = userModel.UserName,
+                //LastName =  userModel.LastName,
+                FullName = userModel.FullName
             };
 
             var result = await _userManager.CreateAsync(userModel, userModel.Password);

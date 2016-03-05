@@ -26,7 +26,8 @@
     
     var getRooms = function () {
         debugger;
-        usersService.getUserId($scope.userName).then(function(result) {
+        usersService.getUserId($scope.userName).then(function (result) {
+            debugger;
             $scope.UserId = result.data.id;
             $scope.UserIsAdmin = result.data.isAdmin;
             roomsService.getRooms(result.data.id).then(function (results) {

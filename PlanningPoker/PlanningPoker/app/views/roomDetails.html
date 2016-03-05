@@ -64,9 +64,9 @@
                        theme="bootstrap"
                        ng-disabled="disabled"
                        reset-search-input="true" style="width: 200px !important; ">
-                <ui-select-match placeholder="Select or search user" style="width: 200px !important;">{{$select.selected.UserName}}</ui-select-match>
+                <ui-select-match placeholder="Select or search user" style="width: 200px !important;">{{$select.selected.FullName}}</ui-select-match>
                 <ui-select-choices repeat="user in users | filter: $select.search" style="width: 200px !important; ">
-                    <span ng-bind-html="trustAsHtml((user.UserName | highlight: $select.search))" style="width: 200px !important; "></span>
+                    <span ng-bind-html="trustAsHtml((user.FullName | highlight: $select.search))" style="width: 200px !important; "></span>
                 </ui-select-choices>
             </ui-select>
         </div><br/>
@@ -100,7 +100,7 @@
             <tr ng-repeat="(id, user) in roomUsers track by $index">
                 <td><strong>{{$index+1}}</strong></td>
                 <td>
-                    <p ng-bind="user.userName"></p>
+                    <p ng-bind="user.fullName"></p>
                 </td>
                 <td data-ng-hide="!userLink.isAdmin">
                     <p><img src="../../img/delete.png" width="30px;" style="cursor: pointer;" ng-click="deleteUser(user.id, user.userName)" data-ng-hide="admin.userName == user.userName" /></p>
@@ -146,8 +146,5 @@
                 </tr>
             </table>
         </div>
-    </div>
-    <div class="col-lg-12">
-        <hr />
     </div>
 </div>

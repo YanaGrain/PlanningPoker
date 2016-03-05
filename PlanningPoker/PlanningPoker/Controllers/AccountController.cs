@@ -41,17 +41,17 @@ namespace PlanningPoker.Controllers
 
         // GET: api/Account/{roomId}/Admin
         [Route("{roomId}/Admin")]
-        public IdentityUser GetAdmin(int roomId)
+        public UserModel GetAdmin(int roomId)
         {
-            IdentityUser admin = unitOfWork.Accounts.GetAdmin(roomId);
+            UserModel admin = unitOfWork.Accounts.GetAdmin(roomId);
             return (admin);
         }
 
         // GET: api/Account/{linkId}
         [Route("addUser/{linkId}")]
-        public IdentityUser GetUserByLink(int linkId)
+        public UserModel GetUserByLink(int linkId)
         {
-            IdentityUser user = unitOfWork.Accounts.GetUserByLink(linkId);
+            UserModel user = unitOfWork.Accounts.GetUserByLink(linkId);
             return (user);
         }
 
@@ -79,14 +79,14 @@ namespace PlanningPoker.Controllers
 
         [HttpGet]
         [Route("{UserName}")]
-        public async Task<IdentityUser> GetUser(string userName)
+        public async Task<UserModel> GetUser(string userName)
         {
             //if (!ModelState.IsValid)
             //{
             //    return BadRequest(ModelState);
             //}
 
-            IdentityUser user = await unitOfWork.Accounts.FindUserByName(userName);
+            UserModel user = await unitOfWork.Accounts.FindUserByName(userName);
 
             /*IHttpActionResult errorResult = GetErrorResult(result);
 

@@ -194,6 +194,8 @@
     <Content Include="Content\Site.css" />
     <Content Include="Content\toastr.css" />
     <Content Include="Content\toastr.min.css" />
+    <Content Include="img\avatars\boy.png" />
+    <Content Include="img\avatars\girl.png" />
     <Content Include="img\cards\card0.png" />
     <Content Include="img\cards\card1.png" />
     <Content Include="img\cards\card100.png" />
@@ -216,6 +218,15 @@
     <Content Include="img\crossBlue1.png" />
     <Content Include="img\current_logo.png" />
     <Content Include="img\delete.png" />
+    <Content Include="img\icons\chat.svg" />
+    <Content Include="img\icons\friends-front.svg" />
+    <Content Include="img\icons\friends-group.svg" />
+    <Content Include="img\icons\list.svg" />
+    <Content Include="img\icons\lock.svg" />
+    <Content Include="img\icons\mail.svg" />
+    <Content Include="img\icons\search.svg" />
+    <Content Include="img\icons\trash-can.svg" />
+    <Content Include="img\icons\user.svg" />
     <Content Include="img\Logo.png" />
     <Content Include="img\mail.png" />
     <Content Include="img\phone.png" />
@@ -282,6 +293,18 @@
     <Compile Include="Migrations\201603051007505_firstLastName.Designer.cs">
       <DependentUpon>201603051007505_firstLastName.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603051300065_fullName.cs" />
+    <Compile Include="Migrations\201603051300065_fullName.Designer.cs">
+      <DependentUpon>201603051300065_fullName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201603051745393_fullName2.cs" />
+    <Compile Include="Migrations\201603051745393_fullName2.Designer.cs">
+      <DependentUpon>201603051745393_fullName2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201603051808291_newOne.cs" />
+    <Compile Include="Migrations\201603051808291_newOne.Designer.cs">
+      <DependentUpon>201603051808291_newOne.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CardsModel.cs" />
     <Compile Include="Models\ChoicesModel.cs" />
@@ -328,6 +351,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603051007505_firstLastName.resx">
       <DependentUpon>201603051007505_firstLastName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603051300065_fullName.resx">
+      <DependentUpon>201603051300065_fullName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603051745393_fullName2.resx">
+      <DependentUpon>201603051745393_fullName2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603051808291_newOne.resx">
+      <DependentUpon>201603051808291_newOne.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
