@@ -12,10 +12,15 @@ namespace PlanningPoker.Models
         public PokerContext()
             : base("PokerContext")
         {
-            Database.SetInitializer<PokerContext>(new PokerDbInitializer());
+            
             //don't forget about include if needed!
             this.Configuration.LazyLoadingEnabled = false;
             this.Configuration.ProxyCreationEnabled = false;
+        }
+
+        static PokerContext()
+        {
+            Database.SetInitializer<PokerContext>(new PokerDbInitializer());
         }
         public DbSet<Card> Cards { get; set; }
         public DbSet<Room> Rooms { get; set; }

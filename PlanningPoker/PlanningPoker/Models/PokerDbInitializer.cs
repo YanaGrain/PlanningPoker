@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
 namespace PlanningPoker.Models
 {
-    public class PokerDbInitializer: System.Data.Entity.DropCreateDatabaseIfModelChanges<PokerContext>
+    public class PokerDbInitializer: DropCreateDatabaseIfModelChanges<PokerContext>
     {
         protected override void Seed(PokerContext db)
         {
