@@ -44,13 +44,15 @@ namespace PlanningPoker.Hubs
 
         public void AddDashRoom(string userId)
         {
+            
+            //Clients.User(userId).showNewRoom();
             Clients.All.showNewRoom(userId);
         }
 
         public void DelDashRoom(string userId)
         {
-            Clients.User(userId).hideDelRoom();
-            //Clients.All.hideDelRoom(userId);
+            //Clients.User(userId).hideDelRoom();
+            Clients.All.hideDelRoom(userId);
         }
 
         public void ShowStoryCards(int storyId)

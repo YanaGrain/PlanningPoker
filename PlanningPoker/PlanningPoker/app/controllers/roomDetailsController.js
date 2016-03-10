@@ -62,7 +62,6 @@
             $scope.roomIsClosed = false;
         }
         $scope.newLink.RoomId = roomData.roomId;
-        //alert($scope.currentRoom.roomId);
     };
 
     
@@ -93,7 +92,6 @@
         });
     }
     getAdmin();
-
     
     $scope.closeRoom = function () {
         $scope.room = {
@@ -120,7 +118,6 @@
         
     }
     getUserLink();
-
     
     $scope.goToStory = function () {
         $location.path('/room/' + $scope.currentRoom.roomId + '/' +$scope.currentStory.id);       
@@ -130,7 +127,7 @@
         storiesService.getCurrentStory($scope.currentRoom.roomId).then(function (result) {
             $scope.currentStory = result.data;            
         });        
-}
+    }
     getCurrentStory();
 
 

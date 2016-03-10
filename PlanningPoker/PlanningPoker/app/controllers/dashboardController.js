@@ -62,6 +62,7 @@
     connection.start();
     pokerHubProxy.on('showNewRoom', function (userId) {
         if ($scope.UserId == userId) {
+            debugger;
             getRooms();
             $scope.$apply();
             toastr.info("You were added to the room.");
@@ -69,12 +70,12 @@
         
     });
 
-    pokerHubProxy.on('hideDelRoom', function () {
-        //if ($scope.UserId == userId) {
+    pokerHubProxy.on('hideDelRoom', function (userId) {
+        if ($scope.UserId == userId) {
+            toastr.error("You were deleted from the room Or the room was deleted.");
             getRooms();
             $scope.$apply();
-            toastr.error("You were deleted from the room Or the room was deleted.");
-        //}
+        }
     });
     
 }); 
