@@ -6,7 +6,6 @@ app.factory('usersService', ['$http', 'localStorageService', 'authService', func
 
     var _getUserId = function (userName) {        
         return $http.get(urlBase + "api/account/" + userName).then(function (result) {
-            debugger;
             //$scope.userId = result.data.id;
             return result;
         });

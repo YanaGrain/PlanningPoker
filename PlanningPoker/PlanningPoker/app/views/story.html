@@ -66,7 +66,10 @@
             </tr>
             
             <tr ng-repeat="(id, user) in roomUsers">
-                <td>{{user.fullName}}</td>
+                <td>
+                    {{user.fullName}}
+                    <p ng-show="user.userName == admin.userName" style="color: dodgerblue;">Admin</p>
+                </td>
                 <td style="width:150px;" class="text-center"><img src="../../img/checkBlue.png" ng-show="user.ready" width="30px;"/></td>
                 <td style="width:150px;" class="text-center" ng-show="currentStory.isEstimated" ng-class="{'text-success': user.value == minValue, 'text-danger': user.value == maxValue }"><span ><b>{{user.value}}</b></span></td>                
             </tr>

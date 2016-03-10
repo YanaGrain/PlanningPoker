@@ -11,15 +11,15 @@ app.factory('roomsService', ['$http', 'localStorageService', function($http, loc
     
     
     var _getRooms = function (userId) {
-        debugger;
+       
         return $http.get(urlBase + 'api/Rooms/' + userId).then(function (data) {
-            debugger;
+            
             return data;
         });
     };
 
     var _createRoom = function (room, name) {
-        debugger;
+        
         return $http.post(urlBase + 'api/Rooms/' + name, room).success(function(result) {
             localStorageService.set('roomData', { roomName: room.Name, roomDescription: room.Description, roomId: result});
             

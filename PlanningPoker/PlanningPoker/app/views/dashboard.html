@@ -2,11 +2,13 @@
     <hr />
     <h2 class="text-center">{{ message }}</h2>
     <hr />
-    <!--Trigger the modal with a button-->    
+    <!--Trigger the modal with a button-->
     <div class="text-center">
         <a class="btn btn-warning" style="width: 200px;" data-toggle="modal" data-target="#myModal">Create room</a>
+    </div><br />
+    <div class="text-center">
+        <h4 ng-show="warning" style="color: crimson;">You should enter Room name to create a room</h4>
     </div>    
-    <br />
      <!--Modal--> 
     <div class="modal fade" id="myModal" role="dialog" >
         <div class="modal-dialog">
@@ -58,7 +60,6 @@
                 <td>
                     <p>{{ room.Description }}&nbsp;&nbsp;<img src="../../img/closed-stamp.png" width="100px;" ng-show="room.IsClosed" /></p>
                 </td>
-                <!--<td data-ng-hide="!userIsAdmin"><a ng-click="deleteRoom(room.Id)" style="cursor: pointer;">Delete</a></td>-->
             </tr>
         </table>
     </div>

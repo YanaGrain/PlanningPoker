@@ -24,8 +24,6 @@
         </div>
     </div>
 
-    
-
     <!--Modal for closing the room-->
     <div class="modal" id="closeModal">
         <div class="modal-dialog modal-sm">
@@ -48,7 +46,7 @@
 
     <div class="text-center" data-ng-hide="!userLink.isAdmin">
         <hr />
-        <a class="btn btn-info" style="width: 150px;" ng-click="showStoriesForm()" ng-show="!roomIsClosed">Enter Stories</a>
+        <a class="btn btn-info" style="width: 150px;" ng-click="showStoriesForm()" ng-show="!roomIsClosed">Add Stories</a>
         <a class="btn btn-success" style="width: 150px;" ng-click="showAddForm()" ng-show="!roomIsClosed">Add Users</a>
         <a class="btn btn-warning" style="width: 150px;" data-toggle="modal" data-target="#closeModal" ng-show="!roomIsClosed">Close Room</a>
         <a class="btn btn-danger" style="width: 150px;" data-toggle="modal" data-target="#deleteModal">Delete Room</a>
@@ -65,18 +63,16 @@
                        ng-disabled="disabled"
                        reset-search-input="true" style="width: 200px !important; ">
                 <ui-select-match placeholder="Select or search user" style="width: 200px !important;">{{$select.selected.FullName}}</ui-select-match>
-                <ui-select-choices repeat="user in users | filter: $select.search" style="width: 200px !important; ">
-                    <span ng-bind-html="trustAsHtml((user.FullName | highlight: $select.search))" style="width: 200px !important; "></span>
+                <ui-select-choices repeat="user in users | propsFilter: {FullName: $select.search, UserName: $select.search}" style="width: 200px !important; ">
+                    <div ng-bind-html="trustAsHtml((user.FullName | highlight: $select.search))" style="width: 200px !important;"></div>
+                    <small>
+                        Username: <span ng-bind-html="user.UserName | highlight: $select.search"></span>
+                    </small>
                 </ui-select-choices>
             </ui-select>
         </div><br/>
             <button class="btn btn-success" style="width: 100px;" ng-click="addUser(data.userSelect.Id)">Add</button>
      </div>
-
-    <!--<div ng-show="data.visible" class="col-lg-offset-4 col-lg-4">
-        
-        <button class="btn btn-success" style="width: 100px;" ng-click="addUser(data.userSelect.Id)">Add</button>
-    </div>-->
 
     <!--entering stories form-->
     <div class="text-center form-inline" ng-show="data.storiesVisible">
@@ -101,6 +97,7 @@
                 <td><strong>{{$index+1}}</strong></td>
                 <td>
                     <p ng-bind="user.fullName"></p>
+                    <p ng-show="user.userName == admin.userName" style="color: dodgerblue;">Admin</p>
                 </td>
                 <td data-ng-hide="!userLink.isAdmin">
                     <p><img src="../../img/delete.png" width="30px;" style="cursor: pointer;" ng-click="deleteUser(user.id, user.userName)" data-ng-hide="admin.userName == user.userName" /></p>
@@ -114,34 +111,44 @@
     </div>
 
     <div class="col-md-offset-2 col-md-8 text-center">
-        <h4 ng-show="stories.length == 0" style="color:crimson"><b>You have no stories</b></h4>
+        <div ng-show="stories.length == 0">
+            <h4 style="color: crimson"><b>You have no stories</b></h4>
+            <h4>To start discussion add some stories and invite users.</h4>
+        </div>
         <div ng-show="stories.length > 0">
             <h3 class="text-center">Stories</h3>
-            <h4 ng-show="!currentStory" style="color:dodgerblue"><b>You have no current stories</b></h4>
-            <p><a class="btn btn-success" style="width: 150px;" ng-click="goToStory()" ng-show="currentStory">Current Story</a></p>
+            <h4 ng-show="!currentStory" style="color: dodgerblue"><b>You have no current stories</b></h4>
+            <p><a class="btn btn-success" style="width: 150px;" ng-click="goToStory()" ng-show="currentStory">Current Story</a>
+            </p>
             <table class="table table-hover table-bordered text-center">
                 <tr>
-                    <th style="width:40px;" class="text-center">#</th>
-                    <th style="width:200px;" class="text-center">Name</th>
-                    <th style="width:100px;" class="text-center">Is Estimated</th>
-                    <th style="width:100px;" class="text-center">Points</th>
-                    <th style="width:50px;" class="text-center" data-ng-hide="!userLink.isAdmin">Delete</th>
+                    <th style="width: 40px;" class="text-center">#</th>
+                    <th style="width: 200px;" class="text-center">Name</th>
+                    <th style="width: 100px;" class="text-center">Is Estimated</th>
+                    <th style="width: 100px;" class="text-center">Points</th>
+                    <th style="width: 50px;" class="text-center" data-ng-hide="!userLink.isAdmin">Delete</th>
                 </tr>
                 <tr ng-repeat="(id, story) in stories">
                     <td><strong>{{$index+1}}</strong></td>
                     <td>
-                        <h4>{{story.name}} <img src="../../img/current_logo.png" width="55px;" data-ng-hide="!(story.id == currentStory.id)" /></h4>
+                        <h4>
+                            {{story.name}}
+                            <h4 data-ng-hide="!(story.id == currentStory.id)" style="color: dodgerblue;"><b>Current</b></h4>
+                        </h4>
 
                     </td>
                     <td>
-                        <p><img src="../../img/checkBlue.png" width="30px;" data-ng-hide="!story.isEstimated" /></p>
-                        <p><img src="../../img/crossBlue1.png" width="30px;" data-ng-hide="story.isEstimated" /></p>
+                        <p><img src="../../img/checkBlue.png" width="30px;" data-ng-hide="!story.isEstimated"/>
+                        </p>
+                        <p><img src="../../img/crossBlue1.png" width="30px;" data-ng-hide="story.isEstimated"/>
+                        </p>
                     </td>
                     <td>
                         <h4>{{ story.points }}</h4>
                     </td>
                     <td data-ng-hide="!userLink.isAdmin">
-                        <p><img src="../../img/delete.png" width="30px;" style="cursor: pointer;" ng-click="deleteStory(story.id)" /></p>
+                        <p><img src="../../img/delete.png" width="30px;" style="cursor: pointer;" ng-click="deleteStory(story.id)"/>
+                        </p>
                     </td>
                 </tr>
             </table>
