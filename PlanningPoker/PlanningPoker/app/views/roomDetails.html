@@ -1,6 +1,4 @@
 ﻿<div class="container text-center">
-    <!--<hr />
-    <h2>Welcome to the room {{name}}</h2>-->
     <hr />
     <h2>{{currentRoom.roomName}}</h2>
     <h3>{{currentRoom.roomDescription}}</h3>
@@ -13,9 +11,6 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title">Delete the room?</h4>
                 </div>
-                <!--<div class="modal-body text-center">
-                    <h4>You can't restore it</h4>
-                </div>-->
                 <div class="modal-body text-center center-block">
                     <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="deleteRoom()">Yes</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
@@ -32,11 +27,8 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title">Close the room?</h4>
                 </div>
-                <!--<div class="modal-body text-center">
-                    <h4>You can't restore it</h4>
-                </div>-->
                 <div class="modal-body text-center center-block">
-                    <h4>If you close the room you won't be able to add stories and users.</h4>
+                    <h4>If you close the room you won't be able to add stories and users. All unfinished stories will be deleted!</h4>
                     <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="closeRoom()">Yes</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
                 </div>
@@ -53,24 +45,25 @@
     </div>
     <br />
     <!--adding user form-->
-    <div ng-show="data.visible" >
+    <div ng-show="data.visible" class="col-md-12">
         <!--<select class="form-control" placeholder="Select user" style="width: 200px;" id="repeatSelect" ng-model="data.userSelect">
             <option ng-repeat="(id, user) in users" value="{{user.Id}}">{{user.UserName}}</option>
         </select>-->
-        <div class="col-lg-offset-5">
+        <div class="col-md-offset-5">
             <ui-select ng-model="data.userSelect"
                        theme="bootstrap"
                        ng-disabled="disabled"
-                       reset-search-input="true" style="width: 200px !important; ">
+                       reset-search-input="true" style="width: 200px !important;">
                 <ui-select-match placeholder="Select or search user" style="width: 200px !important;">{{$select.selected.FullName}}</ui-select-match>
-                <ui-select-choices repeat="user in users | propsFilter: {FullName: $select.search, UserName: $select.search}" style="width: 200px !important; ">
+                <ui-select-choices repeat="user in users | propsFilter: {FullName: $select.search, UserName: $select.search}" style="width: 200px !important;">
                     <div ng-bind-html="trustAsHtml((user.FullName | highlight: $select.search))" style="width: 200px !important;"></div>
                     <small>
                         Username: <span ng-bind-html="user.UserName | highlight: $select.search"></span>
                     </small>
                 </ui-select-choices>
             </ui-select>
-        </div><br/>
+        </div>
+        <br/>
             <button class="btn btn-success" style="width: 100px;" ng-click="addUser(data.userSelect.Id)">Add</button>
      </div>
 
@@ -106,14 +99,14 @@
         </table>
     </div>
 
-    <div class="col-lg-12">
+    <div class="col-md-12">
         <hr />
     </div>
 
     <div class="col-md-offset-2 col-md-8 text-center">
         <div ng-show="stories.length == 0">
-            <h4 style="color: crimson"><b>You have no stories</b></h4>
-            <h4>To start discussion add some stories and invite users.</h4>
+            <h4 style="color: crimson"><b>There is no stories in this room</b></h4>
+            <h4 ng-show="userLink.isAdmin">To start discussion add some stories and invite users.</h4>
         </div>
         <div ng-show="stories.length > 0">
             <h3 class="text-center">Stories</h3>
