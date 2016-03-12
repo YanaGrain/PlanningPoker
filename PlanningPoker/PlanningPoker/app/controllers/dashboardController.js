@@ -1,5 +1,5 @@
 ﻿app.controller('dashboardController', function ($scope, $http, $location, authService, localStorageService, roomsService, usersService) {
-    var serviceBase = 'http://localhost:65020/';
+    var urlBase = 'http://localhost:65020/';
     $scope.message = 'This is your dashboard ';
     $scope.userName = authService.authentication.userName;
     $scope.warning = false;
@@ -25,10 +25,12 @@
             roomsService.getRooms(result.data.id).then(function (results) {
                 $scope.rooms = [];
                 $scope.rooms = results.data;
+                debugger;
             }, function (error) {
                 $scope.status = 'Unable to load customer data: ' + error.message;
             });
         });
+       
     }
 
     getRooms();
@@ -59,23 +61,25 @@
     $scope.addedRoom = {}; // holds the new user  
     var connection = $.hubConnection(); // initializes hub
     var pokerHubProxy = connection.createHubProxy('pokerHub');
-    connection.start();
-    pokerHubProxy.on('showNewRoom', function (userId) {
-        if ($scope.UserId == userId) {
-            getRooms();
-            $scope.$apply();
-            toastr.info("You were added to the room.");
-        }
-        
-    });
+    connection.start().done();
+    
+        pokerHubProxy.on('showNewRoom', function (userId) {
+            if ($scope.UserId == userId) {
+                debugger;
+                getRooms();
+                $scope.$apply();
+                toastr.info("You were added to the room.");
+            }
+        });
 
-    pokerHubProxy.on('hideDelRoom', function () {
-        //if ($scope.UserId == userId) {
-            getRooms();
-            $scope.$apply();
-            toastr.error("You were deleted from the room Or the room was deleted.");
-        //}
-    });
+        pokerHubProxy.on('hideDelRoom', function (userId) {
+            if ($scope.UserId == userId) {
+                debugger;
+                getRooms();
+                $scope.$apply();
+                toastr.error("You were deleted from the room Or the room was deleted.");
+            }
+        });
     
 }); 
 

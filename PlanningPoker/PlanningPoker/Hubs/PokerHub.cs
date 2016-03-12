@@ -49,8 +49,8 @@ namespace PlanningPoker.Hubs
 
         public void DelDashRoom(string userId)
         {
-            Clients.User(userId).hideDelRoom();
-            //Clients.All.hideDelRoom(userId);
+            //Clients.User(userId).hideDelRoom();
+            Clients.All.hideDelRoom(userId);
         }
 
         public void ShowStoryCards(int storyId)

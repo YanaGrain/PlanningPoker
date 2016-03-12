@@ -24,7 +24,7 @@
     $scope.newChoice = {
         UserId: "",
         StoryId: 0,
-        CardId: 0,        
+        CardId: 0        
     };
 
     $scope.currentRoom = {
@@ -85,6 +85,7 @@
        storiesService.getCurrentStory($scope.currentRoom.roomId).then(function (result) {
            $scope.currentStory = result.data;
            $scope.messages = localStorageService.get($scope.currentStory.id) || []; // collection of messages coming from server
+           $scope.chosenCard = localStorageService.get("Card" + $scope.currentStory.id) || "";
            debugger;
            choicesService.getChoices($scope.currentStory.id).then(function (results) {
                debugger;
@@ -115,6 +116,59 @@
     }, function (error) {
         alert(error.data.message);
     });
+
+    var getStories = function () {
+        storiesService.getStories($scope.currentRoom.roomId).then(function (results) {
+            $scope.stories = results.data;
+            debugger;
+        });
+    }
+    getStories();
+
+
+    var getAdmin = function () {
+        usersService.getAdmin($scope.currentRoom.roomId).then(function (results) {
+            $scope.admin = results.data;
+            debugger;
+        });
+    }
+    getAdmin();
+
+    var getUserLink = function () {
+        usersService.getUserId($scope.name).then(function (result) {
+            $scope.UserId = result.data.id;
+            usersService.getLink(result.data.id, $scope.currentRoom.roomId).then(function (link) {
+                $scope.userLink = link.data;
+            });
+        });
+
+    }
+    getUserLink();
+
+    $scope.toRoom = function () {
+        $location.path('room/' + $scope.currentRoom.roomId);
+    }
+
+
+    $scope.goToStory = function () {
+        $location.path('/room/' + $scope.currentRoom.roomId + '/' + $scope.currentStory.id);
+    };
+
+    $scope.selectCard = function (id, path) {
+        if ($scope.activeClass == id) {
+            $scope.activeClass = null;
+            $scope.newChoice = {};
+        }
+        else {
+            $scope.activeClass = id;
+            $scope.newChoice.StoryId = $scope.currentStory.id;
+            $scope.newChoice.UserId = $scope.UserId;
+            $scope.newChoice.CardId = id;
+            localStorageService.set("Card" + $scope.currentStory.id, path);
+            $scope.chosenCard = localStorageService.get("Card" + $scope.currentStory.id);
+        }
+
+    };
      
     //signalR
     $scope.addedChoice = {}; // holds the new user  
@@ -164,7 +218,8 @@
         if (storyId == $scope.currentStory.id) {
             debugger;
             $location.path('room/' + $scope.currentRoom.roomId);
-            localStorageService.remove($scope.currentStory.id)
+            localStorageService.remove($scope.currentStory.id);
+            localStorageService.remove("Card"+$scope.currentStory.id);
             $scope.$apply();
         }
 
@@ -178,41 +233,48 @@
         }
     });
 
-    connection.start().done(function () {
+    pokerHubProxy.on('hideDelRoom', function (userId) {
+        if ($scope.UserId == userId) {
+            debugger;
+            $location.path("/dashboard");
+        }
+    });
 
-        $scope.cardChosen = function () {            
-                choicesService.createChoice($scope.newChoice).then(function (result) {
-                    pokerHubProxy.invoke('addStoryChoice', result.data, $scope.name);
-                    debugger;
-                    $scope.done = true;
-                    //alert("Done!");
-                    getStoryChoices();
-                });            
+    connection.start().done(function() {
+
+        $scope.cardChosen = function() {
+            choicesService.createChoice($scope.newChoice).then(function(result) {
+                pokerHubProxy.invoke('addStoryChoice', result.data, $scope.name);
+                debugger;
+                $scope.done = true;
+                //alert("Done!");
+                getStoryChoices();
+            });
         }
 
-        $scope.showCards = function () {
+        $scope.showCards = function() {
             $scope.showCard = false;
             //$scope.cardsShown = true;
             $scope.currentStory.isEstimated = true;
-            storiesService.estimateStory($scope.currentStory.id, $scope.currentStory).then(function (result) {
+            storiesService.estimateStory($scope.currentStory.id, $scope.currentStory).then(function(result) {
                 //alert("Room is Estimated!");
             });
             pokerHubProxy.invoke('showStoryCards', $scope.currentStory.id);
-            
+
         }
 
-        $scope.newMessage = function () {
+        $scope.newMessage = function() {
             if ($scope.message != '') {
                 // sends a new message to the server
                 pokerHubProxy.invoke('sendMessage', $scope.name, $scope.message, $scope.currentStory.id);
                 $scope.message = '';
-            }            
+            }
         }
 
-        $scope.enterPoints = function () {
+        $scope.enterPoints = function() {
             $scope.currentStory.points = $scope.points;
             $scope.currentStory.isClosed = true;
-            storiesService.estimateStory($scope.currentStory.id, $scope.currentStory).then(function (result) {
+            storiesService.estimateStory($scope.currentStory.id, $scope.currentStory).then(function(result) {
                 //alert("Points are written!");
                 $scope.currentStory.points = 0;
                 pokerHubProxy.invoke('closeStory', $scope.currentStory.id);
@@ -222,57 +284,6 @@
             });
         }
 
-    })
-    
-    var getStories = function () {
-        storiesService.getStories($scope.currentRoom.roomId).then(function (results) {
-            $scope.stories = results.data;
-            debugger;
-        });
-    }
-    getStories();
-    
-
-    var getAdmin = function () {
-        usersService.getAdmin($scope.currentRoom.roomId).then(function (results) {
-            $scope.admin = results.data;
-            debugger;
-        });
-    }
-    getAdmin();
-
-    var getUserLink = function () {
-        usersService.getUserId($scope.name).then(function (result) {
-            $scope.UserId = result.data.id;
-            usersService.getLink(result.data.id, $scope.currentRoom.roomId).then(function (link) {
-                $scope.userLink = link.data;
-            })
-        });
-
-    }
-    getUserLink();
-
-    $scope.toRoom = function () {
-        $location.path('room/' + $scope.currentRoom.roomId);
-    }
-
-    
-    $scope.goToStory = function () {
-        $location.path('/room/' + $scope.currentRoom.roomId + '/' + $scope.currentStory.id);
-    };
-
-    $scope.selectCard = function (id) {
-        if ($scope.activeClass == id) {
-            $scope.activeClass = null;
-            $scope.newChoice = {};
-        }
-        else {
-            $scope.activeClass = id;
-            $scope.newChoice.StoryId = $scope.currentStory.id;
-            $scope.newChoice.UserId = $scope.UserId;
-            $scope.newChoice.CardId = id;
-        }
-             
-    };
+    });
 
 });

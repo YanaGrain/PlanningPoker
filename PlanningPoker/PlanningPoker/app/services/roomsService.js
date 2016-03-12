@@ -13,7 +13,6 @@ app.factory('roomsService', ['$http', 'localStorageService', function($http, loc
     var _getRooms = function (userId) {
        
         return $http.get(urlBase + 'api/Rooms/' + userId).then(function (data) {
-            
             return data;
         });
     };

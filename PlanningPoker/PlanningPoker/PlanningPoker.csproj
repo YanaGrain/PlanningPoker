@@ -156,7 +156,6 @@
   <ItemGroup>
     <Content Include="app\app.js" />
     <Content Include="app\controllers\aboutController.js" />
-    <Content Include="app\controllers\cardsController.js" />
     <Content Include="app\controllers\contactController.js" />
     <Content Include="app\controllers\dashboardController.js" />
     <Content Include="app\controllers\homeController.js" />
@@ -173,7 +172,6 @@
     <Content Include="app\services\storiesService.js" />
     <Content Include="app\services\usersService.js" />
     <Content Include="app\views\about.html" />
-    <Content Include="app\views\cards.html" />
     <Content Include="app\views\contact.html" />
     <Content Include="app\views\dashboard.html" />
     <Content Include="app\views\home.html" />
