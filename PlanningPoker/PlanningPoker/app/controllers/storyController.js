@@ -188,6 +188,7 @@
             $scope.addedChoice.StoryId = storyId;
             $scope.choices.push($scope.addedChoice);
             getStoryChoices();
+            getRoomUsers();
             $scope.addedChoice = {};
             if (name != $scope.name) {
                 debugger;
@@ -229,6 +230,7 @@
         //$scope.showCard = false;
         if (storyId == $scope.currentStory.id) {
             $scope.currentStory.isEstimated = true;
+            getRoomUsers();
             $scope.$apply();
         }
     });

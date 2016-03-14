@@ -1,4 +1,4 @@
-﻿app.controller('dashboardController', function ($scope, $http, $location, authService, localStorageService, roomsService, usersService, $route) {
+﻿app.controller('dashboardController', function ($scope, $http, $location, authService, localStorageService, roomsService, usersService) {
 
     //signalR
     $scope.addedRoom = {}; // holds the new user  
@@ -6,7 +6,7 @@
     var pokerHubProxy = connection.createHubProxy('pokerHub');
     
 
-    var urlBase = 'http://localhost:65020/';
+    //var urlBase = 'http://localhost:65020/';
     $scope.message = 'This is your dashboard ';
     $scope.userName = authService.authentication.userName;
     $scope.warning = false;

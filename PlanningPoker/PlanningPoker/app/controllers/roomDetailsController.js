@@ -113,28 +113,7 @@
     getAdmin();
 
     
-    $scope.closeRoom = function () {
-        $scope.room = {
-            name: $scope.currentRoom.roomName,
-            description: $scope.currentRoom.roomDescription,
-            id: $scope.currentRoom.roomId,
-            isClosed: true
-        };        
-        roomsService.closeRoom($scope.room.id, $scope.room).then(function (data) {
-           
-        }), function (data) {
-            alert("An error while closing the room!");
-        };
-        angular.forEach($scope.stories, function (story, id) {
-            if (story.isClosed != true) {
-                storiesService.deleteStory(story.id);
-            };
-        });
-        localStorageService.set('roomData', { roomName: $scope.room.name, roomDescription: $scope.room.description, roomId: $scope.room.id, roomIsClosed: $scope.room.isClosed });
-        getRoomData();
-        getStories();
-        $scope.$apply();
-    };
+    
 
     var getUserLink = function () {
         usersService.getUserId($scope.name).then(function (result) {
@@ -269,8 +248,10 @@
         $scope.deleteRoom = function () {
             roomsService.deleteRoom($scope.currentRoom.roomId).then(function (data) {
                 //$location.path("/dashboard");
-                localStorageService.remove($scope.currentStory.id);
-                localStorageService.remove("Card" + $scope.currentStory.id);
+                if ($scope.currentStory) {
+                    localStorageService.remove($scope.currentStory.id);
+                    localStorageService.remove("Card" + $scope.currentStory.id);
+                }
                 angular.forEach($scope.roomUsers, function (user, id) {
                     pokerHubProxy.invoke('delDashRoom', user.id);
                 });
@@ -302,6 +283,34 @@
                 alert("An error while deleting the story!");
             };
         };
+
+        $scope.closeRoom = function () {
+            $scope.room = {
+                name: $scope.currentRoom.roomName,
+                description: $scope.currentRoom.roomDescription,
+                id: $scope.currentRoom.roomId,
+                isClosed: true
+            };
+            roomsService.closeRoom($scope.room.id, $scope.room).then(function (data) {
+
+            }), function (data) {
+                alert("An error while closing the room!");
+            };
+            angular.forEach($scope.stories, function (story, id) {
+                if (story.isClosed != true) {
+                    storiesService.deleteStory(story.id).then(function() {
+                        pokerHubProxy.invoke('deleteRoomStory', story.id, $scope.currentRoom.roomId);
+                        getStories();
+                        getCurrentStory();
+                    });
+                };
+            });
+            localStorageService.set('roomData', { roomName: $scope.room.name, roomDescription: $scope.room.description, roomId: $scope.room.id, roomIsClosed: $scope.room.isClosed });
+            getRoomData();
+            getStories();
+            $scope.$apply();
+        };
+
     });
 
     $scope.trustAsHtml = function (value) {
