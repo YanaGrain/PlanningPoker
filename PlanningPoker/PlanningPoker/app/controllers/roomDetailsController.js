@@ -201,6 +201,7 @@
         if ($scope.UserId == userId) {
             debugger;
             $location.path("/dashboard");
+            $scope.$apply();
         }
     });
 
@@ -235,8 +236,8 @@
             $scope.$apply();
         }        
     });
-   
-        connection.start().done(function () {
+
+    connection.start().done(function () {
         //adding New User
         $scope.addUser = function (userId) {
             $scope.newLink.UserId = userId;
@@ -254,8 +255,8 @@
             }
         }
 
-        $scope.deleteUser = function (userId, userName) { 
-            usersService.deleteUser(userId, $scope.currentRoom.roomId).then(function(result) {
+        $scope.deleteUser = function (userId, userName) {
+            usersService.deleteUser(userId, $scope.currentRoom.roomId).then(function (result) {
                 //alert("User deleted.");
                 pokerHubProxy.invoke('deleteRoomUser', userId, $scope.currentRoom.roomId, userName);
                 debugger;

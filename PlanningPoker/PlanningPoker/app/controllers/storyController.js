@@ -93,12 +93,12 @@
                angular.forEach($scope.choices, function (choice, id) {
                    cardsService.getValue(choice.cardId).then(function (result) {
                        choice.value = result.data.value;
-                       if (choice.value <= $scope.minValue) {
-                           $scope.minValue = choice.value;
-                       }
-                       if (choice.value >= $scope.maxValue) {
-                           $scope.maxValue = choice.value;
-                       }
+                       //if (choice.value <= $scope.minValue) {
+                       //    $scope.minValue = choice.value;
+                       //}
+                       //if (choice.value >= $scope.maxValue) {
+                       //    $scope.maxValue = choice.value;
+                       //}
                    });
 
                });

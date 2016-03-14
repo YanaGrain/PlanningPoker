@@ -1,4 +1,11 @@
-﻿app.controller('dashboardController', function ($scope, $http, $location, authService, localStorageService, roomsService, usersService) {
+﻿app.controller('dashboardController', function ($scope, $http, $location, authService, localStorageService, roomsService, usersService, $route) {
+
+    //signalR
+    $scope.addedRoom = {}; // holds the new user  
+    var connection = $.hubConnection(); // initializes hub
+    var pokerHubProxy = connection.createHubProxy('pokerHub');
+    
+
     var urlBase = 'http://localhost:65020/';
     $scope.message = 'This is your dashboard ';
     $scope.userName = authService.authentication.userName;
@@ -17,7 +24,7 @@
         "showMethod": "fadeIn",
         "hideMethod": "fadeOut"
     }
-    
+
     var getRooms = function () {
         usersService.getUserId($scope.userName).then(function (result) {
             $scope.UserId = result.data.id;
@@ -30,10 +37,31 @@
                 $scope.status = 'Unable to load customer data: ' + error.message;
             });
         });
-       
+
     }
 
     getRooms();
+    pokerHubProxy.on('showNewRoom', function (userId) {
+        if ($scope.UserId == userId) {
+            debugger;
+            getRooms();
+            $scope.$apply();
+            toastr.info("You were added to the room.");
+        }
+    });
+
+    connection.start().done(function() {});
+
+    pokerHubProxy.on('hideDelRoom', function (userId) {
+        if ($scope.UserId == userId) {
+            debugger;
+            getRooms();
+            $scope.$apply();
+            toastr.error("You were deleted from the room Or the room was deleted.");
+        }
+    });
+    
+    
     $scope.newroom = {};
     
     $scope.createRoom = function () {
@@ -51,35 +79,15 @@
         }
     };
     
+    
+
     $scope.enterRoom = function (id) {
         roomsService.findRoom(id).then(function (result) {
             $location.path('/room/' + id);
         });
     };
 
-    //signalR
-    $scope.addedRoom = {}; // holds the new user  
-    var connection = $.hubConnection(); // initializes hub
-    var pokerHubProxy = connection.createHubProxy('pokerHub');
-    connection.start().done();
-    
-        pokerHubProxy.on('showNewRoom', function (userId) {
-            if ($scope.UserId == userId) {
-                debugger;
-                getRooms();
-                $scope.$apply();
-                toastr.info("You were added to the room.");
-            }
-        });
 
-        pokerHubProxy.on('hideDelRoom', function (userId) {
-            if ($scope.UserId == userId) {
-                debugger;
-                getRooms();
-                $scope.$apply();
-                toastr.error("You were deleted from the room Or the room was deleted.");
-            }
-        });
-    
+        
 }); 
 
